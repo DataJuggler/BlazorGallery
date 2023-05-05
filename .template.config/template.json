@@ -1,10 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Data Juggler",
-  "classifications": [ "ClassLibrary", "DataJuggler.Blazor.ImageGallery", "C#11" ],
-  "identity": "DataJuggler.Blazor.ImageGallery",
-  "name": "DataJuggler.Blazor.ImageGallery",
-  "shortName": "DataJuggler.Blazor.ImageGallery",
+  "classifications": [ "ClassLibrary", "DataJuggler.BlazorGallery", "C#11" ],
+  "identity": "DataJuggler.BlazorGallery",
+  "name": "DataJuggler.BlazorGallery",
+  "shortName": "DataJuggler.BlazorGallery",
   "tags": {
     "language": "C#",
     "type": "project"

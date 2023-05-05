@@ -1,0 +1,29 @@
+﻿@page "/"
+@using DataJuggler.Blazor.FileUpload
+@using BlazorStyled;
+
+<PageTitle>Index</PageTitle>
+
+<Styled @bind-Classname=@BlueButton>
+    background-image: url('../Images/UploadButtonBlue.png');
+    position: absolute;
+    left: 2%;
+    top: 30vh;    
+    background-size: 100% 100%;
+    width: 180px;
+    height: 48px;
+    cursor: pointer;
+</Styled>
+
+
+<FileUpload CustomSuccessMessage="Your file uploaded successfully."
+    OnReset="OnReset" ResetButtonClassName="resetbutton" ShowStatus="false"
+    PartialGuidLength="12" MaxFileSize=@UploadLimit FilterByExtension="true"
+    ShowCustomButton="true" OnChange="OnFileUploaded" Visible="false"
+    CustomButtonClassName="@BlueButton" AllowedExtensions=".png;.jpg;"
+    ShowResetButton="true" AppendPartialGuid="true" ButtonText=""
+    CustomExtensionMessage="Only .png and .jpg extensions are allowed."
+    InputFileClassName="customfileupload" Status="Refresh" ResetButtonText=""
+    FileTooLargeMessage=@FileTooLargeMessage>
+</FileUpload>
+

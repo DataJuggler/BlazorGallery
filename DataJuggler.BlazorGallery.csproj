@@ -1,14 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+	<PackageType>Template</PackageType>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <IsPackable>true</IsPackable>
-	  <Version>1.0.1</Version>
-	  <Description>A project template for creating an Image Gallery in Blazor.</Description>
+	<IsPackable>true</IsPackable>
+	<Version>1.0.1</Version>
+	<Description>A project template for creating an Image Gallery in Blazor.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ProjectTemplates\**" />
+    <Content Remove="ProjectTemplates\**" />
+    <EmbeddedResource Remove="ProjectTemplates\**" />
+    <None Remove="ProjectTemplates\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\" />

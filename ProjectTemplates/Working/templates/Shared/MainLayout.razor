@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Blazor Gallery</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <div class="nav-scrollable">
+            <nav class="flex-column">
+                <div class="nav-item px-3">                    
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi imagefolder down16" aria-hidden="true"></span><span class="colorwhite"> Home</span>
+                    </NavLink>                    
+                </div>
+                <button class="addbutton" title="Add A New Folder">                    
+                </button>
+            </nav>
+        </div>
+    </div>
+    <main>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

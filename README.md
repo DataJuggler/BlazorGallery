@@ -1,1 +1,1 @@
-# BlazorGallery
+# DataJuggler.BlazorGallery
