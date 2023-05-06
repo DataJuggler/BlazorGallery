@@ -3,10 +3,12 @@
 #region using statements
 
 using BlazorStyled;
+using DataJuggler.Blazor.FileUpload;
+using DataJuggler.Cryptography;
+using DataJuggler.UltimateHelper;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 #endregion
-
-using DataJuggler.Blazor.FileUpload;
 
 namespace DataJuggler.BlazorGallery.Pages
 {
@@ -26,6 +28,28 @@ namespace DataJuggler.BlazorGallery.Pages
         #endregion
 
         #region Methods
+
+            #region OnAfterRenderAsync(bool firstRender)
+            /// <summary>
+            /// This method is used to verify a user
+            /// </summary>
+            /// <param name="firstRender"></param>
+            /// <returns></returns>
+            protected async override Task OnAfterRenderAsync(bool firstRender)
+            {
+                
+
+                // call the base
+                await base.OnAfterRenderAsync(firstRender);
+
+                //// if the value for HasLoggedInUser is true
+                //if ((HasLoggedInUser) && (firstRender))
+                //{
+                //    // Refresh the UI
+                //    Refresh();
+                //}
+            }
+            #endregion
 
             #region OnFileUploaded(UploadedFileInfo file)
             /// <summary>

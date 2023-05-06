@@ -1,47 +1,59 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.4</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
     <Description>BlazorGallery is a Blazor project template, allowing you to easily create an image gallery with file upload and
 saving the data in SQL Server. Create custom folders to showcase your favorite projects and graphics.
-</Description>
+    </Description>
     <PackageTags>C#;SQL;SQLServer;Blazor;FileUpload;Images;Gallery;</PackageTags>	
     <TargetFramework>net7.0</TargetFramework>
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.0.1</Version>
+    <Version>1.0.4</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/DataJuggler/BlazorGallery</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
     <RepositoryType>Git/GitHub</RepositoryType>
-    <PackageReleaseNotes>5.4.2023: This is the first release of this project.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+		5.5.2023: Added a logo.
+		5.4.2023: This is the first release of this project.
+	</PackageReleaseNotes>
     <Nullable>disable</Nullable>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackAsTool>True</PackAsTool>
     <PackageReadmeFile></PackageReadmeFile>
 
   </PropertyGroup>
-  
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
-    <Compile Remove="**\*" />
-    <Compile Remove="templates\DataTier.Net7.ClassLibrary\.vs\**" />
-    <Content Remove="templates\DataTier.Net7.ClassLibrary\.vs\**" />
-    <EmbeddedResource Remove="templates\DataTier.Net7.ClassLibrary\.vs\**" />
-    <None Remove="templates\DataTier.Net7.ClassLibrary\.vs\**" />
+	<Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+	<Compile Remove="**\*" />
+	<Compile Remove="templates\bin\**" />
+	<Compile Remove="templates\obj\**" />
+	<Content Remove="templates\bin\**" />
+	<Content Remove="templates\obj\**" />
+	<EmbeddedResource Remove="templates\bin\**" />
+	<EmbeddedResource Remove="templates\obj\**" />
+	<None Remove="templates\bin\**" />
+	<None Remove="templates\obj\**" />
+    <Content Include="templates\.template.config\template.json" />
   </ItemGroup>
-  
+  <ItemGroup>	
+    <None Include="templates\BlazorGallery.sln" />
+    <None Include="templates\DataJuggler.BlazorGallery.csproj" />
+    <None Include="templates\DataJuggler.BlazorGallery.csproj.user" />
+  </ItemGroup>
   <ItemGroup>
-    <None Update="templates\ReadMe.md">
-      <Pack>True</Pack>
-      <PackagePath>templates\DataTier.Net7.ClassLibrary\</PackagePath>
-    </None>
+    <Folder Include="templates\Data\" />
+	<None Update="templates\ReadMe.md">
+		<Pack>True</Pack>
+		<PackagePath>templates\</PackagePath>
+	</None>
   </ItemGroup>
   
 </Project>

@@ -29,6 +29,13 @@
     background-image: url('../Images/Folder.png');
     background-size: 100% 100%;
 }
+.logo
+{
+    background-image: url('../Images/Logo.png');
+    width: 244px;
+    height: 48px;
+    background-size: 100% 100%;
+}
 .resetbutton
 {
     background-image: url('../Images/ResetButtonBlue.png');
