@@ -2,8 +2,21 @@
 @using ObjectLibrary.BusinessObjects
 @using DataJuggler.Blazor.Components
 @using DataJuggler.Blazor.Components.Interfaces
+@using DataJuggler.Blazor.FileUpload
+@using BlazorStyled
 
 <PageTitle>Blazor Gallery</PageTitle>
+
+<Styled @bind-Classname=@BlueButton>
+    background-image: url('../Images/UploadButtonBlue.png');
+    position: absolute;    
+    left: 2%;
+    top: @TopStyle;
+    background-size: 100% 100%;
+    width: 180px;
+    height: 48px;
+    cursor: pointer;
+</Styled>
 
 <div class="page">    
     <main>
@@ -22,15 +35,15 @@
                             {
                                 <div class="nav-item px-3">
                                     @if (folder.Selected)
-                                    {  
-                                        SelectedFolder = folder;
-                                        <button class="imagefolder right16 fontbold"><span class="colorblue right64">@folder.Name</span></button>
+                                    {
+                                        <button class="imagefolder right16"><span class="fontsize14 colorblue fontbold right56 text-nowrap">@folder.Name</span></button>
                                     }
                                     else
                                     {
-                                        <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="colorwhite right64">@folder.Name</span></button>
+                                        <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colorwhite right56">@folder.Name</span></button>
                                     }
                                 </div>
+                                <div class="height16 displayblock"></div>
                             }
                         }
                     </div>
@@ -39,10 +52,22 @@
                     @if (AddFolderMode)
                     {
                         <div class="down32">
-                            <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8" SetFocusOnFirstRender="true"
-                                Width="164" Caption="Name:" Unit="px" LabelWidth="80"></ValidationComponent>
+                            <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8"
+                                SetFocusOnFirstRender="true" Unit="px"
+                                Width="164" Caption="Name:"  LabelWidth="80"></ValidationComponent>
                         </div>
                     }
+
+                    <FileUpload CustomSuccessMessage="Your file uploaded successfully."
+                        OnReset="OnReset" ResetButtonClassName="resetbutton" ShowStatus="false"
+                        PartialGuidLength="12" MaxFileSize=@UploadLimit FilterByExtension="true"
+                        ShowCustomButton="true" OnChange="OnFileUploaded" Visible="false"
+                        CustomButtonClassName="@BlueButton" AllowedExtensions=".png;.jpg;"
+                        ShowResetButton="true" AppendPartialGuid="true" ButtonText=""
+                        CustomExtensionMessage="Only .png and .jpg extensions are allowed."
+                        InputFileClassName="customfileupload" Status="Refresh" ResetButtonText=""
+                        FileTooLargeMessage=@FileTooLargeMessage>
+                    </FileUpload>
                 </nav>
             </div>
         </div>

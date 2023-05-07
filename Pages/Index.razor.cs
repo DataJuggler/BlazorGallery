@@ -26,14 +26,10 @@ namespace DataJuggler.BlazorGallery.Pages
     public partial class Index : IBlazorComponent, IBlazorComponentParent
     {
         
-        #region Private Variables
-        public const int UploadLimit = 20480000;
-        public const string FileTooLargeMessage = "The file must be 20 megs or less.";
-        private string blueButton;
-        private string resetButton;
+        #region Private Variables        
         private string name;
         private List<IBlazorComponent> children;
-        private IBlazorComponentParent parent;
+        private IBlazorComponentParent parent;                
         #endregion
 
         #region Methods
@@ -49,43 +45,6 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
 
-            #region OnFileUploaded(UploadedFileInfo file)
-            /// <summary>
-            /// This method On File Uploaded
-            /// </summary>
-            public void OnFileUploaded(UploadedFileInfo file)
-            {
-                // if the file was uploaded
-                if (!file.Aborted)
-                {
-                   // To Do: Save the uploaded file
-                   string fileName = file.Name;
-
-                   // auto reset
-                   OnReset();                   
-                }
-                else
-                {
-                    // for debugging only
-                    if (file.HasException)
-                    {
-                        // for debugging only
-                        string message = file.Exception.Message;
-                    }
-                }
-            }
-            #endregion
-
-            #region OnReset()
-            /// <summary>
-            /// On Reset
-            /// </summary>
-            public void OnReset()
-            {
-                
-            }
-            #endregion
-            
             #region ReceiveData(Message message)
             /// <summary>
             /// method returns the Data
@@ -123,17 +82,6 @@ namespace DataJuggler.BlazorGallery.Pages
         #endregion
 
         #region Properties
-
-            #region BlueButton
-            /// <summary>
-            /// This property gets or sets the value for 'BlueButton'.
-            /// </summary>
-            public string BlueButton
-            {
-                get { return blueButton; }
-                set { blueButton = value; }
-            }
-            #endregion
             
             #region Children
             /// <summary>
@@ -178,17 +126,6 @@ namespace DataJuggler.BlazorGallery.Pages
                     }
                 }
             }
-            #endregion
-            
-            #region ResetButton
-            /// <summary>
-            /// This property gets or sets the value for 'ResetButton'.
-            /// </summary>
-            public string ResetButton
-            {
-                get { return resetButton; }
-                set { resetButton = value; }
-            }     
             #endregion
 
         #endregion

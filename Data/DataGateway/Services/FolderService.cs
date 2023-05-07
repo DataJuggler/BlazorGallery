@@ -5,7 +5,6 @@
 using ApplicationLogicComponent.Connection;
 using DataJuggler.UltimateHelper;
 using DataGateway;
-using DataGateway.Services;
 using ObjectLibrary.BusinessObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;

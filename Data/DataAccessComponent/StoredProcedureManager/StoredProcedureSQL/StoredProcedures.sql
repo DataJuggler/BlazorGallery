@@ -878,5 +878,69 @@ BEGIN
 
 END
 
+-- Begin Custom Methods
+
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Image_FetchAllForFolderId
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   5/7/2023
+-- Description:    Returns all Image objects for the FolderId given.
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Image_FetchAllForFolderId'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Image_FetchAllForFolderId
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Image_FetchAllForFolderId') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Image_FetchAllForFolderId >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Image_FetchAllForFolderId >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Image_FetchAllForFolderId
+
+    -- Create @FolderId Paramater
+    @FolderId int
+
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [CreatedDate],[FolderId],[FullPath],[Height],[Id],[Name],[UserId],[Width]
+
+    -- From tableName
+    From [Image]
+
+    -- Load Matching Records
+    Where [FolderId] = @FolderId
+
+END
+
+
+-- End Custom Methods
+
 -- Thank you for using DataTier.Net.
 

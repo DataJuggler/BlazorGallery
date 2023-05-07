@@ -7,6 +7,11 @@ using DataJuggler.Blazor.Components.Interfaces;
 using DataJuggler.Blazor.Components.Util;
 using ObjectLibrary.BusinessObjects;
 using DataGateway.Services;
+using DataGateway;
+using ApplicationLogicComponent.Connection;
+using DataJuggler.Blazor.FileUpload;
+using DataJuggler.UltimateHelper;
+using OfficeOpenXml.Style;
 
 #endregion
 
@@ -22,11 +27,18 @@ namespace DataJuggler.BlazorGallery.Shared
         
         #region Private Variables
         private List<IBlazorComponent> children;
+        private string blueButton;
         private Pages.Index indexPage;
         private List<Folder> folders;
         private Folder selectedFolder;
         private bool addFolderMode;
         private ValidationComponent newFolderNameComponent;
+        private int top;
+        private bool forceReload;
+        public const int FolderHeight = 48;
+        public const int UploadLimit = 20480000;
+        public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
+        public const int FolderTop = 140;
         #endregion
         
         #region Methods
@@ -39,6 +51,9 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 // set to true
                 AddFolderMode = true;
+
+                // Set the Top
+                Top = FolderTop + ((Folders.Count + 1) * FolderHeight);
             }
             #endregion
             
@@ -62,7 +77,28 @@ namespace DataJuggler.BlazorGallery.Shared
                 // Set the SelectedFolder
                 SelectedFolder = await FolderService.FindFolder(folderId);
 
-                // To Do: Load the Images for the selected folder
+                // if the value for HasSelectedFolder is true
+                if (HasSelectedFolder)
+                {
+                    // Set Selectd to true
+                    SelectedFolder.Selected = true;
+
+                    // if saved
+                    bool saved = await FolderService.SaveFolder(ref selectedFolder);
+
+                    // if saved
+                    if (saved)
+                    {
+                        // Unselect all other folders
+                        UnselectFolders(folderId);
+
+                        // Force Reload
+                        ForceReload = true;
+
+                        // Redisplay
+                        Refresh();
+                    }
+                }
             }
             #endregion
             
@@ -75,21 +111,82 @@ namespace DataJuggler.BlazorGallery.Shared
             protected async override Task OnAfterRenderAsync(bool firstRender)
             {
                 // if firstRender
-                if (firstRender)
+                if ((firstRender) || (ForceReload))
                 {
                    // get the folders
                    Folders = await FolderService.GetFolderList();
+
+                   // If the Folders collection exists and has one or more items
+                   if (ListHelper.HasOneOrMoreItems(Folders))
+                   {
+                        // Iterate the collection of Folder objects
+                        foreach (Folder folder in Folders)
+                        {
+                            // If the value for the property folder.Selected is true
+                            if (folder.Selected)
+                            {
+                                // Set the SelectedFolder
+                                SelectedFolder = folder;
+
+                                // break out of the loop
+                                break;
+                            }
+                        }
+
+                        // Set the Top
+                        Top = FolderTop + (Folders.Count * FolderHeight);
+                   }
                 }
 
-                // call the base
+                // call base method
                 await base.OnAfterRenderAsync(firstRender);
 
                 // if firstRender
-                if (firstRender)
+                if ((firstRender) || (ForceReload))
                 {
+                    // only force reload oncea
+                    ForceReload = false;
+
                     // Update the UI
                     Refresh();
                 }
+            }
+            #endregion
+
+            #region OnFileUploaded(UploadedFileInfo file)
+            /// <summary>
+            /// This method On File Uploaded
+            /// </summary>
+            public void OnFileUploaded(UploadedFileInfo file)
+            {
+                // if the file was uploaded
+                if (!file.Aborted)
+                {
+                   // To Do: Save the uploaded file
+                   string fileName = file.Name;
+
+                   // auto reset
+                   OnReset();                   
+                }
+                else
+                {
+                    // for debugging only
+                    if (file.HasException)
+                    {
+                        // for debugging only
+                        string message = file.Exception.Message;
+                    }
+                }
+            }
+            #endregion
+
+            #region OnReset()
+            /// <summary>
+            /// On Reset
+            /// </summary>
+            public void OnReset()
+            {
+                
             }
             #endregion
             
@@ -97,9 +194,53 @@ namespace DataJuggler.BlazorGallery.Shared
             /// <summary>
             /// method Receive Data
             /// </summary>
-            public void ReceiveData(Message message)
+            public async void ReceiveData(Message message)
             {
-                
+                if (message.Sender.Name == "NewFolderNameComponent")
+                {
+                    // if EscapePressed
+                    if (message.Text == "EscapePressed")
+                    {
+                        // no longer editing
+                        AddFolderMode = false;
+
+                        // Exit edit mode
+                        Refresh();
+                    }
+                    else if (message.Text == "EnterPressed")
+                    {
+                        // Handle the save
+                        Folder folder = new Folder();
+                        folder.Name = NewFolderNameComponent.Text;
+                        folder.Selected = true;
+                        folder.CreatedDate = DateTime.Now;
+
+                        // to do: Change to LoggedInUser.UserId
+                        folder.UserId = 1;
+
+                        // Perform the save
+                        bool saved = await FolderService.SaveFolder(ref folder);
+
+                        // if the value for saved is true
+                        if (saved)
+                        {  
+                            // Set the SelectedFolder
+                            SelectedFolder = folder;
+
+                            // Unselect all other folders
+                            UnselectFolders(folder.Id);
+
+                            // hide the textbox
+                            AddFolderMode = false;
+
+                            // Force a Reload
+                            ForceReload = true;
+
+                            // Update the UI
+                            Refresh();
+                        }
+                    }
+                }
             }
             #endregion
             
@@ -133,6 +274,34 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // set the NewFolderNameComponent
                     NewFolderNameComponent = component as ValidationComponent;
+
+                    // Set Focus
+                    NewFolderNameComponent.SetFocus();
+                }
+            }
+            #endregion
+            
+            #region UnselectFolders(int selectedFolderId)
+            /// <summary>
+            /// Unselect Folders
+            /// </summary>
+            public async void UnselectFolders(int selectedFolderId)
+            {
+                // Iterate the collection of Folder objects
+                foreach (Folder tempFolder in Folders)
+                {
+                    // if the FolderId is not the new folder
+                    if (tempFolder.Id != selectedFolderId)
+                    {
+                        // no longer selected
+                        tempFolder.Selected = false;
+
+                        // clone this object
+                        Folder clone = tempFolder.Clone();
+
+                        // save this folder
+                        bool saved = await FolderService.SaveFolder(ref clone);
+                    }
                 }
             }
             #endregion
@@ -149,6 +318,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return addFolderMode; }
                 set { addFolderMode = value; }
+            }
+            #endregion
+            
+            #region BlueButton
+            /// <summary>
+            /// This property gets or sets the value for 'BlueButton'.
+            /// </summary>
+            public string BlueButton
+            {
+                get { return blueButton; }
+                set { blueButton = value; }
             }
             #endregion
             
@@ -171,6 +351,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return folders; }
                 set { folders = value; }
+            }
+            #endregion
+            
+            #region ForceReload
+            /// <summary>
+            /// This property gets or sets the value for 'ForceReload'.
+            /// </summary>
+            public bool ForceReload
+            {
+                get { return forceReload; }
+                set { forceReload = value; }
             }
             #endregion
             
@@ -272,6 +463,35 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return selectedFolder; }
                 set { selectedFolder = value; }
+            }
+            #endregion
+            
+            #region Top
+            /// <summary>
+            /// This property gets or sets the value for 'Top'.
+            /// </summary>
+            public int Top
+            {
+                get { return top; }
+                set { top = value; }
+            }
+            #endregion
+            
+            #region TopStyle
+            /// <summary>
+            /// This read only property returns the Top + px. Example 16px;
+            /// </summary>
+            public string TopStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string topStyle = Top + "px";
+                    
+                    // return value
+                    return topStyle;
+                }
             }
             #endregion
             

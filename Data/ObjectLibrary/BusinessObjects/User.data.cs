@@ -4,8 +4,6 @@
 
 using ObjectLibrary.Enumerations;
 using System;
-using DataJuggler.Net7.Delegates;
-using DataJuggler.Net7.Enumerations;
 
 #endregion
 
@@ -26,7 +24,6 @@ namespace ObjectLibrary.BusinessObjects
         private string name;
         private string passwordHash;
         private string userName;
-        private ItemChangedCallback callback;
         #endregion
 
         #region Methods
@@ -56,18 +53,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (Active != value);
-
-                    // Set the value
                     active = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
                 }
             }
             #endregion
@@ -81,18 +67,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (CreatedDate != value);
-
-                    // Set the value
                     createdDate = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
                 }
             }
             #endregion
@@ -106,18 +81,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (EmailAddress != value);
-
-                    // Set the value
                     emailAddress = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
                 }
             }
             #endregion
@@ -131,18 +95,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (EmailVerified != value);
-
-                    // Set the value
                     emailVerified = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
                 }
             }
             #endregion
@@ -170,18 +123,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (Name != value);
-
-                    // Set the value
                     name = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
                 }
             }
             #endregion
@@ -195,18 +137,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (PasswordHash != value);
-
-                    // Set the value
                     passwordHash = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
                 }
             }
             #endregion
@@ -220,46 +151,7 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
-                    // local
-                    bool hasChanges = (UserName != value);
-
-                    // Set the value
                     userName = value;
-
-                    // if the Callback exists and changes occurred
-                    if ((HasCallback) && (hasChanges))
-                    {
-                        // Notify the Callback changes have occurred
-                        Callback(this, ChangeTypeEnum.ItemChanged);
-                    }
-                }
-            }
-            #endregion
-
-            #region ItemChangedCallback Callback
-            public ItemChangedCallback Callback
-            {
-                get
-                {
-                    return callback;
-                }
-                set
-                {
-                    callback = value;
-                }
-            }
-            #endregion
-
-            #region bool HasCallback
-            public bool HasCallback
-            {
-                get
-                {
-                    // Initial Value
-                    bool hasCallback = (this.Callback != null);
-
-                    // return value
-                    return hasCallback;
                 }
             }
             #endregion

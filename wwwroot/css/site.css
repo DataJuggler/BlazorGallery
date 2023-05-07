@@ -17,14 +17,19 @@
     height: 48px;
     min-height: 48px;
     visibility: hidden;
-    display: none;
-    position: fixed;
-    left: 0px;
-    top: 0px;
+    display: none;    
 }
 .fontbold
 {
     font-weight: bold;
+}
+.fontsize12
+{
+    font-size: 12px;    
+}
+.fontsize14
+{
+    font-size: 14px;    
 }
 .fontsize18
 {
@@ -32,8 +37,8 @@
 }
 .imagefolder
 {
-    width: 64px;
-    height: 48px;
+    width: 48px;
+    height: 36px;
     background-image: url('../Images/Folder.png');
     background-size: 100% 100%;
     background-color: transparent;
