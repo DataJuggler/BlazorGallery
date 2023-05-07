@@ -3,10 +3,16 @@
 #region using statements
 
 using BlazorStyled;
+using DataGateway.Services;
 using DataJuggler.Blazor.FileUpload;
 using DataJuggler.Cryptography;
 using DataJuggler.UltimateHelper;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using ObjectLibrary.BusinessObjects;
+using DataJuggler.Blazor.Components.Interfaces;
+using DataJuggler.Blazor.Components;
+using DataJuggler.Blazor.Components.Util;
 
 #endregion
 
@@ -17,7 +23,7 @@ namespace DataJuggler.BlazorGallery.Pages
     /// <summary>
     /// This class is the main page of this app.
     /// </summary>
-    public partial class Index
+    public partial class Index : IBlazorComponent, IBlazorComponentParent
     {
         
         #region Private Variables
@@ -25,29 +31,21 @@ namespace DataJuggler.BlazorGallery.Pages
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";
         private string blueButton;
         private string resetButton;
+        private string name;
+        private List<IBlazorComponent> children;
+        private IBlazorComponentParent parent;
         #endregion
 
         #region Methods
 
-            #region OnAfterRenderAsync(bool firstRender)
+            #region FindChildByName(string name)
             /// <summary>
-            /// This method is used to verify a user
+            /// method returns the Child By Name
             /// </summary>
-            /// <param name="firstRender"></param>
-            /// <returns></returns>
-            protected async override Task OnAfterRenderAsync(bool firstRender)
+            public IBlazorComponent FindChildByName(string name)
             {
-                
-
-                // call the base
-                await base.OnAfterRenderAsync(firstRender);
-
-                //// if the value for HasLoggedInUser is true
-                //if ((HasLoggedInUser) && (firstRender))
-                //{
-                //    // Refresh the UI
-                //    Refresh();
-                //}
+                // if found return the Child by name
+                return ComponentHelper.FindChildByName(Children, name);
             }
             #endregion
 
@@ -88,6 +86,40 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
             
+            #region ReceiveData(Message message)
+            /// <summary>
+            /// method returns the Data
+            /// </summary>
+            public void ReceiveData(Message message)
+            {
+                
+            }
+            #endregion
+            
+            #region Refresh()
+            /// <summary>
+            /// Refresh
+            /// </summary>
+            public void Refresh()
+            {
+                // Update the UI
+                InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+            }
+            #endregion
+
+            #region Register(IBlazorComponent component)
+            /// <summary>
+            /// method returns the
+            /// </summary>
+            public void Register(IBlazorComponent component)
+            {
+                
+            }
+            #endregion
+            
         #endregion
 
         #region Properties
@@ -103,6 +135,51 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
             
+            #region Children
+            /// <summary>
+            /// This property gets or sets the value for 'Children'.
+            /// </summary>
+            public List<IBlazorComponent> Children
+            {
+                get { return children; }
+                set { children = value; }
+            }
+            #endregion
+            
+            #region Name
+            /// <summary>
+            /// This property gets or sets the value for 'Name'.
+            /// </summary>
+            public string Name
+            {
+                get { return name; }
+                set { name = value; }
+            }
+            #endregion
+            
+            #region Parent
+            /// <summary>
+            /// This property gets or sets the value for 'Parent'.
+            /// </summary>
+            [Parameter]
+            public IBlazorComponentParent Parent
+            {
+                get { return parent; }
+                set 
+                {
+                    // set the value
+                    parent = value;
+
+                    // if the parent class exists
+                    if (parent != null)
+                    {
+                        // register with the parent
+                        parent.Register(this);
+                    }
+                }
+            }
+            #endregion
+            
             #region ResetButton
             /// <summary>
             /// This property gets or sets the value for 'ResetButton'.
@@ -111,11 +188,11 @@ namespace DataJuggler.BlazorGallery.Pages
             {
                 get { return resetButton; }
                 set { resetButton = value; }
-            }
+            }     
             #endregion
-            
+
         #endregion
-        
+
     }
     #endregion
 

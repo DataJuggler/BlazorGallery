@@ -22,12 +22,22 @@
     left: 0px;
     top: 0px;
 }
+.fontbold
+{
+    font-weight: bold;
+}
+.fontsize18
+{
+    font-size: 18px;    
+}
 .imagefolder
 {
     width: 64px;
     height: 48px;
     background-image: url('../Images/Folder.png');
     background-size: 100% 100%;
+    background-color: transparent;
+    border: none;
 }
 .logo
 {
