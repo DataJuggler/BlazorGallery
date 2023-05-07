@@ -57,6 +57,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region DeleteFolder(int folderId)
+            /// <summary>
+            /// Delete Folder
+            /// </summary>
+            public void DeleteFolder(int folderId)
+            {
+                // first we need to find this folder
+
+            }
+            #endregion
+            
             #region FindChildByName(string name)
             /// <summary>
             /// method Find Child By Name

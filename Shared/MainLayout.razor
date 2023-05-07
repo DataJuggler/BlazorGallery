@@ -34,6 +34,7 @@
                             foreach (Folder folder in Folders)
                             {
                                 <div class="nav-item px-3">
+                                    <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
                                     @if (folder.Selected)
                                     {
                                         <button class="imagefolder right16"><span class="fontsize14 colorblue fontbold right56 text-nowrap">@folder.Name</span></button>
@@ -57,7 +58,6 @@
                                 Width="164" Caption="Name:"  LabelWidth="80"></ValidationComponent>
                         </div>
                     }
-
                     <FileUpload CustomSuccessMessage="Your file uploaded successfully."
                         OnReset="OnReset" ResetButtonClassName="resetbutton" ShowStatus="false"
                         PartialGuidLength="12" MaxFileSize=@UploadLimit FilterByExtension="true"

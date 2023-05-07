@@ -51,6 +51,16 @@
     height: 48px;
     background-size: 100% 100%;
 }
+.removebutton
+{
+    background-image: url('../Images/RemoveButton.png');
+    background-size: 100% 100%;    
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
 .resetbutton
 {
     background-image: url('../Images/ResetButtonBlue.png');
@@ -63,35 +73,6 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
-}
-/* Tooltip container */
-.tooltip {
-  position: absolute;
-  left: 10%;
-  top: 10vh;
-  display: inline-block; 
-  height: 32px;
-  width: 32px;
-  z-index: 2;
-  background-color: transparent;
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: royalblue;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 10;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }
 
 input[type=file], /* FF, IE7+, chrome (except button) */
