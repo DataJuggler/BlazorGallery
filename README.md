@@ -13,7 +13,7 @@ Then execute the BlazorGalleryDatabase.sql script to create the tables and store
 
 Here is a video showing you how to setup this project, and build your own DataTier.Net projects.
 
-How To Create A Nuget Package For A Blazor Site
+How To Create A Nuget Package For A Blazor Site<br>
 https://youtu.be/K5WbNKUPDGs
 
 
