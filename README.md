@@ -18,5 +18,5 @@ https://youtu.be/K5WbNKUPDGs
 
 
 # Want To Help Contribute to this project?
-Volunteer to take the instructions from the video and write them out as step by step. Bonus with image and screen shots.
+Volunteer to take the instructions from the video and write them out as step by step. Bonus with images and screen shots.
 
