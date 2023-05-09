@@ -1,12 +1,10 @@
 
-
 #region using statements
 
 using ObjectLibrary.Enumerations;
 using System;
 
 #endregion
-
 
 namespace ObjectLibrary.BusinessObjects
 {
@@ -17,6 +15,7 @@ namespace ObjectLibrary.BusinessObjects
     {
 
         #region Private Variables
+        private bool loadByUserId;
         #endregion
 
         #region Constructor
@@ -42,6 +41,18 @@ namespace ObjectLibrary.BusinessObjects
         #endregion
 
         #region Properties
+
+            #region LoadByUserId
+            /// <summary>
+            /// This property gets or sets the value for 'LoadByUserId'.
+            /// </summary>
+            public bool LoadByUserId
+            {
+                get { return loadByUserId; }
+                set { loadByUserId = value; }
+            }
+            #endregion
+
         #endregion
 
     }

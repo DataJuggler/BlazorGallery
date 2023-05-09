@@ -1,0 +1,72 @@
+﻿@namespace DataJuggler.BlazorGallery.Components
+@using DataJuggler.UltimateHelper
+@using DataJuggler.Blazor.Components 
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+<div class="logincontainer">
+    <div class="signupcontrols">
+        Sign In With Your User Name or Email Address
+        <div class="bigline"></div>
+        <ValidationComponent Name="UserNameComponent"
+            Visible="true" ZIndex="40" Width="80" Column1Width=20 Parent="this" LabelTop=1
+             TextBoxWidth=50 Caption="User Name:" LabelColor="black" IsRequired="false"
+             MinimumLength="5" LabelWidth=40 HeightUnit="vh" Height=3.2 TextBoxClassName="up1"
+             MaximumLength="20" IsUniqueCallbackRequired="true">
+        </ValidationComponent>
+        <ValidationComponent Name="EmailAddressComponent" Visible="true" ZIndex="40" Width="80"
+            Column1Width=20 Parent="this" Position="relative" Top=2 LabelTop=1
+            TextBoxWidth=50 Caption="Email Address:" LabelColor="black" IsRequired="false"            
+            MinimumLength="5" LabelWidth=40 HeightUnit="vh" Height=3.2 TextBoxClassName="up1"            
+            MaximumLength="80" IsUniqueCallbackRequired="true">
+        </ValidationComponent>
+        <ValidationComponent Name="PasswordComponent" Visible="true" ZIndex="40" Width="80"
+            Column1Width=20 Parent="this" Position="relative" Top=4 LabelTop=1
+            TextBoxWidth=50 Caption="Password:" LabelColor="black"
+            MinimumLength="5" LabelWidth=40 HeightUnit="vh" Height=3.2 TextBoxClassName="up1"
+            MaximumLength="20" PasswordMode="true"
+            IsRequired="true" ValidationMessage="You must enter a password.">
+        </ValidationComponent>
+        <ValidationComponent Name="RememberLoginComponent" Unit="%"
+            Visible="true" ZIndex="40" Width="80" Column1Width=20 Parent="this" 
+            Caption="Remember:" IsRequired="false" MinimumLength="5" HeightUnit="vh" Height=3.2
+            CheckBoxMode=true CheckBoxYPosition=-.48 CheckBoxXPosition=-.32
+            LabelFontSizeUnit="px" LabelColor="black" Position="relative" Top="6" Left="18.8"
+            IsUniqueCallbackRequired="false" ShowCaption=true>
+        </ValidationComponent>       
+    </div>
+    <div class="right96 down40">
+        <button class="loginbutton" @onclick="LoginButton_Click">
+            <span class="up0"></span>
+        </button>
+        <button class="cancelbutton" @onclick="Cancel">
+            <span class="up0"></span>
+        </button>
+    </div>
+</div>
+@if (TextHelper.Exists(ValidationMessage))
+{
+    <div class="validationmessage2">
+        @ValidationMessage
+    </div>
+ }
+ @if (ShowProgress)
+ { 
+     <div class="progresscontainer">
+         <div class=@ProgressStyle>
+            <span class="text-white">@PercentString</span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+     </div>
+}
+<Sprite Subscriber=this Visible="true" Interval="50" Position="fixed" 
+         XPosition="-200" YPosition="-200" Width="100" Height="100">
+ </Sprite>
+
+
+
+
+
+                   

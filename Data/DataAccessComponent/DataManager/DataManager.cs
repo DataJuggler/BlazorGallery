@@ -28,6 +28,7 @@ namespace DataAccessComponent.DataManager
         #region Private Variables
         private DataConnector dataConnector;
         private string connectionName;
+        private AdminManager adminManager;
         private FolderManager folderManager;
         private ImageManager imageManager;
         private UserManager userManager;
@@ -60,6 +61,7 @@ namespace DataAccessComponent.DataManager
                 this.DataConnector = new DataConnector();
 
                 // Create Child Object Managers
+                this.AdminManager = new AdminManager(this);
                 this.FolderManager = new FolderManager(this);
                 this.ImageManager = new ImageManager(this);
                 this.UserManager = new UserManager(this);
@@ -83,6 +85,14 @@ namespace DataAccessComponent.DataManager
             {
                 get { return connectionName; }
                 set { connectionName = value; }
+            }
+            #endregion
+
+            #region AdminManager
+            public AdminManager AdminManager
+            {
+                get { return adminManager; }
+                set { adminManager = value; }
             }
             #endregion
 

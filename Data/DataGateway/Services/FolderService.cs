@@ -114,7 +114,7 @@ namespace DataGateway.Services
                 // return the value of deleted
                 return Task.FromResult(deleted);
             }
-        #endregion
+            #endregion
 
             #region SaveFolder(ref Folder folder)
             /// <summary>

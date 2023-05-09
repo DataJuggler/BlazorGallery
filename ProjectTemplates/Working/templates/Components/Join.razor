@@ -1,0 +1,74 @@
+﻿@namespace DataJuggler.BlazorGallery.Components
+@using DataJuggler.UltimateHelper
+@using DataJuggler.Blazor.Components 
+
+<div class="signupcontainer">
+    <div class="signupcontrols">
+        Sign Up For Free
+        <div class="bigline"></div>
+
+        <ValidationComponent Name="UserNameComponent" Parent=this 
+            Caption="User Name:" IsRequired="true" MinimumLength="5" 
+            Unit="%" Width=30 LabelWidth=10 Column2Width="30"  Position="relative" Top=0
+            MaximumLength="20" IsUniqueCallbackRequired="true"
+            LabelColor="Black" TextBoxClassName="Up4"
+            ValidationMessage="User Name Must Be Between 5 And 20 Characters">
+        </ValidationComponent> 
+        <ValidationComponent Name="NameComponent" Parent=this LabelColor="Black"
+            Unit="%" Width=30 LabelWidth=10 Column2Width="30"Position="relative" Top=8
+            Caption="Name:" IsRequired="false" MaximumLength="50" TextBoxClassName="up4"
+            IsUniqueCallbackRequired="false">
+        </ValidationComponent>
+        <ValidationComponent Name="EmailAddressComponent" Parent=this TextBoxClassName="up4"
+            Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=16
+            LabelColor="Black" IsUniqueCallbackRequired="true" Caption="Email Address:"
+            MaximumLength="80" IsRequired="true" ValidationMessage="You must enter a valid email address">
+        </ValidationComponent>
+        <ValidationComponent Name="PasswordComponent" Parent=this LabelColor="Black"
+            Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=24
+            Caption="Password:" IsRequired="true" MaximumLength="20" TextBoxClassName="up4"
+            MinimumLength="8" IsUniqueCallbackRequired="false"
+            PasswordMode="true" ValidationMessage="You must enter a password.">
+        </ValidationComponent>
+        <ValidationComponent Name="ConfirmPasswordComponent" Parent=this LabelColor="Black"         
+            Caption="Confirm Password:" IsRequired="true" MaximumLength="20"
+            Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=32
+            MinimumLength="8" IsUniqueCallbackRequired="false" TextBoxClassName="up4"
+            PasswordMode="true" ValidationMessage="You must enter a confirm password.">
+        </ValidationComponent>
+    </div>
+    <div class="right280 down40">
+        <button class="joinbutton" @onclick="SignUp">           
+        </button>
+        <button class="cancelbutton" @onclick="Cancel">           
+        </button>
+    </div>
+    
+</div>
+@if (TextHelper.Exists(ValidationMessage))
+{
+    <div class="validationmessage2">
+        @ValidationMessage
+    </div>
+ }
+ 
+ @if (ShowProgress)
+ { 
+     <div class="progresscontainer2">
+         <div class=@ProgressStyle>
+            <span class="text-white">@PercentString</span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+     </div>
+}
+ <Sprite Subscriber=this Visible="true" Interval="50" Position="fixed" 
+         XPosition="-200" YPosition="-200" Width="100" Height="100">
+ </Sprite>
+
+
+
+
+                   

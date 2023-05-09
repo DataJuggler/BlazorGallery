@@ -316,6 +316,58 @@ namespace DataGateway
             }
             #endregion
 
+                    #region FindUserByEmailAddress(string emailAddress)
+                    /// <summary>
+                    /// This method is used to find 'User' objects for the EmailAddress given.
+                    /// </summary>
+                    public User FindUserByEmailAddress(string emailAddress)
+                    {
+                        // initial value
+                        User user = null;
+                        
+                        // Create a temp User object
+                        User tempUser = new User();
+                        
+                        // Set the value for FindByEmailAddress to true
+                        tempUser.FindByEmailAddress = true;
+                        
+                        // Set the value for EmailAddress
+                        tempUser.EmailAddress = emailAddress;
+                        
+                        // Perform the find
+                        user = FindUser(0, tempUser);
+                        
+                        // return value
+                        return user;
+                    }
+                    #endregion
+                    
+                #region FindUserByUserName(string userName)
+                /// <summary>
+                /// This method is used to find 'User' objects for the UserName given.
+                /// </summary>
+                public User FindUserByUserName(string userName)
+                {
+                    // initial value
+                    User user = null;
+                    
+                    // Create a temp User object
+                    User tempUser = new User();
+                    
+                    // Set the value for FindByUserName to true
+                    tempUser.FindByUserName = true;
+                    
+                    // Set the value for UserName
+                    tempUser.UserName = userName;
+                    
+                    // Perform the find
+                    user = FindUser(0, tempUser);
+                    
+                    // return value
+                    return user;
+                }
+                #endregion
+                
             #region GetDataConnector()
             /// <summary>
             /// This method (safely) returns the Data Connector from the
@@ -397,6 +449,32 @@ namespace DataGateway
             }
             #endregion
 
+                #region LoadFoldersForUserId(int userId)
+                /// <summary>
+                /// This method is used to load 'Folder' objects for the UserId given.
+                /// </summary>
+                public List<Folder> LoadFoldersForUserId(int userId)
+                {
+                    // initial value
+                    List<Folder> folders = null;
+                    
+                    // Create a temp Folder object
+                    Folder tempFolder = new Folder();
+                    
+                    // Set the value for LoadByUserId to true
+                    tempFolder.LoadByUserId = true;
+                    
+                    // Set the value for UserId
+                    tempFolder.UserId = userId;
+                    
+                    // Perform the load
+                    folders = LoadFolders(tempFolder);
+                    
+                    // return value
+                    return folders;
+                }
+                #endregion
+                
             #region LoadImages(Image tempImage = null)
             /// <summary>
             /// This method loads a collection of 'Image' objects.

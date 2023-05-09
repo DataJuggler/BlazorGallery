@@ -4,6 +4,7 @@
 @using DataJuggler.Blazor.Components.Interfaces
 @using DataJuggler.Blazor.FileUpload
 @using BlazorStyled
+@using DataJuggler.BlazorGallery.Components
 
 <PageTitle>Blazor Gallery</PageTitle>
 
@@ -48,7 +49,14 @@
                                 foreach (Folder folder in Folders)
                                 {
                                     <div class="nav-item px-3">
-                                        <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
+                                        @if (folder.Name != "Home")
+                                        {
+                                            <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
+                                        }
+                                        else
+                                        {
+                                            <div class="displayinlineblock width16"></div>
+                                        }
                                         @if (folder.Selected)
                                         {
                                             <button class="imagefolder right16"><span class="fontsize14 colorblue fontbold right56 text-nowrap">@folder.Name</span></button>
@@ -62,8 +70,10 @@
                                 }
                             }
                         </div>
-                        <button class="addbutton" title="Add A New Folder" @onclick=AddFolder>
-                        </button>
+                        @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount))
+                        {
+                            <button class="addbutton" title="Add A New Folder" @onclick=AddFolder></button>
+                        }
                         @if (AddFolderMode)
                         {
                             <div class="down32">
@@ -84,6 +94,9 @@
                         </FileUpload>
                     }
                 </nav>
+            </div>
+            <div>
+                <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>                
             </div>
         </div>
         <article class="content px-4">            

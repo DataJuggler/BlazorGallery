@@ -4,6 +4,8 @@
 
 using ObjectLibrary.Enumerations;
 using System;
+using DataJuggler.Net7.Delegates;
+using DataJuggler.Net7.Enumerations;
 
 #endregion
 
@@ -21,9 +23,13 @@ namespace ObjectLibrary.BusinessObjects
         private string emailAddress;
         private bool emailVerified;
         private int id;
+        private bool isAdmin;
+        private DateTime lastLoginDate;
         private string name;
         private string passwordHash;
+        private int totalLogins;
         private string userName;
+        private ItemChangedCallback callback;
         #endregion
 
         #region Methods
@@ -53,7 +59,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (Active != value);
+
+                    // Set the value
                     active = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -67,7 +84,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (CreatedDate != value);
+
+                    // Set the value
                     createdDate = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -81,7 +109,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (EmailAddress != value);
+
+                    // Set the value
                     emailAddress = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -95,7 +134,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (EmailVerified != value);
+
+                    // Set the value
                     emailVerified = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -107,9 +157,55 @@ namespace ObjectLibrary.BusinessObjects
                 {
                     return id;
                 }
+            }
+            #endregion
+
+            #region bool IsAdmin
+            public bool IsAdmin
+            {
+                get
+                {
+                    return isAdmin;
+                }
                 set
                 {
-                    id = value;
+                    // local
+                    bool hasChanges = (IsAdmin != value);
+
+                    // Set the value
+                    isAdmin = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region DateTime LastLoginDate
+            public DateTime LastLoginDate
+            {
+                get
+                {
+                    return lastLoginDate;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (LastLoginDate != value);
+
+                    // Set the value
+                    lastLoginDate = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -123,7 +219,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (Name != value);
+
+                    // Set the value
                     name = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -137,7 +244,43 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (PasswordHash != value);
+
+                    // Set the value
                     passwordHash = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region int TotalLogins
+            public int TotalLogins
+            {
+                get
+                {
+                    return totalLogins;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (TotalLogins != value);
+
+                    // Set the value
+                    totalLogins = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -151,7 +294,60 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (UserName != value);
+
+                    // Set the value
                     userName = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region bool IsNew
+            public bool IsNew
+            {
+                get
+                {
+                    // Initial Value
+                    bool isNew = (this.Id < 1);
+
+                    // return value
+                    return isNew;
+                }
+            }
+            #endregion
+
+            #region ItemChangedCallback Callback
+            public ItemChangedCallback Callback
+            {
+                get
+                {
+                    return callback;
+                }
+                set
+                {
+                    callback = value;
+                }
+            }
+            #endregion
+
+            #region bool HasCallback
+            public bool HasCallback
+            {
+                get
+                {
+                    // Initial Value
+                    bool hasCallback = (this.Callback != null);
+
+                    // return value
+                    return hasCallback;
                 }
             }
             #endregion

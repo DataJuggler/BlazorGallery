@@ -13,6 +13,8 @@ using DataJuggler.Blazor.FileUpload;
 using DataJuggler.UltimateHelper;
 using OfficeOpenXml.Style;
 using System.Runtime.Versioning;
+using System.Linq;
+using DataJuggler.BlazorGallery.Components;
 
 #endregion
 
@@ -39,6 +41,11 @@ namespace DataJuggler.BlazorGallery.Shared
         private int top;
         private bool forceReload;
         private string resetButton;
+        private Admin admin;
+        private ConfirmationComponent confirmationComponent;
+        private bool showConfirmation;
+        private int folderToDeleteId;
+        private const int AdminId = 1;
         public const int FolderHeight = 48;
         public const int UploadLimit = 20480000;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
@@ -73,22 +80,23 @@ namespace DataJuggler.BlazorGallery.Shared
                 // If the folder object exists
                 if (NullHelper.Exists(folder))
                 {
-                    // If the value for the property folder.Selected is true
-                    if (folder.Selected)
-                    {
-                        // Unselect all others
-                        UnselectFolders(folderId);
-                    }
+                    // Set the Id of the folder to be deleted
+                    FolderToDeleteId = folder.Id;
 
-                    // perform the delete
-                    bool removed = await FolderService.RemoveFolder(folder);
+                    // Show the Confirmation Component
+                    ShowConfirmation = true;
 
-                    // if the value for removed is true
-                    if (removed)
+                    // Update the UI
+                    Refresh();
+
+                    // if the value for HasConfirmationComponent is true
+                    if (HasConfirmationComponent)
                     {
-                        // Update the UI
-                        ForceReload = true;
-                        Refresh();
+                        // Set the prompt to send
+                        string prompt = "Confirm Delete Folder " + folder.Name + "?";
+
+                        // Setup the Prompt
+                        ConfirmationComponent.SetPrompt(prompt);
                     }
                 }
             }
@@ -105,6 +113,37 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
 
+            #region FindHomeFolder()
+            /// <summary>
+            /// returns the Home Folder
+            /// </summary>
+            public Folder FindHomeFolder()
+            {
+                // initial value
+                Folder homeFolder = null;
+
+                // if the value for HasFolders is true
+                if (HasFolders)
+                {
+                    // Iterate the collection of Folder objects
+                    foreach (Folder folder in Folders)
+                    {
+                        if (folder.Name == "Home")
+                        {
+                            // Set the folderName
+                            homeFolder = folder;
+
+                            // break out of the loop
+                            break;
+                        }
+                    }
+                }
+                
+                // return value
+                return homeFolder;
+            }
+            #endregion
+            
             #region FolderSelected(int folderId)
             /// <summary>
             /// Folder Selected
@@ -150,6 +189,13 @@ namespace DataJuggler.BlazorGallery.Shared
                 // if firstRender
                 if ((firstRender) || (ForceReload))
                 {
+                    // if the value for HasAdmin is false
+                    if (!HasAdmin)
+                    {
+                        // Load the Admin  
+                        Admin = await AdminService.FindAdmin(AdminId);
+                    }
+
                     // if the value for HasLoggedInUser is true
                     if (HasLoggedInUser)
                     {
@@ -290,6 +336,81 @@ namespace DataJuggler.BlazorGallery.Shared
                         }
                     }
                 }
+                else if (message.Sender.Name == "ConfirmationComponent")
+                {
+                    if (message.Text == "YesClicked")
+                    {
+                        // If the value for FolderToDeleteId is greater than zero
+                        if (FolderToDeleteId > 0)
+                        {
+                            // Find the folder
+                            Folder folder = await FolderService.FindFolder(FolderToDeleteId);
+
+                            // if the folder exists
+                            if (NullHelper.Exists(folder))
+                            {
+                                // if the folder is selected
+                                if (folder.Selected)
+                                {
+                                    // we need to find the home folder for this user
+                                    SelectedFolder = FindHomeFolder();
+
+                                    // if the SelectedFolder exists
+                                    if (HasSelectedFolder)
+                                    {
+                                        // to do: Load the images for the selected folder
+                                        SelectedFolder.Selected = true;
+
+                                        // perform the save
+                                        bool saved = await FolderService.SaveFolder(ref selectedFolder);
+
+                                        // if saved
+                                        if (saved)
+                                        {
+                                            // perform the delete
+                                            bool removed = await FolderService.RemoveFolder(folder);
+
+                                            // if the value for removed is true
+                                            if (removed)
+                                            {
+                                                // Update the UI
+                                                ForceReload = true;
+                                                Refresh();
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // perform the delete
+                                    bool removed = await FolderService.RemoveFolder(folder);
+
+                                    // if the value for removed is true
+                                    if (removed)
+                                    {
+                                        // Update the UI
+                                        ForceReload = true;
+                                        Refresh();
+                                    }
+                                }
+                            }
+                        }
+
+                        // Hide
+                        ShowConfirmation = false;
+
+                        // Update the UI
+                        Refresh();
+                    }
+                    else if (message.Text == "NoClicked")
+                    {
+                        // Hide
+                        ShowConfirmation = false;
+
+                        // Update the UI
+                        Refresh();
+                    }                    
+                }
             }
             #endregion
             
@@ -331,6 +452,14 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // store the file upload
                     FileUpload = component as FileUpload;
+                }
+                else if (component is ConfirmationComponent)
+                {
+                    // store the ConfirmationComponent
+                    ConfirmationComponent = component as ConfirmationComponent;      
+                    
+                    // Start off hidden
+                    ConfirmationComponent.SetVisible(false);
                 }
             }
             #endregion
@@ -375,6 +504,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region Admin
+            /// <summary>
+            /// This property gets or sets the value for 'Admin'.
+            /// </summary>
+            public Admin Admin
+            {
+                get { return admin; }
+                set { admin = value; }
+            }
+            #endregion
+            
             #region BlueButton
             /// <summary>
             /// This property gets or sets the value for 'BlueButton'.
@@ -394,6 +534,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return children; }
                 set { children = value; }
+            }
+            #endregion
+            
+            #region ConfirmationComponent
+            /// <summary>
+            /// This property gets or sets the value for 'ConfirmationComponent'.
+            /// </summary>
+            public ConfirmationComponent ConfirmationComponent
+            {
+                get { return confirmationComponent; }
+                set { confirmationComponent = value; }
             }
             #endregion
             
@@ -419,6 +570,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region FolderToDeleteId
+            /// <summary>
+            /// This property gets or sets the value for 'FolderToDeleteId'.
+            /// </summary>
+            public int FolderToDeleteId
+            {
+                get { return folderToDeleteId; }
+                set { folderToDeleteId = value; }
+            }
+            #endregion
+            
             #region ForceReload
             /// <summary>
             /// This property gets or sets the value for 'ForceReload'.
@@ -427,6 +589,40 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return forceReload; }
                 set { forceReload = value; }
+            }
+            #endregion
+            
+            #region HasAdmin
+            /// <summary>
+            /// This property returns true if this object has an 'Admin'.
+            /// </summary>
+            public bool HasAdmin
+            {
+                get
+                {
+                    // initial value
+                    bool hasAdmin = (this.Admin != null);
+                    
+                    // return value
+                    return hasAdmin;
+                }
+            }
+            #endregion
+            
+            #region HasConfirmationComponent
+            /// <summary>
+            /// This property returns true if this object has a 'ConfirmationComponent'.
+            /// </summary>
+            public bool HasConfirmationComponent
+            {
+                get
+                {
+                    // initial value
+                    bool hasConfirmationComponent = (this.ConfirmationComponent != null);
+                    
+                    // return value
+                    return hasConfirmationComponent;
+                }
             }
             #endregion
             
@@ -623,6 +819,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return selectedFolder; }
                 set { selectedFolder = value; }
+            }
+            #endregion
+            
+            #region ShowConfirmation
+            /// <summary>
+            /// This property gets or sets the value for 'ShowConfirmation'.
+            /// </summary>
+            public bool ShowConfirmation
+            {
+                get { return showConfirmation; }
+                set { showConfirmation = value; }
             }
             #endregion
             

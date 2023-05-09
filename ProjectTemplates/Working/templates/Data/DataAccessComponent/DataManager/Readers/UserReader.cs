@@ -41,9 +41,12 @@ namespace DataAccessComponent.DataManager.Readers
                 int emailAddressfield = 2;
                 int emailVerifiedfield = 3;
                 int idfield = 4;
-                int namefield = 5;
-                int passwordHashfield = 6;
-                int userNamefield = 7;
+                int isAdminfield = 5;
+                int lastLoginDatefield = 6;
+                int namefield = 7;
+                int passwordHashfield = 8;
+                int totalLoginsfield = 9;
+                int userNamefield = 10;
 
                 try
                 {
@@ -53,8 +56,11 @@ namespace DataAccessComponent.DataManager.Readers
                     user.EmailAddress = DataHelper.ParseString(dataRow.ItemArray[emailAddressfield]);
                     user.EmailVerified = DataHelper.ParseBoolean(dataRow.ItemArray[emailVerifiedfield], false);
                     user.UpdateIdentity(DataHelper.ParseInteger(dataRow.ItemArray[idfield], 0));
+                    user.IsAdmin = DataHelper.ParseBoolean(dataRow.ItemArray[isAdminfield], false);
+                    user.LastLoginDate = DataHelper.ParseDate(dataRow.ItemArray[lastLoginDatefield]);
                     user.Name = DataHelper.ParseString(dataRow.ItemArray[namefield]);
                     user.PasswordHash = DataHelper.ParseString(dataRow.ItemArray[passwordHashfield]);
+                    user.TotalLogins = DataHelper.ParseInteger(dataRow.ItemArray[totalLoginsfield], 0);
                     user.UserName = DataHelper.ParseString(dataRow.ItemArray[userNamefield]);
                 }
                 catch

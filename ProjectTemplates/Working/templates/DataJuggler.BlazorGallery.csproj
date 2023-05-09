@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.0.4</Version>
+	<Version>1.0.6</Version>
 	<Description>A project template for creating an Image Gallery in Blazor.</Description>
   </PropertyGroup>
 
@@ -36,7 +36,7 @@
 
   <ItemGroup>
     <PackageReference Include="DataJuggler.Blazor.Components" Version="7.7.3" />
-    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.0.4" />
+    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.0.5" />
     <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.8" />
   </ItemGroup>
 

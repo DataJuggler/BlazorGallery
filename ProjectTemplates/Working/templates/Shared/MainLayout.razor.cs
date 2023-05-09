@@ -12,6 +12,7 @@ using ApplicationLogicComponent.Connection;
 using DataJuggler.Blazor.FileUpload;
 using DataJuggler.UltimateHelper;
 using OfficeOpenXml.Style;
+using System.Runtime.Versioning;
 
 #endregion
 
@@ -22,6 +23,7 @@ namespace DataJuggler.BlazorGallery.Shared
     /// <summary>
     /// This class is the main layout of this application.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public partial class MainLayout : IBlazorComponentParent
     {
         
@@ -32,9 +34,11 @@ namespace DataJuggler.BlazorGallery.Shared
         private List<Folder> folders;
         private Folder selectedFolder;
         private bool addFolderMode;
+        private FileUpload fileUpload;
         private ValidationComponent newFolderNameComponent;
         private int top;
         private bool forceReload;
+        private string resetButton;
         public const int FolderHeight = 48;
         public const int UploadLimit = 20480000;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
@@ -146,8 +150,12 @@ namespace DataJuggler.BlazorGallery.Shared
                 // if firstRender
                 if ((firstRender) || (ForceReload))
                 {
-                   // get the folders
-                   Folders = await FolderService.GetFolderList();
+                    // if the value for HasLoggedInUser is true
+                    if (HasLoggedInUser)
+                    {
+                       // get the folders
+                       Folders = await FolderService.GetFolderListForUserId(LoggedInUser.Id);
+                    }
 
                    // If the Folders collection exists and has one or more items
                    if (ListHelper.HasOneOrMoreItems(Folders))
@@ -198,8 +206,12 @@ namespace DataJuggler.BlazorGallery.Shared
                    // To Do: Save the uploaded file
                    string fileName = file.Name;
 
-                   // auto reset
-                   OnReset();                   
+                    // if the value for HasFileUpload is true
+                    if (HasFileUpload)
+                    {
+                        // Reset so the button shows again
+                        FileUpload.Reset();
+                    }
                 }
                 else
                 {
@@ -242,35 +254,39 @@ namespace DataJuggler.BlazorGallery.Shared
                     }
                     else if (message.Text == "EnterPressed")
                     {
-                        // Handle the save
-                        Folder folder = new Folder();
-                        folder.Name = NewFolderNameComponent.Text;
-                        folder.Selected = true;
-                        folder.CreatedDate = DateTime.Now;
+                        // if the LoggedInUser exists
+                        if (HasLoggedInUser)
+                        {
+                            // Handle the save
+                            Folder folder = new Folder();
+                            folder.Name = NewFolderNameComponent.Text;
+                            folder.Selected = true;
+                            folder.CreatedDate = DateTime.Now;
 
-                        // to do: Change to LoggedInUser.UserId
-                        folder.UserId = 1;
+                            // LoggedInUser.UserId
+                            folder.UserId = LoggedInUser.Id;
 
-                        // Perform the save
-                        bool saved = await FolderService.SaveFolder(ref folder);
+                            // Perform the save
+                            bool saved = await FolderService.SaveFolder(ref folder);
 
-                        // if the value for saved is true
-                        if (saved)
-                        {  
-                            // Set the SelectedFolder
-                            SelectedFolder = folder;
+                            // if the value for saved is true
+                            if (saved)
+                            {  
+                                // Set the SelectedFolder
+                                SelectedFolder = folder;
 
-                            // Unselect all other folders
-                            UnselectFolders(folder.Id);
+                                // Unselect all other folders
+                                UnselectFolders(folder.Id);
 
-                            // hide the textbox
-                            AddFolderMode = false;
+                                // hide the textbox
+                                AddFolderMode = false;
 
-                            // Force a Reload
-                            ForceReload = true;
+                                // Force a Reload
+                                ForceReload = true;
 
-                            // Update the UI
-                            Refresh();
+                                // Update the UI
+                                Refresh();
+                            }
                         }
                     }
                 }
@@ -310,6 +326,11 @@ namespace DataJuggler.BlazorGallery.Shared
 
                     // Set Focus
                     NewFolderNameComponent.SetFocus();
+                }
+                else if (component is FileUpload)
+                {
+                    // store the file upload
+                    FileUpload = component as FileUpload;
                 }
             }
             #endregion
@@ -376,6 +397,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region FileUpload
+            /// <summary>
+            /// This property gets or sets the value for 'FileUpload'.
+            /// </summary>
+            public FileUpload FileUpload
+            {
+                get { return fileUpload; }
+                set { fileUpload = value; }
+            }
+            #endregion
+            
             #region Folders
             /// <summary>
             /// This property gets or sets the value for 'Folders'.
@@ -395,6 +427,23 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return forceReload; }
                 set { forceReload = value; }
+            }
+            #endregion
+            
+            #region HasFileUpload
+            /// <summary>
+            /// This property returns true if this object has a 'FileUpload'.
+            /// </summary>
+            public bool HasFileUpload
+            {
+                get
+                {
+                    // initial value
+                    bool hasFileUpload = (this.FileUpload != null);
+                    
+                    // return value
+                    return hasFileUpload;
+                }
             }
             #endregion
             
@@ -428,6 +477,23 @@ namespace DataJuggler.BlazorGallery.Shared
                     
                     // return value
                     return hasIndexPage;
+                }
+            }
+            #endregion
+            
+            #region HasLoggedInUser
+            /// <summary>
+            /// This property returns true if this object has a 'LoggedInUser'.
+            /// </summary>
+            public bool HasLoggedInUser
+            {
+                get
+                {
+                    // initial value
+                    bool hasLoggedInUser = (this.LoggedInUser != null);
+                    
+                    // return value
+                    return hasLoggedInUser;
                 }
             }
             #endregion
@@ -477,6 +543,56 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region LoggedInUser
+            /// <summary>
+            /// This read only property returns the value of LoggedInUser from the object IndexPage.
+            /// </summary>
+            public User LoggedInUser
+            {
+                
+                get
+                {
+                    // initial value
+                    User loggedInUser = null;
+                    
+                    // if IndexPage exists
+                    if (IndexPage != null)
+                    {
+                        // set the return value
+                        loggedInUser = IndexPage.LoggedInUser;
+                    }
+                    
+                    // return value
+                    return loggedInUser;
+                }
+            }
+            #endregion
+            
+            #region LoggedInUserId
+            /// <summary>
+            /// This read only property returns the value of LoggedInUserId from the object LoggedInUser.
+            /// </summary>
+            public int LoggedInUserId
+            {
+                
+                get
+                {
+                    // initial value
+                    int loggedInUserId = 0;
+                    
+                    // if LoggedInUser exists
+                    if (LoggedInUser != null)
+                    {
+                        // set the return value
+                        loggedInUserId = LoggedInUser.Id;
+                    }
+                    
+                    // return value
+                    return loggedInUserId;
+                }
+            }
+            #endregion
+            
             #region NewFolderNameComponent
             /// <summary>
             /// This property gets or sets the value for 'NewFolderNameComponent'.
@@ -485,6 +601,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return newFolderNameComponent; }
                 set { newFolderNameComponent = value; }
+            }
+            #endregion
+            
+            #region ResetButton
+            /// <summary>
+            /// This property gets or sets the value for 'ResetButton'.
+            /// </summary>
+            public string ResetButton
+            {
+                get { return resetButton; }
+                set { resetButton = value; }
             }
             #endregion
             

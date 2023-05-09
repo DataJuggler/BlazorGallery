@@ -235,11 +235,11 @@ namespace ApplicationLogicComponent.Controllers
             /// procedure 'User_Insert'.</param>
             /// </summary>
             /// <param name='user'>The 'User' object to insert.</param>
-            /// <returns>True if successful or false if not.</returns>
-            public bool Insert(User user)
+            /// <returns>The id (int) of the new  'User' object that was inserted.</returns>
+            public int Insert(User user)
             {
                 // Initial values
-                bool inserted = false;
+                int newIdentity = -1;
 
                 // Get information for calling 'DataBridgeManager.PerformDataOperation' method.
                 string methodName = "Insert";
@@ -258,8 +258,12 @@ namespace ApplicationLogicComponent.Controllers
                         // Perform DataOperation
                         PolymorphicObject returnObject = this.AppController.DataBridge.PerformDataOperation(methodName, objectName, insertMethod , parameters);
 
-                        // Set the return value to true
-                        inserted = true;
+                        // If return object exists
+                        if (returnObject != null)
+                        {
+                            // Set return value
+                            newIdentity = returnObject.IntegerValue;
+                        }
                     }
                 }
                 catch (Exception error)
@@ -267,15 +271,13 @@ namespace ApplicationLogicComponent.Controllers
                     // If ErrorProcessor exists
                     if (this.ErrorProcessor != null)
                     {
-                        // Set inserted to false
-                        inserted = false;
                         // Log the current error
                         this.ErrorProcessor.LogError(methodName, objectName, error);
                     }
                 }
 
                 // return value
-                return inserted;
+                return newIdentity;
             }
             #endregion
 
@@ -294,23 +296,25 @@ namespace ApplicationLogicComponent.Controllers
                 // If the user exists.
                 if(user != null)
                 {
-                    // Since this is not an Autonumber field, we must attempt to look up this item before we decide to Insert or Update
-
-                    // Look up this item to see if it already exists
-                    User tempUser = this.Find(user);
-
-                    // Is this a new object ?
-                    bool isNew = (tempUser == null);
-
-                    // If this is a new object
-                    if (isNew)
+                    // Is this a new User
+                    if(user.IsNew)
                     {
-                        // Perform the insert
-                        saved = this.Insert(user);
+                        // Insert new User
+                        int newIdentity = this.Insert(user);
+
+                        // if insert was successful
+                        if(newIdentity > 0)
+                        {
+                            // Update Identity
+                            user.UpdateIdentity(newIdentity);
+
+                            // Set return value
+                            saved = true;
+                        }
                     }
                     else
                     {
-                        // Perform the update
+                        // Update User
                         saved = this.Update(user);
                     }
                 }
