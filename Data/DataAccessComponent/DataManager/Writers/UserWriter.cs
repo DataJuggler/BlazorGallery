@@ -1,5 +1,4 @@
 
-
 #region using statements
 
 using DataAccessComponent.StoredProcedureManager.DeleteProcedures;
@@ -12,7 +11,6 @@ using System;
 using System.Data;
 
 #endregion
-
 
 namespace DataAccessComponent.DataManager.Writers
 {
@@ -27,10 +25,57 @@ namespace DataAccessComponent.DataManager.Writers
 
         #region Static Methods
 
-            // *******************************************
-            // Write any overrides or custom methods here.
-            // *******************************************
+            #region CreateFindUserStoredProcedure(User user)
+            /// <summary>
+            /// This method creates an instance of a
+            /// 'FindUserStoredProcedure' object and
+            /// creates the sql parameter[] array needed
+            /// to execute the procedure 'User_Find'.
+            /// </summary>
+            /// <param name="user">The 'User' to use to
+            /// get the primary key parameter.</param>
+            /// <returns>An instance of an FetchUserStoredProcedure</returns>
+            public static new FindUserStoredProcedure CreateFindUserStoredProcedure(User user)
+            {
+                // Initial Value
+                FindUserStoredProcedure findUserStoredProcedure = null;
 
+                // verify user exists
+                if(user != null)
+                {
+                    // Instanciate findUserStoredProcedure
+                    findUserStoredProcedure = new FindUserStoredProcedure();
+
+                    // if user.FindByUserName is true
+                    if (user.FindByUserName)
+                    {
+                            // Change the procedure name
+                            findUserStoredProcedure.ProcedureName = "User_FindByUserName";
+                            
+                            // Create the @UserName parameter
+                            findUserStoredProcedure.Parameters = SqlParameterHelper.CreateSqlParameters("@UserName", user.UserName);
+                    }
+                    // if user.FindByEmailAddress is true
+                    else if (user.FindByEmailAddress)
+                    {
+                        // Change the procedure name
+                        findUserStoredProcedure.ProcedureName = "User_FindByEmailAddress";
+                        
+                        // Create the @EmailAddress parameter
+                        findUserStoredProcedure.Parameters = SqlParameterHelper.CreateSqlParameters("@EmailAddress", user.EmailAddress);
+                    }
+                    else
+                    {
+                        // Now create parameters for this procedure
+                        findUserStoredProcedure.Parameters = CreatePrimaryKeyParameter(user);
+                    }
+                }
+
+                // return value
+                return findUserStoredProcedure;
+            }
+            #endregion
+            
         #endregion
 
     }

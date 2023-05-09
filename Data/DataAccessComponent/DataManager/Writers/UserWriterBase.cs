@@ -117,7 +117,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateInsertParameters(User user)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[8];
+                SqlParameter[] parameters = new SqlParameter[10];
                 SqlParameter param = null;
 
                 // verify userexists
@@ -158,29 +158,52 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[3]
                     parameters[3] = param;
 
-                    // Create [Id] parameter
-                    param = new SqlParameter("@Id", user.Id);
+                    // Create [IsAdmin] parameter
+                    param = new SqlParameter("@IsAdmin", user.IsAdmin);
 
                     // set parameters[4]
                     parameters[4] = param;
 
-                    // Create [Name] parameter
-                    param = new SqlParameter("@Name", user.Name);
+                    // Create [LastLoginDate] Parameter
+                    param = new SqlParameter("@LastLoginDate", SqlDbType.DateTime);
 
+                    // If user.LastLoginDate does not exist.
+                    if (user.LastLoginDate.Year < 1900)
+                    {
+                        // Set the value to 1/1/1900
+                        param.Value = new DateTime(1900, 1, 1);
+                    }
+                    else
+                    {
+                        // Set the parameter value
+                        param.Value = user.LastLoginDate;
+                    }
                     // set parameters[5]
                     parameters[5] = param;
 
-                    // Create [PasswordHash] parameter
-                    param = new SqlParameter("@PasswordHash", user.PasswordHash);
+                    // Create [Name] parameter
+                    param = new SqlParameter("@Name", user.Name);
 
                     // set parameters[6]
                     parameters[6] = param;
 
-                    // Create [UserName] parameter
-                    param = new SqlParameter("@UserName", user.UserName);
+                    // Create [PasswordHash] parameter
+                    param = new SqlParameter("@PasswordHash", user.PasswordHash);
 
                     // set parameters[7]
                     parameters[7] = param;
+
+                    // Create [TotalLogins] parameter
+                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
+
+                    // set parameters[8]
+                    parameters[8] = param;
+
+                    // Create [UserName] parameter
+                    param = new SqlParameter("@UserName", user.UserName);
+
+                    // set parameters[9]
+                    parameters[9] = param;
                 }
 
                 // return value
@@ -227,7 +250,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateUpdateParameters(User user)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[8];
+                SqlParameter[] parameters = new SqlParameter[11];
                 SqlParameter param = null;
 
                 // verify userexists
@@ -270,27 +293,58 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[3]
                     parameters[3] = param;
 
-                    // Create parameter for [Name]
-                    param = new SqlParameter("@Name", user.Name);
+                    // Create parameter for [IsAdmin]
+                    param = new SqlParameter("@IsAdmin", user.IsAdmin);
 
                     // set parameters[4]
                     parameters[4] = param;
 
-                    // Create parameter for [PasswordHash]
-                    param = new SqlParameter("@PasswordHash", user.PasswordHash);
+                    // Create parameter for [LastLoginDate]
+                    // Create [LastLoginDate] Parameter
+                    param = new SqlParameter("@LastLoginDate", SqlDbType.DateTime);
+
+                    // If user.LastLoginDate does not exist.
+                    if (user.LastLoginDate.Year < 1900)
+                    {
+                        // Set the value to 1/1/1900
+                        param.Value = new DateTime(1900, 1, 1);
+                    }
+                    else
+                    {
+                        // Set the parameter value
+                        param.Value = user.LastLoginDate;
+                    }
 
                     // set parameters[5]
                     parameters[5] = param;
 
-                    // Create parameter for [UserName]
-                    param = new SqlParameter("@UserName", user.UserName);
+                    // Create parameter for [Name]
+                    param = new SqlParameter("@Name", user.Name);
 
                     // set parameters[6]
                     parameters[6] = param;
 
+                    // Create parameter for [PasswordHash]
+                    param = new SqlParameter("@PasswordHash", user.PasswordHash);
+
+                    // set parameters[7]
+                    parameters[7] = param;
+
+                    // Create parameter for [TotalLogins]
+                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
+
+                    // set parameters[8]
+                    parameters[8] = param;
+
+                    // Create parameter for [UserName]
+                    param = new SqlParameter("@UserName", user.UserName);
+
+                    // set parameters[9]
+                    parameters[9] = param;
+
                     // Create parameter for [Id]
                     param = new SqlParameter("@Id", user.Id);
-                    parameters[7] = param;
+                    parameters[10] = param;
                 }
 
                 // return value

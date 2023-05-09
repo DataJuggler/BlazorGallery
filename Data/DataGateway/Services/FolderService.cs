@@ -8,6 +8,7 @@ using DataGateway;
 using ObjectLibrary.BusinessObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 #endregion
 
@@ -63,6 +64,27 @@ namespace DataGateway.Services
                 
                 // load the sites
                 list = gateway.LoadFolders();
+                
+                // return the list
+                return Task.FromResult(list);
+            }
+            #endregion
+
+            #region GetFolderListForUserId(int userId)
+            /// <summary>
+            /// This method is used to load the Site 
+            /// </summary>
+            /// <returns></returns>
+            public static Task<List<Folder>> GetFolderListForUserId(int userId)
+            {
+                // initial value
+                List<Folder> list = null;
+                
+                // Create a new instance of a 'Gateway' object, and set the connectionName
+                Gateway gateway = new Gateway(Connection.Name);
+                
+                // load the sites
+                list = gateway.LoadFoldersForUserId(userId);
                 
                 // return the list
                 return Task.FromResult(list);

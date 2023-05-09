@@ -6,7 +6,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Insert a new Folder
 -- =========================================================
 
@@ -67,7 +67,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Update an existing Folder
 -- =========================================================
 
@@ -131,7 +131,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Find an existing Folder
 -- =========================================================
 
@@ -188,7 +188,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Delete an existing Folder
 -- =========================================================
 
@@ -242,7 +242,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Returns all Folder objects
 -- =========================================================
 
@@ -293,7 +293,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Insert a new Image
 -- =========================================================
 
@@ -357,7 +357,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Update an existing Image
 -- =========================================================
 
@@ -427,7 +427,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Find an existing Image
 -- =========================================================
 
@@ -484,7 +484,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Delete an existing Image
 -- =========================================================
 
@@ -538,7 +538,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Returns all Image objects
 -- =========================================================
 
@@ -589,7 +589,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Insert a new User
 -- =========================================================
 
@@ -624,9 +624,11 @@ Create PROCEDURE User_Insert
     @CreatedDate datetime,
     @EmailAddress nvarchar(80),
     @EmailVerified bit,
-    @Id int,
+    @IsAdmin bit,
+    @LastLoginDate datetime,
     @Name nvarchar(50),
     @PasswordHash nvarchar(255),
+    @TotalLogins int,
     @UserName nvarchar(20)
 
 AS
@@ -638,10 +640,13 @@ BEGIN
 
     -- Begin Insert Statement
     Insert Into [User]
-    ([Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[Name],[PasswordHash],[UserName])
+    ([Active],[CreatedDate],[EmailAddress],[EmailVerified],[IsAdmin],[LastLoginDate],[Name],[PasswordHash],[TotalLogins],[UserName])
 
     -- Begin Values List
-    Values(@Active, @CreatedDate, @EmailAddress, @EmailVerified, @Id, @Name, @PasswordHash, @UserName)
+    Values(@Active, @CreatedDate, @EmailAddress, @EmailVerified, @IsAdmin, @LastLoginDate, @Name, @PasswordHash, @TotalLogins, @UserName)
+
+    -- Return ID of new record
+    SELECT SCOPE_IDENTITY()
 
 END
 
@@ -651,7 +656,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Update an existing User
 -- =========================================================
 
@@ -687,8 +692,11 @@ Create PROCEDURE User_Update
     @EmailAddress nvarchar(80),
     @EmailVerified bit,
     @Id int,
+    @IsAdmin bit,
+    @LastLoginDate datetime,
     @Name nvarchar(50),
     @PasswordHash nvarchar(255),
+    @TotalLogins int,
     @UserName nvarchar(20)
 
 AS
@@ -706,9 +714,11 @@ BEGIN
     [CreatedDate] = @CreatedDate,
     [EmailAddress] = @EmailAddress,
     [EmailVerified] = @EmailVerified,
-    [Id] = @Id,
+    [IsAdmin] = @IsAdmin,
+    [LastLoginDate] = @LastLoginDate,
     [Name] = @Name,
     [PasswordHash] = @PasswordHash,
+    [TotalLogins] = @TotalLogins,
     [UserName] = @UserName
 
     -- Update Matching Record
@@ -722,7 +732,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Find an existing User
 -- =========================================================
 
@@ -763,7 +773,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[Name],[PasswordHash],[UserName]
+    Select [Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[IsAdmin],[LastLoginDate],[Name],[PasswordHash],[TotalLogins],[UserName]
 
     -- From tableName
     From [User]
@@ -779,7 +789,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Delete an existing User
 -- =========================================================
 
@@ -833,7 +843,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
+-- Create Date:   5/8/2023
 -- Description:    Returns all User objects
 -- =========================================================
 
@@ -871,7 +881,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[Name],[PasswordHash],[UserName]
+    Select [Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[IsAdmin],[LastLoginDate],[Name],[PasswordHash],[TotalLogins],[UserName]
 
     -- From tableName
     From [User]
@@ -885,40 +895,154 @@ set ANSI_NULLS ON
 set QUOTED_IDENTIFIER ON
 Go
 -- =========================================================
--- Procure Name: Image_FetchAllForFolderId
+-- Procure Name: User_FindByEmailAddress
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/7/2023
--- Description:    Returns all Image objects for the FolderId given.
+-- Create Date:   5/8/2023
+-- Description:    Find an existing User for the EmailAddress given.
 -- =========================================================
 
 -- Check if the procedure already exists
-IF EXISTS (select * from syscomments where id = object_id ('Image_FetchAllForFolderId'))
+IF EXISTS (select * from syscomments where id = object_id ('User_FindByEmailAddress'))
 
     -- Procedure Does Exist, Drop First
     BEGIN
 
         -- Execute Drop
-        Drop Procedure Image_FetchAllForFolderId
+        Drop Procedure User_FindByEmailAddress
 
         -- Test if procedure was dropped
-        IF OBJECT_ID('dbo.Image_FetchAllForFolderId') IS NOT NULL
+        IF OBJECT_ID('dbo.User_FindByEmailAddress') IS NOT NULL
 
             -- Print Line Drop Failed
-            PRINT '<<< Drop Failed On Procedure Image_FetchAllForFolderId >>>'
+            PRINT '<<< Drop Failed On Procedure User_FindByEmailAddress >>>'
 
         Else
 
             -- Print Line Procedure Dropped
-            PRINT '<<< Drop Suceeded On Procedure Image_FetchAllForFolderId >>>'
+            PRINT '<<< Drop Suceeded On Procedure User_FindByEmailAddress >>>'
 
     End
 
 GO
 
-Create PROCEDURE Image_FetchAllForFolderId
+Create PROCEDURE User_FindByEmailAddress
 
-    -- Create @FolderId Paramater
-    @FolderId int
+    -- Create @EmailAddress Paramater
+    @EmailAddress nvarchar(80)
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[IsAdmin],[LastLoginDate],[Name],[PasswordHash],[TotalLogins],[UserName]
+
+    -- From tableName
+    From [User]
+
+    -- Find Matching Record
+    Where [EmailAddress] = @EmailAddress
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: User_FindByUserName
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   5/8/2023
+-- Description:    Find an existing User for the UserName given.
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('User_FindByUserName'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure User_FindByUserName
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.User_FindByUserName') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure User_FindByUserName >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure User_FindByUserName >>>'
+
+    End
+
+GO
+
+Create PROCEDURE User_FindByUserName
+
+    -- Create @UserName Paramater
+    @UserName nvarchar(20)
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [Active],[CreatedDate],[EmailAddress],[EmailVerified],[Id],[IsAdmin],[LastLoginDate],[Name],[PasswordHash],[TotalLogins],[UserName]
+
+    -- From tableName
+    From [User]
+
+    -- Find Matching Record
+    Where [UserName] = @UserName
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Folder_FetchAllForUserId
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   5/8/2023
+-- Description:    Returns all Folder objects for the UserId given.
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Folder_FetchAllForUserId'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Folder_FetchAllForUserId
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Folder_FetchAllForUserId') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Folder_FetchAllForUserId >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Folder_FetchAllForUserId >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Folder_FetchAllForUserId
+
+    -- Create @UserId Paramater
+    @UserId int
 
 
 AS
@@ -929,13 +1053,13 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [CreatedDate],[FolderId],[FullPath],[Height],[Id],[Name],[UserId],[Width]
+    Select [CreatedDate],[Id],[Name],[Selected],[UserId]
 
     -- From tableName
-    From [Image]
+    From [Folder]
 
     -- Load Matching Records
-    Where [FolderId] = @FolderId
+    Where [UserId] = @UserId
 
 END
 

@@ -10,6 +10,24 @@
     background-color: transparent;
     float: right;
 }
+.bigline
+{  
+    height: 1vh;
+    margin-bottom: 1vh;
+}
+.cancelbutton
+{
+    background-image: url('../Images/CancelButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: 120px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
+}
 .customfileupload
 {  
     display: inline-block;
@@ -44,6 +62,45 @@
     background-color: transparent;
     border: none;
 }
+.joinbutton
+{
+    background-image: url('../Images/JoinButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: 120px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
+}
+.loginbutton
+{
+    background-image: url('../Images/LoginButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: 120px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
+}
+.logincontainer
+{
+    position: absolute;      
+    width: 40%;
+    height: 64vh;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: fixed;
+    top: 20vh;
+    left: 28%;
+}
 .logo
 {
     background-image: url('../Images/Logo.png');
@@ -63,16 +120,57 @@
 }
 .resetbutton
 {
-    background-image: url('../Images/ResetButtonBlue.png');
-    position: absolute;
-    left: 2%;
-    top: 30vh;    
+    background-image: url('../Images/ResetButtonBlue.png');   
+    position: relative;
+    left: 0;
+    top: 32px;
     background-size: 100% 100%;
-    width: 180px;
-    height: 48px;
+    width: 120px;
+    height: 32px;
     cursor: pointer;
     background-color: transparent;
-    border: none;
+    border: none;    
+}
+.signout
+{
+    background-image: url('../Images/SignOutButton.png');
+    position: relative;
+    left: 8;
+    top: 8px;
+    background-size: 100% 100%;
+    width: 120px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
+}
+.signupbuttons
+{
+    position: relative;
+    left: -6%;
+    top: 8vh;
+}
+.signupcontainer
+{  
+    position: absolute;    
+    width: 60%;
+    height: 64vh;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: fixed;
+    top: 20vh;
+    left: 20%;
+}
+.topright
+{
+    position: absolute;
+    top: 1vh;
+    right: 1%;
+    float: right;    
+    width: 20%;
+    height: 8vh;
 }
 
 input[type=file], /* FF, IE7+, chrome (except button) */
