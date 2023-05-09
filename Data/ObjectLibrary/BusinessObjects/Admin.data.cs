@@ -20,6 +20,7 @@ namespace ObjectLibrary.BusinessObjects
         #region Private Variables
         private int id;
         private int maxFolderCount;
+        private int maxImagesPerFolder;
         private int maxStoragePlanFree;
         private ItemChangedCallback callback;
         #endregion
@@ -66,6 +67,31 @@ namespace ObjectLibrary.BusinessObjects
 
                     // Set the value
                     maxFolderCount = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region int MaxImagesPerFolder
+            public int MaxImagesPerFolder
+            {
+                get
+                {
+                    return maxImagesPerFolder;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (MaxImagesPerFolder != value);
+
+                    // Set the value
+                    maxImagesPerFolder = value;
 
                     // if the Callback exists and changes occurred
                     if ((HasCallback) && (hasChanges))

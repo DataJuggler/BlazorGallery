@@ -38,13 +38,15 @@ namespace DataAccessComponent.DataManager.Readers
                 // Create field Integers
                 int idfield = 0;
                 int maxFolderCountfield = 1;
-                int maxStoragePlanFreefield = 2;
+                int maxImagesPerFolderfield = 2;
+                int maxStoragePlanFreefield = 3;
 
                 try
                 {
                     // Load Each field
                     admin.UpdateIdentity(DataHelper.ParseInteger(dataRow.ItemArray[idfield], 0));
                     admin.MaxFolderCount = DataHelper.ParseInteger(dataRow.ItemArray[maxFolderCountfield], 0);
+                    admin.MaxImagesPerFolder = DataHelper.ParseInteger(dataRow.ItemArray[maxImagesPerFolderfield], 0);
                     admin.MaxStoragePlanFree = DataHelper.ParseInteger(dataRow.ItemArray[maxStoragePlanFreefield], 0);
                 }
                 catch

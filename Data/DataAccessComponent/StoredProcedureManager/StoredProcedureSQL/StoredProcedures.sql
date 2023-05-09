@@ -38,6 +38,7 @@ Create PROCEDURE Admin_Insert
 
     -- Add the parameters for the stored procedure here
     @MaxFolderCount int,
+    @MaxImagesPerFolder int,
     @MaxStoragePlanFree int
 
 AS
@@ -49,10 +50,10 @@ BEGIN
 
     -- Begin Insert Statement
     Insert Into [Admin]
-    ([MaxFolderCount],[MaxStoragePlanFree])
+    ([MaxFolderCount],[MaxImagesPerFolder],[MaxStoragePlanFree])
 
     -- Begin Values List
-    Values(@MaxFolderCount, @MaxStoragePlanFree)
+    Values(@MaxFolderCount, @MaxImagesPerFolder, @MaxStoragePlanFree)
 
     -- Return ID of new record
     SELECT SCOPE_IDENTITY()
@@ -98,6 +99,7 @@ Create PROCEDURE Admin_Update
     -- Add the parameters for the stored procedure here
     @Id int,
     @MaxFolderCount int,
+    @MaxImagesPerFolder int,
     @MaxStoragePlanFree int
 
 AS
@@ -112,6 +114,7 @@ BEGIN
 
     -- Update Each field
     Set [MaxFolderCount] = @MaxFolderCount,
+    [MaxImagesPerFolder] = @MaxImagesPerFolder,
     [MaxStoragePlanFree] = @MaxStoragePlanFree
 
     -- Update Matching Record
@@ -166,7 +169,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [Id],[MaxFolderCount],[MaxStoragePlanFree]
+    Select [Id],[MaxFolderCount],[MaxImagesPerFolder],[MaxStoragePlanFree]
 
     -- From tableName
     From [Admin]
@@ -274,7 +277,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [Id],[MaxFolderCount],[MaxStoragePlanFree]
+    Select [Id],[MaxFolderCount],[MaxImagesPerFolder],[MaxStoragePlanFree]
 
     -- From tableName
     From [Admin]
