@@ -106,7 +106,22 @@
     background-image: url('../Images/Logo.png');
     width: 244px;
     height: 48px;
+    position: relative;
+    top: 1.2vh;
     background-size: 100% 100%;
+}
+.nobutton
+{
+    background-image: url('../Images/NoButton.png');
+    position: relative;
+    left: 0;
+    top: 0px;
+    background-size: 100% 100%;
+    width: 82px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
 }
 .removebutton
 {
@@ -171,6 +186,19 @@
     float: right;    
     width: 20%;
     height: 8vh;
+}
+.yesbutton
+{
+    background-image: url('../Images/YesButton.png');
+    position: relative;
+    left: 0;
+    top: 0px;
+    background-size: 100% 100%;
+    width: 82px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;        
 }
 
 input[type=file], /* FF, IE7+, chrome (except button) */

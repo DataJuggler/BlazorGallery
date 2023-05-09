@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.0.6</Version>
+	<Version>1.0.7</Version>
 	<Description>A project template for creating an Image Gallery in Blazor.</Description>
   </PropertyGroup>
 

@@ -17,6 +17,7 @@ namespace ObjectLibrary.BusinessObjects
 
         #region Private Variables
         private DateTime createdDate;
+        private int fileSize;
         private int folderId;
         private string fullPath;
         private int height;
@@ -54,6 +55,20 @@ namespace ObjectLibrary.BusinessObjects
                 set
                 {
                     createdDate = value;
+                }
+            }
+            #endregion
+
+            #region int FileSize
+            public int FileSize
+            {
+                get
+                {
+                    return fileSize;
+                }
+                set
+                {
+                    fileSize = value;
                 }
             }
             #endregion

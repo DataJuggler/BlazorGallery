@@ -8,31 +8,30 @@ using DataGateway;
 using ObjectLibrary.BusinessObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.ComponentModel;
 
 #endregion
 
 namespace DataGateway.Services
 {
 
-    #region class FolderService
+    #region class AdminService
     /// <summary>
-    /// This is the Service class for managing Folder objects.
+    /// This is the Service class for managing Admin objects.
     /// </summary>
-    public class FolderService
+    public class AdminService
     {
 
         #region Methods
 
-            #region FindFolder(int id)
+            #region FindAdmin(int id)
             /// <summary>
-            /// This method is used to find a Folder object by the primary key id.
+            /// This method is used to find a Admin object by the primary key id.
             /// </summary>
             /// <returns></returns>
-            public static Task<Folder> FindFolder(int id)
+            public static Task<Admin> FindAdmin(int id)
             {
                 // initial value
-                Folder folder = null;
+                Admin admin = null;
                 
                 // If the id is set
                 if (id > 0)
@@ -40,89 +39,68 @@ namespace DataGateway.Services
                     // Create a new instance of a 'Gateway' object, and set the connectionName
                     Gateway gateway = new Gateway(Connection.Name);
                     
-                    // load the folder
-                    folder = gateway.FindFolder(id);
+                    // load the admin
+                    admin = gateway.FindAdmin(id);
                 }
                 
                 // return value
-                return Task.FromResult(folder);
+                return Task.FromResult(admin);
             }
             #endregion
             
-            #region GetFolderList()
+            #region GetAdminList()
             /// <summary>
             /// This method is used to load the Site 
             /// </summary>
             /// <returns></returns>
-            public static Task<List<Folder>> GetFolderList()
+            public static Task<List<Admin>> GetAdminList()
             {
                 // initial value
-                List<Folder> list = null;
+                List<Admin> list = null;
                 
                 // Create a new instance of a 'Gateway' object, and set the connectionName
                 Gateway gateway = new Gateway(Connection.Name);
                 
                 // load the sites
-                list = gateway.LoadFolders();
-                
-                // return the list
-                return Task.FromResult(list);
-            }
-            #endregion
-
-            #region GetFolderListForUserId(int userId)
-            /// <summary>
-            /// This method is used to load the Site 
-            /// </summary>
-            /// <returns></returns>
-            public static Task<List<Folder>> GetFolderListForUserId(int userId)
-            {
-                // initial value
-                List<Folder> list = null;
-                
-                // Create a new instance of a 'Gateway' object, and set the connectionName
-                Gateway gateway = new Gateway(Connection.Name);
-                
-                // load the sites
-                list = gateway.LoadFoldersForUserId(userId);
+                list = gateway.LoadAdmins();
                 
                 // return the list
                 return Task.FromResult(list);
             }
             #endregion
             
-            #region RemoveFolder(Folder folder)
+            #region RemoveAdmin(Admin admin)
             /// <summary>
-            /// This method is used to delete a Folder
+            /// This method is used to delete a Admin
             /// </summary>
             /// <returns></returns>
-            public static Task<bool> RemoveFolder(Folder folder)
+            public static Task<bool> RemoveAdmin(Admin admin)
             {
                 // initial value
                 bool deleted = false;
                 
-                // if the folder object exists
-                if (NullHelper.Exists(folder))
+                // if the admin object exists
+                if (NullHelper.Exists(admin))
                 {
                     // Create a new instance of a 'Gateway' object, and set the connectionName
                     Gateway gateway = new Gateway(Connection.Name);
                     
                     // load the sites
-                    deleted = gateway.DeleteFolder(folder.Id);
+                    deleted = gateway.DeleteAdmin(admin.Id);
                 }
                 
                 // return the value of deleted
                 return Task.FromResult(deleted);
             }
-            #endregion
+        #endregion
 
-            #region SaveFolder(ref Folder folder)
+            #region SaveAdmin(ref Admin admin)
             /// <summary>
-            /// This method is used to create Folder objects
+            /// This method is used to create Admin objects
             /// </summary>
-            /// <param name="folder">Pass in an object of type Folder to save</param>
+            /// <param name="admin">Pass in an object of type Admin to save</param>
             /// <returns></returns>
-            public static Task<bool> SaveFolder(ref Folder folder)
+            public static Task<bool> SaveAdmin(ref Admin admin)
             {
                 // initial value
                 bool saved = false;
@@ -131,7 +109,7 @@ namespace DataGateway.Services
                 Gateway gateway = new Gateway(Connection.Name);
                 
                 // load the sites
-                saved = gateway.SaveFolder(ref folder);
+                saved = gateway.SaveAdmin(ref admin);
                 
                 // return the value of saved
                 return Task.FromResult(saved);

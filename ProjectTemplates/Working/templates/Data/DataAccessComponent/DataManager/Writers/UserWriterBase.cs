@@ -117,7 +117,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateInsertParameters(User user)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[10];
+                SqlParameter[] parameters = new SqlParameter[11];
                 SqlParameter param = null;
 
                 // verify userexists
@@ -193,17 +193,23 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[7]
                     parameters[7] = param;
 
-                    // Create [TotalLogins] parameter
-                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
+                    // Create [StorageUsed] parameter
+                    param = new SqlParameter("@StorageUsed", user.StorageUsed);
 
                     // set parameters[8]
                     parameters[8] = param;
 
-                    // Create [UserName] parameter
-                    param = new SqlParameter("@UserName", user.UserName);
+                    // Create [TotalLogins] parameter
+                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
 
                     // set parameters[9]
                     parameters[9] = param;
+
+                    // Create [UserName] parameter
+                    param = new SqlParameter("@UserName", user.UserName);
+
+                    // set parameters[10]
+                    parameters[10] = param;
                 }
 
                 // return value
@@ -250,7 +256,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateUpdateParameters(User user)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[11];
+                SqlParameter[] parameters = new SqlParameter[12];
                 SqlParameter param = null;
 
                 // verify userexists
@@ -330,21 +336,27 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[7]
                     parameters[7] = param;
 
-                    // Create parameter for [TotalLogins]
-                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
+                    // Create parameter for [StorageUsed]
+                    param = new SqlParameter("@StorageUsed", user.StorageUsed);
 
                     // set parameters[8]
                     parameters[8] = param;
 
-                    // Create parameter for [UserName]
-                    param = new SqlParameter("@UserName", user.UserName);
+                    // Create parameter for [TotalLogins]
+                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
 
                     // set parameters[9]
                     parameters[9] = param;
 
+                    // Create parameter for [UserName]
+                    param = new SqlParameter("@UserName", user.UserName);
+
+                    // set parameters[10]
+                    parameters[10] = param;
+
                     // Create parameter for [Id]
                     param = new SqlParameter("@Id", user.Id);
-                    parameters[10] = param;
+                    parameters[11] = param;
                 }
 
                 // return value

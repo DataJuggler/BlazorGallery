@@ -48,6 +48,43 @@ namespace DataGateway
 
         #region Methods
         
+            #region DeleteAdmin(int id, Admin tempAdmin = null)
+            /// <summary>
+            /// This method is used to delete Admin objects.
+            /// </summary>
+            /// <param name="id">Delete the Admin with this id</param>
+            /// <param name="tempAdmin">Pass in a tempAdmin to perform a custom delete.</param>
+            public bool DeleteAdmin(int id, Admin tempAdmin = null)
+            {
+                // initial value
+                bool deleted = false;
+        
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempAdmin does not exist
+                    if (tempAdmin == null)
+                    {
+                        // create a temp Admin
+                        tempAdmin = new Admin();
+                    }
+        
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempAdmin.UpdateIdentity(id);
+                    }
+        
+                    // perform the delete
+                    deleted = this.AppController.ControllerManager.AdminController.Delete(tempAdmin);
+                }
+        
+                // return value
+                return deleted;
+            }
+            #endregion
+        
             #region DeleteFolder(int id, Folder tempFolder = null)
             /// <summary>
             /// This method is used to delete Folder objects.
@@ -202,6 +239,43 @@ namespace DataGateway
 
                 // return value
                 return returnValue;
+            }
+            #endregion
+
+            #region FindAdmin(int id, Admin tempAdmin = null)
+            /// <summary>
+            /// This method is used to find 'Admin' objects.
+            /// </summary>
+            /// <param name="id">Find the Admin with this id</param>
+            /// <param name="tempAdmin">Pass in a tempAdmin to perform a custom find.</param>
+            public Admin FindAdmin(int id, Admin tempAdmin = null)
+            {
+                // initial value
+                Admin admin = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempAdmin does not exist
+                    if (tempAdmin == null)
+                    {
+                        // create a temp Admin
+                        tempAdmin = new Admin();
+                    }
+
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempAdmin.UpdateIdentity(id);
+                    }
+
+                    // perform the find
+                    admin = this.AppController.ControllerManager.AdminController.Find(tempAdmin);
+                }
+
+                // return value
+                return admin;
             }
             #endregion
 
@@ -428,6 +502,27 @@ namespace DataGateway
             }
             #endregion
 
+            #region LoadAdmins(Admin tempAdmin = null)
+            /// <summary>
+            /// This method loads a collection of 'Admin' objects.
+            /// </summary>
+            public List<Admin> LoadAdmins(Admin tempAdmin = null)
+            {
+                // initial value
+                List<Admin> admins = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    admins = this.AppController.ControllerManager.AdminController.FetchAll(tempAdmin);
+                }
+
+                // return value
+                return admins;
+            }
+            #endregion
+
             #region LoadFolders(Folder tempFolder = null)
             /// <summary>
             /// This method loads a collection of 'Folder' objects.
@@ -514,6 +609,28 @@ namespace DataGateway
 
                 // return value
                 return users;
+            }
+            #endregion
+
+            #region SaveAdmin(ref Admin admin)
+            /// <summary>
+            /// This method is used to save 'Admin' objects.
+            /// </summary>
+            /// <param name="admin">The Admin to save.</param>
+            public bool SaveAdmin(ref Admin admin)
+            {
+                // initial value
+                bool saved = false;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the save
+                    saved = this.AppController.ControllerManager.AdminController.Save(ref admin);
+                }
+
+                // return value
+                return saved;
             }
             #endregion
 

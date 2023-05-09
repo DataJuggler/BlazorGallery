@@ -27,6 +27,7 @@ namespace ObjectLibrary.BusinessObjects
         private DateTime lastLoginDate;
         private string name;
         private string passwordHash;
+        private int storageUsed;
         private int totalLogins;
         private string userName;
         private ItemChangedCallback callback;
@@ -249,6 +250,31 @@ namespace ObjectLibrary.BusinessObjects
 
                     // Set the value
                     passwordHash = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region int StorageUsed
+            public int StorageUsed
+            {
+                get
+                {
+                    return storageUsed;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (StorageUsed != value);
+
+                    // Set the value
+                    storageUsed = value;
 
                     // if the Callback exists and changes occurred
                     if ((HasCallback) && (hasChanges))

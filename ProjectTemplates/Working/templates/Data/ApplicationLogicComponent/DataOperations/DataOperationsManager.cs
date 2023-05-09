@@ -29,6 +29,7 @@ namespace ApplicationLogicComponent.DataOperations
         #region Private Variables
         private DataManager dataManager;
         private SystemMethods systemMethods;
+        private AdminMethods adminMethods;
         private FolderMethods folderMethods;
         private ImageMethods imageMethods;
         private UserMethods userMethods;
@@ -58,6 +59,7 @@ namespace ApplicationLogicComponent.DataOperations
             {
                 // Create Child DataOperatonMethods
                 this.SystemMethods = new SystemMethods();
+                this.AdminMethods = new AdminMethods(this.DataManager);
                 this.FolderMethods = new FolderMethods(this.DataManager);
                 this.ImageMethods = new ImageMethods(this.DataManager);
                 this.UserMethods = new UserMethods(this.DataManager);
@@ -81,6 +83,14 @@ namespace ApplicationLogicComponent.DataOperations
             {
                 get { return systemMethods; }
                 set { systemMethods = value; }
+            }
+            #endregion
+
+            #region AdminMethods
+            public AdminMethods AdminMethods
+            {
+                get { return adminMethods; }
+                set { adminMethods = value; }
             }
             #endregion
 

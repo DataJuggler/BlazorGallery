@@ -1,0 +1,19 @@
+﻿
+@using BlazorStyled
+
+<Styled @bind-Classname=@ComponentStyle>
+    width: 240px;
+    height: 120px;    
+    position: absolute;
+    left: 4%;
+    top: 68vh;
+    display: @DisplayStyle;
+</Styled>
+
+<div class="@ComponentStyle">
+    <div class="displayinlineblock">@Prompt</div>
+    <button class="yesbutton" @onclick="YesClicked"></button>
+    <button class="nobutton" @onclick="NoClicked"></button>
+</div>
+
+

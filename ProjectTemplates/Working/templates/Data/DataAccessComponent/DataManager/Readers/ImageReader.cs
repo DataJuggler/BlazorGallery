@@ -37,18 +37,20 @@ namespace DataAccessComponent.DataManager.Readers
 
                 // Create field Integers
                 int createdDatefield = 0;
-                int folderIdfield = 1;
-                int fullPathfield = 2;
-                int heightfield = 3;
-                int idfield = 4;
-                int namefield = 5;
-                int userIdfield = 6;
-                int widthfield = 7;
+                int fileSizefield = 1;
+                int folderIdfield = 2;
+                int fullPathfield = 3;
+                int heightfield = 4;
+                int idfield = 5;
+                int namefield = 6;
+                int userIdfield = 7;
+                int widthfield = 8;
 
                 try
                 {
                     // Load Each field
                     image.CreatedDate = DataHelper.ParseDate(dataRow.ItemArray[createdDatefield]);
+                    image.FileSize = DataHelper.ParseInteger(dataRow.ItemArray[fileSizefield], 0);
                     image.FolderId = DataHelper.ParseInteger(dataRow.ItemArray[folderIdfield], 0);
                     image.FullPath = DataHelper.ParseString(dataRow.ItemArray[fullPathfield]);
                     image.Height = DataHelper.ParseInteger(dataRow.ItemArray[heightfield], 0);
