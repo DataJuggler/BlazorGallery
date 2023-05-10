@@ -591,6 +591,32 @@ namespace DataGateway
             }
             #endregion
 
+                #region LoadImagesForFolderId(int folderId)
+                /// <summary>
+                /// This method is used to load 'Image' objects for the FolderId given.
+                /// </summary>
+                public List<Image> LoadImagesForFolderId(int folderId)
+                {
+                    // initial value
+                    List<Image> images = null;
+                    
+                    // Create a temp Image object
+                    Image tempImage = new Image();
+                    
+                    // Set the value for LoadByFolderId to true
+                    tempImage.LoadByFolderId = true;
+                    
+                    // Set the value for FolderId
+                    tempImage.FolderId = folderId;
+                    
+                    // Perform the load
+                    images = LoadImages(tempImage);
+                    
+                    // return value
+                    return images;
+                }
+                #endregion
+                
             #region LoadUsers(User tempUser = null)
             /// <summary>
             /// This method loads a collection of 'User' objects.

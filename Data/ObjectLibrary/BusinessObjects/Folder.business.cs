@@ -3,6 +3,7 @@
 
 using ObjectLibrary.Enumerations;
 using System;
+using System.Collections.Generic;
 
 #endregion
 
@@ -16,6 +17,7 @@ namespace ObjectLibrary.BusinessObjects
 
         #region Private Variables
         private bool loadByUserId;
+        private List<Image> images;
         #endregion
 
         #region Constructor
@@ -42,6 +44,59 @@ namespace ObjectLibrary.BusinessObjects
 
         #region Properties
 
+            #region HasImages
+            /// <summary>
+            /// This property returns true if this object has an 'Images'.
+            /// </summary>
+            public bool HasImages
+            {
+                get
+                {
+                    // initial value
+                    bool hasImages = (this.Images != null);
+                    
+                    // return value
+                    return hasImages;
+                }
+            }
+            #endregion
+            
+            #region Images
+            /// <summary>
+            /// This property gets or sets the value for 'Images'.
+            /// </summary>
+            public List<Image> Images
+            {
+                get { return images; }
+                set { images = value; }
+            }
+            #endregion
+            
+            #region ImagesCount
+            /// <summary>
+            /// This read only property returns the value of Count from the object Images.
+            /// </summary>
+            public int ImagesCount
+            {
+                
+                get
+                {
+                    // initial value
+                    int imagesCount = 0;
+                    
+                    // if Images exists
+                    if (Images != null)
+                    {
+                        // set the return value
+                        imagesCount = Images.Count;
+                    }
+                    
+                    // return value
+                    return imagesCount;
+                }
+            }
+            #endregion
+            
             #region LoadByUserId
             /// <summary>
             /// This property gets or sets the value for 'LoadByUserId'.

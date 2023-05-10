@@ -15,6 +15,8 @@ using OfficeOpenXml.Style;
 using System.Runtime.Versioning;
 using System.Linq;
 using DataJuggler.BlazorGallery.Components;
+using DataJuggler.PixelDatabase;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 #endregion
 
@@ -44,14 +46,14 @@ namespace DataJuggler.BlazorGallery.Shared
         private Admin admin;
         private ConfirmationComponent confirmationComponent;
         private bool showConfirmation;
-        private int folderToDeleteId;
+        private int folderToDeleteId;        
         private const int AdminId = 1;
         public const int FolderHeight = 48;
         public const int UploadLimit = 20480000;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
         public const int FolderTop = 140;
         #endregion
-        
+
         #region Methods
             
             #region AddFolder()
@@ -215,6 +217,9 @@ namespace DataJuggler.BlazorGallery.Shared
                                 // Set the SelectedFolder
                                 SelectedFolder = folder;
 
+                                // Load the image
+                                SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
+
                                 // break out of the loop
                                 break;
                             }
@@ -244,13 +249,49 @@ namespace DataJuggler.BlazorGallery.Shared
             /// <summary>
             /// This method On File Uploaded
             /// </summary>
-            public void OnFileUploaded(UploadedFileInfo file)
+            public async void OnFileUploaded(UploadedFileInfo file)
             {
                 // if the file was uploaded
                 if (!file.Aborted)
                 {
                    // To Do: Save the uploaded file
                    string fileName = file.Name;
+
+                   // If the LoggedInUser exists and SelectedFolder exists
+                   if ((HasLoggedInUser) && (HasSelectedFolder))
+                   {
+                        // load the pixelDatabase
+                        DataJuggler.PixelDatabase.PixelDatabase pixelDatabase = PixelDatabaseLoader.LoadPixelDatabase(file.FullPath, null);
+
+                        // Create a new instance of an 'Image' object.
+                        Image image = new Image();
+
+                        FileInfo fileInfo = new FileInfo(file.FullPath);
+
+                        // Set the size
+                        image.FileSize = (int) file.Size;
+                        image.Name = fileInfo.Name;
+                        image.UserId = LoggedInUser.Id;
+                        image.Height = pixelDatabase.Height;
+                        image.Width = pixelDatabase.Width;
+                        image.FolderId = SelectedFolder.Id;
+                        image.CreatedDate = DateTime.Now;
+                        image.FullPath = file.FullPath;
+                        image.RelativePath = "../Upload/" + System.Web.HttpUtility.UrlPathEncode(fileInfo.Name);
+                        
+                        // perform the save
+                        bool saved = await ImageService.SaveImage(ref image);
+
+                        // if the value for saved is true
+                        if (saved)
+                        {
+                            // Load the imagess
+                            SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
+
+                            // update the UI
+                            Refresh();
+                        }
+                   }
 
                     // if the value for HasFileUpload is true
                     if (HasFileUpload)
@@ -358,7 +399,10 @@ namespace DataJuggler.BlazorGallery.Shared
                                     // if the SelectedFolder exists
                                     if (HasSelectedFolder)
                                     {
-                                        // to do: Load the images for the selected folder
+                                        // Load the images for the selected folder
+                                        SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
+
+                                        // Set the selected folder
                                         SelectedFolder.Selected = true;
 
                                         // perform the save
@@ -404,6 +448,9 @@ namespace DataJuggler.BlazorGallery.Shared
                     }
                     else if (message.Text == "NoClicked")
                     {
+                        // Erase
+                        FolderToDeleteId = 0;
+
                         // Hide
                         ShowConfirmation = false;
 

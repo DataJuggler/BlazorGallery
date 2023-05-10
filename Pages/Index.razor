@@ -32,5 +32,14 @@ else
         Welcome @LoggedInUser.Name
         <button class="signout" @onclick=SignOut></button>
     </div>
+    @if ((HasSelectedFolder) && (SelectedFolder.HasImages))
+    {
+        <div class="flex-grid">
+            @foreach (Image image in SelectedFolder.Images)
+            {
+                <ImageViewer Parent="this" Image=@image></ImageViewer>
+            }
+        </div>
+    }
 }
 
