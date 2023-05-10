@@ -41,6 +41,7 @@ set a user level environment variable named BlazorGalleryConnString. </PackageRe
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ProjectTemplates\Working\templates\wwwroot\Images\" />
     <Folder Include="wwwroot\Upload\" />
   </ItemGroup>
 

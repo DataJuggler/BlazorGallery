@@ -1,6 +1,6 @@
 # DataJuggler.BlazorGallery
-Blazor Gallery is a work in progress. I learned this week how to create a Blazor Website as a Nuget package, and I wrote a program to help me with
-the CI / CD called BuildCopy.
+Blazor Gallery is now working. I learned this week how to create a Blazor Website as a Nuget package, 
+and I wrote a program to help me with the CI / CD called BuildCopy.
 
 BuildCopy
 https://github.com/DataJuggler/BuildCopy
@@ -12,10 +12,6 @@ Here is a video showing you how to setup this project, build the data tier for B
 
 How To Create A Nuget Package For A Blazor Site<br>
 https://youtu.be/K5WbNKUPDGs
-
-
-# Want To Help Contribute to this project?
-Volunteer to take the instructions from the video and write them out as step by step. Bonus with images and screen shots.
 
 If you think this project is worth the price, please leave a star and / or subscribe to my YouTube channel: https://youtube.com/DataJuggler
 
