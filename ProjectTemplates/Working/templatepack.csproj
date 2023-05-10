@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.11</PackageVersion>
+    <PackageVersion>1.0.12</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
@@ -13,7 +13,7 @@ saving the data in SQL Server. Create custom folders to showcase your favorite p
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.0.11</Version>
+    <Version>1.0.12</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
