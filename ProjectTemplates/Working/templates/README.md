@@ -1,11 +1,28 @@
 # DataJuggler.BlazorGallery
-Blazor Gallery is now working. You can either clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
-or using DOT NET CLI dotnet new install DataJuggler.BlazorGallery
+Blazor Gallery is now working. 
+
+5.10.2023 - New video published
+
+How To Create A Complete Blazor SQL Server Project In 5 Minutes
+https://youtu.be/yQz1dqYiy2g
 
 I learned this week how to create a Nuget package for a Blazor site. Never again will I have to delete
 Weather Forecast and Counter pages.
 
 Instructions to run this project:
+
+To Install Via Nuget and DOT NET CLI 
+
+    dotnet new install DataJuggler.BlazorGallery
+    dotnet new DataJuggler.BlazorGallery
+
+or
+
+Clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
+
+
+# Important!
+If you created the project from Nuget CLI, you must create an Upload folder in wwwroot of this project (next to images)
 
 1. Create a SQL Server Database named BlazorGallery
 2. Execute BlazorGalleryDatabase.sql located in the SQL folder of this project.
