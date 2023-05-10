@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.0.9</Version>
+	<Version>1.0.11</Version>
 	<Description>A project template for creating an Image Gallery in Blazor.
 You will need SQL Server to run this project. See the Read Me for more info.</Description>
 	<PackageProjectUrl>https://github.com/DataJuggler/BlazorGallery</PackageProjectUrl>
@@ -33,7 +33,7 @@ set a user level environment variable named BlazorGalleryConnString. </PackageRe
     <Compile Remove="Data\**" />
     <Compile Remove="ProjectTemplates\**" />
     <Content Remove="Data\**" />
-    <Content Remove="ProjectTemplates\**" />
+    <Content Remove="ProjectTemplates\**" />   
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="ProjectTemplates\**" />
     <None Remove="Data\**" />
@@ -41,8 +41,11 @@ set a user level environment variable named BlazorGalleryConnString. </PackageRe
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ProjectTemplates\Working\templates\wwwroot\Images\" />
-    <Folder Include="wwwroot\Upload\" />
+	<Folder Include="wwwroot\Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Upload\.gitignore" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,7 +68,7 @@ set a user level environment variable named BlazorGalleryConnString. </PackageRe
     <None Update="SQL\README.md">
       <PackagePath>\</PackagePath>
       <Pack>True</Pack>
-    </None>
+    </None>	
   </ItemGroup>
 
 </Project>
