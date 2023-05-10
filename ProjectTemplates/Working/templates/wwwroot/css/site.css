@@ -28,6 +28,10 @@
     background-color: transparent;
     border: none;    
 }
+.col 
+{
+  justify-content: flex-start; 
+}
 .customfileupload
 {  
     display: inline-block;
@@ -36,6 +40,33 @@
     min-height: 48px;
     visibility: hidden;
     display: none;    
+}
+.fixedsidebar
+{
+    background-image: url('../Images/SideBarBrown.png');
+    width: 256px;
+    height: 100vh;   
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    background-size: 100% 100%;
+    overflow: hidden;
+    border-right: 1px solid black;    
+}
+.flex-grid 
+{
+  display: flex;  
+  position: absolute;
+  width: 78%;
+  height: 80vh;
+  top: 8vh;
+  left: 20.4%;  
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: 8px;
+  object-fit: cover;
+  gap: 0px;
 }
 .fontbold
 {
@@ -104,8 +135,8 @@
 .logo
 {
     background-image: url('../Images/Logo.png');
-    width: 244px;
-    height: 48px;
+    width: 256px;
+    height: 64px;
     position: relative;
     top: 1.2vh;
     background-size: 100% 100%;
@@ -205,12 +236,11 @@ input[type=file], /* FF, IE7+, chrome (except button) */
 input[type=file]::-webkit-file-upload-button
 {
     cursor: pointer;
-    display: none;
-    visibility: hidden;    
+    display: none;    
 }
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;    
 }
 
 h1:focus {

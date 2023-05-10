@@ -37,11 +37,11 @@ namespace DataJuggler.BlazorGallery.Pages
         private IBlazorComponentParent parent;
         private ScreenTypeEnum screenType;
         private Login loginComponent;
-        private User loggedInUser;
+        private User loggedInUser;        
         #endregion
 
         #region Methods
-
+            
             #region FindChildByName(string name)
             /// <summary>
             /// method returns the Child By Name
@@ -423,6 +423,23 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
             
+            #region HasSelectedFolder
+            /// <summary>
+            /// This property returns true if this object has a 'SelectedFolder'.
+            /// </summary>
+            public bool HasSelectedFolder
+            {
+                get
+                {
+                    // initial value
+                    bool hasSelectedFolder = (this.SelectedFolder != null);
+                    
+                    // return value
+                    return hasSelectedFolder;
+                }
+            }
+            #endregion
+            
             #region LoggedInUser
             /// <summary>
             /// This property gets or sets the value for 'LoggedInUser'.
@@ -512,6 +529,31 @@ namespace DataJuggler.BlazorGallery.Pages
             {
                 get { return screenType; }
                 set { screenType = value; }
+            }
+            #endregion
+            
+            #region SelectedFolder
+            /// <summary>
+            /// This read only property returns the value of SelectedFolder from the object Parent.
+            /// </summary>
+            public Folder SelectedFolder
+            {
+                
+                get
+                {
+                    // initial value
+                    Folder selectedFolder = null;
+                    
+                    // if Parent exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        selectedFolder = ParentMainLayout.SelectedFolder;
+                    }
+                    
+                    // return value
+                    return selectedFolder;
+                }
             }
             #endregion
             

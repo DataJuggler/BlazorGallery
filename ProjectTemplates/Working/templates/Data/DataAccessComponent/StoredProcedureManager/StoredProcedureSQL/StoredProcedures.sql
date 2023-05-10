@@ -38,6 +38,7 @@ Create PROCEDURE Admin_Insert
 
     -- Add the parameters for the stored procedure here
     @MaxFolderCount int,
+    @MaxImagesPerFolder int,
     @MaxStoragePlanFree int
 
 AS
@@ -49,10 +50,10 @@ BEGIN
 
     -- Begin Insert Statement
     Insert Into [Admin]
-    ([MaxFolderCount],[MaxStoragePlanFree])
+    ([MaxFolderCount],[MaxImagesPerFolder],[MaxStoragePlanFree])
 
     -- Begin Values List
-    Values(@MaxFolderCount, @MaxStoragePlanFree)
+    Values(@MaxFolderCount, @MaxImagesPerFolder, @MaxStoragePlanFree)
 
     -- Return ID of new record
     SELECT SCOPE_IDENTITY()
@@ -98,6 +99,7 @@ Create PROCEDURE Admin_Update
     -- Add the parameters for the stored procedure here
     @Id int,
     @MaxFolderCount int,
+    @MaxImagesPerFolder int,
     @MaxStoragePlanFree int
 
 AS
@@ -112,6 +114,7 @@ BEGIN
 
     -- Update Each field
     Set [MaxFolderCount] = @MaxFolderCount,
+    [MaxImagesPerFolder] = @MaxImagesPerFolder,
     [MaxStoragePlanFree] = @MaxStoragePlanFree
 
     -- Update Matching Record
@@ -166,7 +169,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [Id],[MaxFolderCount],[MaxStoragePlanFree]
+    Select [Id],[MaxFolderCount],[MaxImagesPerFolder],[MaxStoragePlanFree]
 
     -- From tableName
     From [Admin]
@@ -274,7 +277,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [Id],[MaxFolderCount],[MaxStoragePlanFree]
+    Select [Id],[MaxFolderCount],[MaxImagesPerFolder],[MaxStoragePlanFree]
 
     -- From tableName
     From [Admin]
@@ -611,6 +614,7 @@ Create PROCEDURE Image_Insert
     @FullPath nvarchar(255),
     @Height int,
     @Name nvarchar(50),
+    @RelativePath nvarchar(128),
     @UserId int,
     @Width int
 
@@ -623,10 +627,10 @@ BEGIN
 
     -- Begin Insert Statement
     Insert Into [Image]
-    ([CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Name],[UserId],[Width])
+    ([CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Name],[RelativePath],[UserId],[Width])
 
     -- Begin Values List
-    Values(@CreatedDate, @FileSize, @FolderId, @FullPath, @Height, @Name, @UserId, @Width)
+    Values(@CreatedDate, @FileSize, @FolderId, @FullPath, @Height, @Name, @RelativePath, @UserId, @Width)
 
     -- Return ID of new record
     SELECT SCOPE_IDENTITY()
@@ -677,6 +681,7 @@ Create PROCEDURE Image_Update
     @Height int,
     @Id int,
     @Name nvarchar(50),
+    @RelativePath nvarchar(128),
     @UserId int,
     @Width int
 
@@ -697,6 +702,7 @@ BEGIN
     [FullPath] = @FullPath,
     [Height] = @Height,
     [Name] = @Name,
+    [RelativePath] = @RelativePath,
     [UserId] = @UserId,
     [Width] = @Width
 
@@ -752,7 +758,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Id],[Name],[UserId],[Width]
+    Select [CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Id],[Name],[RelativePath],[UserId],[Width]
 
     -- From tableName
     From [Image]
@@ -860,7 +866,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Id],[Name],[UserId],[Width]
+    Select [CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Id],[Name],[RelativePath],[UserId],[Width]
 
     -- From tableName
     From [Image]
@@ -1347,6 +1353,64 @@ BEGIN
 
     -- Load Matching Records
     Where [UserId] = @UserId
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Image_FetchAllForFolderId
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   5/9/2023
+-- Description:    Returns all Image objects for the FolderId given.
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Image_FetchAllForFolderId'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Image_FetchAllForFolderId
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Image_FetchAllForFolderId') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Image_FetchAllForFolderId >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Image_FetchAllForFolderId >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Image_FetchAllForFolderId
+
+    -- Create @FolderId Paramater
+    @FolderId int
+
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [CreatedDate],[FileSize],[FolderId],[FullPath],[Height],[Id],[Name],[RelativePath],[UserId],[Width]
+
+    -- From tableName
+    From [Image]
+
+    -- Load Matching Records
+    Where [FolderId] = @FolderId
 
 END
 

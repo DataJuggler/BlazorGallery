@@ -11,4 +11,4 @@ BuildCopy also allows you to set ignore folders, so I do not copy the .vs, .git,
 I am building the data tier now in a video. If you want to follow along, clone this project and create a SQL Server database named BlazorGallery.
 Then execute the BlazorGalleryDatabase.sql script to create the tables and stored procedures.
 
-Video coming soon.
+After executing the above sql script, execute Insert Admin.

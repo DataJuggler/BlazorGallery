@@ -117,7 +117,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateInsertParameters(Image image)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[8];
+                SqlParameter[] parameters = new SqlParameter[9];
                 SqlParameter param = null;
 
                 // verify imageexists
@@ -170,17 +170,23 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[5]
                     parameters[5] = param;
 
-                    // Create [UserId] parameter
-                    param = new SqlParameter("@UserId", image.UserId);
+                    // Create [RelativePath] parameter
+                    param = new SqlParameter("@RelativePath", image.RelativePath);
 
                     // set parameters[6]
                     parameters[6] = param;
 
-                    // Create [Width] parameter
-                    param = new SqlParameter("@Width", image.Width);
+                    // Create [UserId] parameter
+                    param = new SqlParameter("@UserId", image.UserId);
 
                     // set parameters[7]
                     parameters[7] = param;
+
+                    // Create [Width] parameter
+                    param = new SqlParameter("@Width", image.Width);
+
+                    // set parameters[8]
+                    parameters[8] = param;
                 }
 
                 // return value
@@ -227,7 +233,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateUpdateParameters(Image image)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[9];
+                SqlParameter[] parameters = new SqlParameter[10];
                 SqlParameter param = null;
 
                 // verify imageexists
@@ -282,21 +288,27 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[5]
                     parameters[5] = param;
 
-                    // Create parameter for [UserId]
-                    param = new SqlParameter("@UserId", image.UserId);
+                    // Create parameter for [RelativePath]
+                    param = new SqlParameter("@RelativePath", image.RelativePath);
 
                     // set parameters[6]
                     parameters[6] = param;
 
-                    // Create parameter for [Width]
-                    param = new SqlParameter("@Width", image.Width);
+                    // Create parameter for [UserId]
+                    param = new SqlParameter("@UserId", image.UserId);
 
                     // set parameters[7]
                     parameters[7] = param;
 
+                    // Create parameter for [Width]
+                    param = new SqlParameter("@Width", image.Width);
+
+                    // set parameters[8]
+                    parameters[8] = param;
+
                     // Create parameter for [Id]
                     param = new SqlParameter("@Id", image.Id);
-                    parameters[8] = param;
+                    parameters[9] = param;
                 }
 
                 // return value

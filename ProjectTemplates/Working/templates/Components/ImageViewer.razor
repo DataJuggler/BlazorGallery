@@ -1,0 +1,29 @@
+﻿@using BlazorStyled
+
+<Styled @bind-Classname=@ImageStyle>
+    max-height: 200px;
+    height: 200px;
+    width: @ScaledDownWidthStyle;
+    object-fit: cover;
+    border: none;
+    background-color: transparent;
+    background-image: url(@ImageRelativePath);
+    background-size: 100% 100%;
+</Styled>
+
+@if ((HasLoggedInUser) && (HasSelectedFolder) && (SelectedFolder.UserId == LoggedInUser.Id))
+{
+    <div class="col">
+        @if (ShowRemoveButton)
+        {
+            <button class="removebutton" title="Remove This Image" @onclick="() => DeleteImage(image.Id)"></button>
+        }
+        <button class="@ImageStyle" @onclick=Toggle></button>
+    </div>
+}
+else
+{
+    <div class="col">        
+        <img class="@ImageStyle" src="@ImageRelativePath">
+    </div>
+}

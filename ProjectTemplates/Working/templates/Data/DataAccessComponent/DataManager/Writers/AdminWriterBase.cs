@@ -117,7 +117,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateInsertParameters(Admin admin)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[2];
+                SqlParameter[] parameters = new SqlParameter[3];
                 SqlParameter param = null;
 
                 // verify adminexists
@@ -129,11 +129,17 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[0]
                     parameters[0] = param;
 
-                    // Create [MaxStoragePlanFree] parameter
-                    param = new SqlParameter("@MaxStoragePlanFree", admin.MaxStoragePlanFree);
+                    // Create [MaxImagesPerFolder] parameter
+                    param = new SqlParameter("@MaxImagesPerFolder", admin.MaxImagesPerFolder);
 
                     // set parameters[1]
                     parameters[1] = param;
+
+                    // Create [MaxStoragePlanFree] parameter
+                    param = new SqlParameter("@MaxStoragePlanFree", admin.MaxStoragePlanFree);
+
+                    // set parameters[2]
+                    parameters[2] = param;
                 }
 
                 // return value
@@ -180,7 +186,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateUpdateParameters(Admin admin)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[3];
+                SqlParameter[] parameters = new SqlParameter[4];
                 SqlParameter param = null;
 
                 // verify adminexists
@@ -192,15 +198,21 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[0]
                     parameters[0] = param;
 
-                    // Create parameter for [MaxStoragePlanFree]
-                    param = new SqlParameter("@MaxStoragePlanFree", admin.MaxStoragePlanFree);
+                    // Create parameter for [MaxImagesPerFolder]
+                    param = new SqlParameter("@MaxImagesPerFolder", admin.MaxImagesPerFolder);
 
                     // set parameters[1]
                     parameters[1] = param;
 
+                    // Create parameter for [MaxStoragePlanFree]
+                    param = new SqlParameter("@MaxStoragePlanFree", admin.MaxStoragePlanFree);
+
+                    // set parameters[2]
+                    parameters[2] = param;
+
                     // Create parameter for [Id]
                     param = new SqlParameter("@Id", admin.Id);
-                    parameters[2] = param;
+                    parameters[3] = param;
                 }
 
                 // return value

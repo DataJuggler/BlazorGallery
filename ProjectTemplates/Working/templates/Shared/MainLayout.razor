@@ -32,74 +32,73 @@
 </Styled>
 
 <div class="page">    
-    <main>
-        <div class="sidebar">
-            <div class="nav-scrollable">
-                <nav class="flex-column">
-                    <div class="logo"></div>   
-                    @if (HasLoggedInUser)
+    <div class="fixedsidebar">
+        <div class="logo"></div>   
+        @if (HasLoggedInUser)
+        {
+            <div class="folders down16">
+                <div class="colornavy fontbold right32 fontsize18">
+                    Folders
+                </div>
+                <div class="height8"></div>
+                @if (HasFolders)
+                {
+                    foreach (Folder folder in Folders)
                     {
-                        <div class="folders down16">
-                            <div class="colorwhite right32 fontsize18">
-                                Folders
-                            </div>
-                            <div class="height8"></div>
-                            @if (HasFolders)
+                        <div class="nav-item px-3">
+                            @if (folder.Name != "Home")
                             {
-                                foreach (Folder folder in Folders)
-                                {
-                                    <div class="nav-item px-3">
-                                        @if (folder.Name != "Home")
-                                        {
-                                            <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
-                                        }
-                                        else
-                                        {
-                                            <div class="displayinlineblock width16"></div>
-                                        }
-                                        @if (folder.Selected)
-                                        {
-                                            <button class="imagefolder right16"><span class="fontsize14 colorblue fontbold right56 text-nowrap">@folder.Name</span></button>
-                                        }
-                                        else
-                                        {
-                                            <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colorwhite right56">@folder.Name</span></button>
-                                        }
-                                    </div>
-                                    <div class="height16 displayblock"></div>
-                                }
+                                <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
+                            }
+                            else
+                            {
+                                <div class="displayinlineblock width16"></div>
+                            }
+                            @if (folder.Selected)
+                            {
+                                <button class="imagefolder right16"><span class="fontsize14 colorfirebrick fontbold right56 text-nowrap">@folder.Name</span></button>
+                            }
+                            else
+                            {
+                                <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colornavy right56 fontbold">@folder.Name</span></button>
                             }
                         </div>
-                        @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount))
-                        {
-                            <button class="addbutton" title="Add A New Folder" @onclick=AddFolder></button>
-                        }
-                        @if (AddFolderMode)
-                        {
-                            <div class="down32">
-                                <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8"
-                                    SetFocusOnFirstRender="true" Unit="px"
-                                    Width="164" Caption="Name:"  LabelWidth="80"></ValidationComponent>
-                            </div>
-                        }
-                        <FileUpload CustomSuccessMessage="Your file uploaded successfully." Parent="this"
-                            OnReset="OnReset" ResetButtonClassName="@ResetButton" ShowStatus="false"
-                            PartialGuidLength="12" MaxFileSize=@UploadLimit FilterByExtension="true"
-                            ShowCustomButton="true" OnChange="OnFileUploaded" Visible="false"
-                            CustomButtonClassName="@BlueButton" AllowedExtensions=".png;.jpg;"
-                            ShowResetButton="false" AppendPartialGuid="true" ButtonText=""
-                            CustomExtensionMessage="Only .png and .jpg extensions are allowed."
-                            InputFileClassName="customfileupload" Status="Refresh" ResetButtonText=""
-                            FileTooLargeMessage=@FileTooLargeMessage>
-                        </FileUpload>
+                        <div class="height16 displayblock"></div>
                     }
-                </nav>
+                }
             </div>
-            <div>
-                <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>                
-            </div>
+            @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount))
+            {
+                <button class="addbutton" title="Add A New Folder" @onclick=AddFolder></button>
+            }
+            @if (AddFolderMode)
+            {
+                <div class="down32">
+                    <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8"
+                        SetFocusOnFirstRender="true" Unit="px"
+                        Width="164" Caption="Name:"  LabelWidth="80"></ValidationComponent>
+                </div>
+            }
+            @if ((HasSelectedFolder) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder))
+            {
+                <FileUpload CustomSuccessMessage="Your file uploaded successfully." Parent="this"
+                    OnReset="OnReset" ResetButtonClassName="@ResetButton" ShowStatus="false"
+                    PartialGuidLength="12" MaxFileSize=@UploadLimit FilterByExtension="true"
+                    ShowCustomButton="true" OnChange="OnFileUploaded" Visible="false"
+                    CustomButtonClassName="@BlueButton" AllowedExtensions=".png;.jpg;"
+                    ShowResetButton="false" AppendPartialGuid="true" ButtonText=""
+                    CustomExtensionMessage="Only .png and .jpg extensions are allowed."
+                    InputFileClassName="customfileupload" Status="Refresh" ResetButtonText=""
+                    FileTooLargeMessage=@FileTooLargeMessage>
+                </FileUpload>
+            }
+        }
+        <div>
+            <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>                
         </div>
-        <article class="content px-4">            
+    </div>
+    <main>
+        <article class="content px-4">             
             <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
         </article>
     </main>

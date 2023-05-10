@@ -43,8 +43,9 @@ namespace DataAccessComponent.DataManager.Readers
                 int heightfield = 4;
                 int idfield = 5;
                 int namefield = 6;
-                int userIdfield = 7;
-                int widthfield = 8;
+                int relativePathfield = 7;
+                int userIdfield = 8;
+                int widthfield = 9;
 
                 try
                 {
@@ -56,6 +57,7 @@ namespace DataAccessComponent.DataManager.Readers
                     image.Height = DataHelper.ParseInteger(dataRow.ItemArray[heightfield], 0);
                     image.UpdateIdentity(DataHelper.ParseInteger(dataRow.ItemArray[idfield], 0));
                     image.Name = DataHelper.ParseString(dataRow.ItemArray[namefield]);
+                    image.RelativePath = DataHelper.ParseString(dataRow.ItemArray[relativePathfield]);
                     image.UserId = DataHelper.ParseInteger(dataRow.ItemArray[userIdfield], 0);
                     image.Width = DataHelper.ParseInteger(dataRow.ItemArray[widthfield], 0);
                 }

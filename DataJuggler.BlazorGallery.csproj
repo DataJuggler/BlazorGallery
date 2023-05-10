@@ -7,8 +7,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.0.7</Version>
-	<Description>A project template for creating an Image Gallery in Blazor.</Description>
+	<Version>1.0.8</Version>
+	<Description>A project template for creating an Image Gallery in Blazor.
+You will need SQL Server to run this project. See the Read Me for more info.</Description>
+	<PackageProjectUrl>https://github.com/DataJuggler/BlazorGallery</PackageProjectUrl>
+	<PackageIcon></PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
+	<RepositoryType>Git/GitHub</RepositoryType>
+	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
+	<PackageReleaseNotes>This is the first working version of BlazorGallery.  To run this project, create a SQL Server database named
+BlazorGallery, then execute the SQL file BlazorGalleryDatabase.sql. Finally, build a connection string and
+set a user level environment variable named BlazorGalleryConnString. </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -44,6 +54,13 @@
     <ProjectReference Include="Data\ApplicationLogicComponent\ApplicationLogicComponent.csproj" />
     <ProjectReference Include="Data\DataGateway\DataGateway.csproj" />
     <ProjectReference Include="Data\ObjectLibrary\ObjectLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
