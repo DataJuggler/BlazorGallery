@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.0.8</Version>
+	<Version>1.0.9</Version>
 	<Description>A project template for creating an Image Gallery in Blazor.
 You will need SQL Server to run this project. See the Read Me for more info.</Description>
 	<PackageProjectUrl>https://github.com/DataJuggler/BlazorGallery</PackageProjectUrl>
