@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Components;
 using ObjectLibrary.Enumerations;
 using System.Runtime.Versioning;
 using DataGateway;
+using DataJuggler.BlazorGallery.Shared;
 
 #endregion
 
@@ -87,12 +88,11 @@ namespace DataJuggler.BlazorGallery.Components
             /// This method Cancel
             /// </summary>
             public void Cancel()
-            {
-                // if the value for HasParentIndexPage is true
-                if (HasParentIndexPage)
+            { 
+                if (HasParentMainLayout)
                 {
                     // Cancel signing up
-                    ParentIndexPage.SetupScreen(ScreenTypeEnum.MainScreen);
+                    ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
                 }
             }
             #endregion
@@ -243,7 +243,7 @@ namespace DataJuggler.BlazorGallery.Components
                             bool saved = await UserService.SaveUser(ref user);
 
                             // if saved
-                            if ((saved) && (HasParentIndexPage))
+                            if ((saved) && (HasParentMainLayout))
                             {
                                 // Create a new instance of a 'Folder' object.
                                 Folder folder = new Folder();
@@ -264,7 +264,7 @@ namespace DataJuggler.BlazorGallery.Components
                                 saved = await FolderService.SaveFolder(ref folder);
 
                                 // Force the user to login, see if they entered real data
-                                ParentIndexPage.SetupScreen(ScreenTypeEnum.Login, user.EmailAddress);
+                                ParentMainLayout.SetupScreen(ScreenTypeEnum.Login, user.EmailAddress);
                             }
                             else
                             {
@@ -894,19 +894,19 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
-            #region HasParentIndexPage
+            #region HasParentMainLayout
             /// <summary>
-            /// This property returns true if this object has a 'ParentIndexPage'.
+            /// This property returns true if this object has a 'ParentMainLayout'.
             /// </summary>
-            public bool HasParentIndexPage
+            public bool HasParentMainLayout
             {
                 get
                 {
                     // initial value
-                    bool hasParentIndexPage = (this.ParentIndexPage != null);
+                    bool hasParentMainLayout = (this.ParentMainLayout != null);
                     
                     // return value
-                    return hasParentIndexPage;
+                    return hasParentMainLayout;
                 }
             }
             #endregion
@@ -1012,16 +1012,16 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
 
-            #region ParentIndexPage
+            #region ParentMainLayout
             /// <summary>
-            /// This read only property returns the value for 'ParentIndexPage'.
+            /// This read only property returns the value for Parent cast as a MainLayout object
             /// </summary>
-            public Pages.Index ParentIndexPage
+            public MainLayout ParentMainLayout
             {
                 get
                 {
                     // cast the parent as an Index page
-                    return this.Parent as Pages.Index;
+                    return this.Parent as MainLayout;
                 }
             }
             #endregion

@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DataJuggler.BlazorGallery;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using DataJuggler.BlazorGallery.Shared;
 
 #endregion
 
@@ -93,10 +94,10 @@ namespace DataJuggler.BlazorGallery.Components
             public void Cancel()
             {
                 // if the value for HasParentIndexPage is true
-                if (HasParentIndexPage)
+                if (HasParentMainLayout)
                 {
                     // Restore back to main screen
-                    ParentIndexPage.SetupScreen(ScreenTypeEnum.MainScreen);
+                    ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
                 }
             }
             #endregion
@@ -227,19 +228,19 @@ namespace DataJuggler.BlazorGallery.Components
                 // initial value
                 bool saved = false;
 
-                // if the value for HasParentIndexPage is true
-                if (HasParentIndexPage)
+                // if the value for HasParentMainLayout is true
+                if (HasParentMainLayout)
                 {
                     // if remember login details is true
                     if ((RememberLogin) && (HasLoggedInUser))
                     {
                         // Store the local store items
-                        await ParentIndexPage.StoreLocalStoreItems(LoggedInUser.EmailAddress, LoggedInUser.UserName , LoggedInUser.PasswordHash);
+                        await ParentMainLayout.StoreLocalStoreItems(LoggedInUser.EmailAddress, LoggedInUser.UserName , LoggedInUser.PasswordHash);
                     }
                     else
                     {
                         // Remove any locally stored items
-                        await ParentIndexPage.RemovedLocalStoreItems();
+                        await ParentMainLayout.RemovedLocalStoreItems();
                     }
                 }
 
@@ -255,7 +256,7 @@ namespace DataJuggler.BlazorGallery.Components
             public async void LoginButton_Click()
             {
                 // if the value for HasParentIndexPage is true
-                if (HasParentIndexPage)
+                if (HasParentMainLayout)
                 {
                     // Set to 0 percent
                     Percent = 0;
@@ -287,53 +288,57 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 try
                 {
-                    // cast the object as a signUpModel object
-                    User user = userObject as User;
-
-                    // If the user object exists
-                    if (NullHelper.Exists(user))
+                    // verify all objects exist
+                    if (HasParentMainLayout)
                     {
-                        // Get the KeyCode
-                        string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.User);
+                        // cast the object as a signUpModel object
+                        User user = userObject as User;
 
-                        // verify the user is logged in
-                        bool verified = CryptographyHelper.VerifyHash(password, keyCode, user.PasswordHash);
-
-                        // if not verified
-                        if (!verified)
+                        // If the user object exists
+                        if (NullHelper.Exists(user))
                         {
-                            // Set the message
-                            ValidationMessage = "The credentials entered were either not found or invalid.";
+                            // Get the KeyCode
+                            string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.User);
 
-                            // hide the progress
-                            ShowProgress = false;
-                        }
-                        else
-                        {
-                             // Set the LoggedInUser on this page
-                            LoggedInUser = user;
+                            // verify the user is logged in
+                            bool verified = CryptographyHelper.VerifyHash(password, keyCode, user.PasswordHash);
 
-                            // Set the LoggedInUser
-                            ParentIndexPage.LoggedInUser = user;
-
-                            // if the value for RememberLogin is true
-                            if (RememberLogin)
+                            // if not verified
+                            if (!verified)
                             {
-                                // Save the login details in local protected storage
-                                await HandleRememberPassword();
+                                // Set the message
+                                ValidationMessage = "The credentials entered were either not found or invalid.";
+
+                                // hide the progress
+                                ShowProgress = false;
                             }
+                            else
+                            {
+                                 // Set the LoggedInUser on this page
+                                LoggedInUser = user;
 
-                            // Return to the Main Screen
-                            ParentIndexPage.SetupScreen(ScreenTypeEnum.MainScreen);
+                                // Set the LoggedInUser
+                                ParentMainLayout.LoggedInUser = user;
 
-                            // Update the login information for this user
-                            user.LastLoginDate = DateTime.Now;
+                                // if the value for RememberLogin is true
+                                if (RememberLogin)
+                                {
+                                    // Save the login details in local protected storage
+                                    await HandleRememberPassword();
+                                }
 
-                            // add to their total logins
-                            user.TotalLogins++;
+                                // Return to the Main Screen
+                                ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
 
-                            // Save the user
-                            bool saved = await UserService.SaveUser(ref user);
+                                // Update the login information for this user
+                                user.LastLoginDate = DateTime.Now;
+
+                                // add to their total logins
+                                user.TotalLogins++;
+
+                                // Save the user
+                                bool saved = await UserService.SaveUser(ref user);
+                            }
                         }
                     }
                 }
@@ -674,19 +679,19 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
-            #region HasParentIndexPage
+            #region HasParentMainLayout
             /// <summary>
-            /// This property returns true if this object has a 'ParentIndexPage'.
+            /// This property returns true if this object has a 'ParentMainLayout'.
             /// </summary>
-            public bool HasParentIndexPage
+            public bool HasParentMainLayout
             {
                 get
                 {
                     // initial value
-                    bool hasParentIndexPage = (this.ParentIndexPage != null);
+                    bool hasParentMainLayout = (this.ParentMainLayout != null);
                     
                     // return value
-                    return hasParentIndexPage;
+                    return hasParentMainLayout;
                 }
             }
             #endregion
@@ -809,16 +814,16 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
-            #region ParentIndexPage
+            #region ParentMainLayout
             /// <summary>
             /// This read only property returns the value for 'ParentIndexPage'.
             /// </summary>
-            public Pages.Index ParentIndexPage
+            public MainLayout ParentMainLayout
             {
                 get
                 {
                     // cast the parent as an Index page
-                    return this.Parent as Pages.Index;
+                    return this.Parent as MainLayout;
                 }
             }
             #endregion

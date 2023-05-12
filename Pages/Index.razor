@@ -6,27 +6,10 @@
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using ObjectLibrary.Enumerations
 @using DataJuggler.BlazorGallery.Components
-@inject ProtectedLocalStorage ProtectedLocalStore
 
 <PageTitle>Index</PageTitle>
 
-@if (!HasLoggedInUser)
-{
-    <div class="topright">
-        <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
-        <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
-    </div>
-
-    @if (ScreenType == ScreenTypeEnum.Login)
-    {
-        <Login Parent=this></Login>
-    }
-    else if (ScreenType == ScreenTypeEnum.SignUp)
-    {
-        <Join Parent=this></Join>
-    }
-}
-else
+@if (HasLoggedInUser)
 {
     <div class="topright">
         Welcome @LoggedInUser.Name

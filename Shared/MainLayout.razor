@@ -1,10 +1,14 @@
 ﻿@inherits LayoutComponentBase
 @using ObjectLibrary.BusinessObjects
+@using ObjectLibrary.Enumerations
 @using DataJuggler.Blazor.Components
 @using DataJuggler.Blazor.Components.Interfaces
 @using DataJuggler.Blazor.FileUpload
 @using BlazorStyled
 @using DataJuggler.BlazorGallery.Components
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+
+@inject ProtectedLocalStorage ProtectedLocalStore
 
 <PageTitle>Blazor Gallery</PageTitle>
 
@@ -31,7 +35,29 @@
     background-color: transparent;
 </Styled>
 
-<div class="page">    
+<div class="page">
+    @if (!HasLoggedInUser)
+    {
+        @if (ScreenType == ScreenTypeEnum.Login)
+        {
+            <Login Parent=this></Login>
+        }
+        else if (ScreenType == ScreenTypeEnum.SignUp)
+        {
+            <Join Parent=this></Join>
+        }
+        else if (ScreenType == ScreenTypeEnum.Gallery)
+        {
+            <DataJuggler.BlazorGallery.Pages.Gallery Parent="this"></DataJuggler.BlazorGallery.Pages.Gallery>
+        }
+        else
+        {
+            <div class="topright">
+                <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
+                <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
+            </div>
+        }
+    }
     <div class="fixedsidebar">
         <div class="logo"></div>   
         @if (HasLoggedInUser)
@@ -92,14 +118,17 @@
                     FileTooLargeMessage=@FileTooLargeMessage>
                 </FileUpload>
             }
-        }
-        <div>
-            <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>                
-        </div>
+            <div>
+                <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>
+            </div>
+        }        
     </div>
     <main>
-        <article class="content px-4">             
-            <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
+        <article class="content px-4">
+            @if (HasLoggedInUser)
+            { 
+                <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
+            }           
         </article>
     </main>
 </div>
