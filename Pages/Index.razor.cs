@@ -8,7 +8,6 @@ using DataJuggler.Blazor.FileUpload;
 using DataJuggler.Cryptography;
 using DataJuggler.UltimateHelper;
 using Microsoft.AspNetCore.Components;
-
 using ObjectLibrary.BusinessObjects;
 using DataJuggler.Blazor.Components.Interfaces;
 using DataJuggler.Blazor.Components;
@@ -34,7 +33,9 @@ namespace DataJuggler.BlazorGallery.Pages
         #region Private Variables        
         private string name;
         private List<IBlazorComponent> children;
-        private IBlazorComponentParent parent;                
+        private IBlazorComponentParent parent;
+        private string userName;
+        private string folderName;
         #endregion
 
         #region Methods
@@ -146,6 +147,18 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
             
+            #region FolderName
+            /// <summary>
+            /// This property gets or sets the value for 'FolderName'.
+            /// </summary>
+            [Parameter]
+            public string FolderName
+            {
+                get { return folderName; }
+                set { folderName = value; }
+            }
+            #endregion
+            
             #region HasLoggedInUser
             /// <summary>
             /// This property returns true if this object has a 'LoggedInUser'.
@@ -210,6 +223,23 @@ namespace DataJuggler.BlazorGallery.Pages
                     
                     // return value
                     return hasSelectedFolder;
+                }
+            }
+            #endregion
+            
+            #region HasUserName
+            /// <summary>
+            /// This property returns true if the 'UserName' exists.
+            /// </summary>
+            public bool HasUserName
+            {
+                get
+                {
+                    // initial value
+                    bool hasUserName = (!String.IsNullOrEmpty(this.UserName));
+                    
+                    // return value
+                    return hasUserName;
                 }
             }
             #endregion
@@ -321,6 +351,14 @@ namespace DataJuggler.BlazorGallery.Pages
                     return selectedFolder;
                 }
             }
+            #endregion
+            
+            #region UserName
+            /// <summary>
+            /// This property gets or sets the value for 'UserName'.
+            /// </summary>
+            [Parameter]
+            public string UserName { get; set; }
             #endregion
             
         #endregion

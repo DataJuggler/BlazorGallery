@@ -21,6 +21,11 @@ using DataJuggler.Cryptography;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using ObjectLibrary.Enumerations;
 using DataJuggler.BlazorGallery.Pages;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.WebUtilities;
+using DataJuggler.UltimateHelper.Objects;
+using System.Reflection;
 
 #endregion
 
@@ -52,10 +57,10 @@ namespace DataJuggler.BlazorGallery.Shared
         private ConfirmationComponent confirmationComponent;
         private bool showConfirmation;
         private int folderToDeleteId; 
-        private ScreenTypeEnum screenType;
-        private Gallery gallery;
+        private ScreenTypeEnum screenType;        
         private Sprite sprite;
         private Login loginComponent;
+        private bool initialized;
         private const int AdminId = 1;
         public const int FolderHeight = 48;
         public const int UploadLimit = 20480000;
@@ -170,21 +175,65 @@ namespace DataJuggler.BlazorGallery.Shared
                     // Set Selectd to true
                     SelectedFolder.Selected = true;
 
-                    // if saved
-                    bool saved = await FolderService.SaveFolder(ref selectedFolder);
-
-                    // if saved
-                    if (saved)
+                    // if HasFolders is true
+                    if (HasFolders)
                     {
-                        // Unselect all other folders
-                        UnselectFolders(folderId);
-
-                        // Force Reload
-                        ForceReload = true;
-
-                        // Redisplay
-                        Refresh();
+                        // Iterate the collection of Folder objects
+                        foreach (Folder folder in Folders)
+                        {
+                            // if this is the SelectedFolder
+                            if (folder.Id == SelectedFolder.Id)
+                            {
+                                // Select this folder so it displays properly (red)
+                                folder.Selected = true;
+                            }
+                        }
                     }
+
+                    // load the images here
+                    SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
+
+                    // Set the url
+                     string url = "/";
+
+                    // if there is a LoggedInUser and the LoggedInUser is the owner of this Folder and the LoggedInUser is not in ViewOnlyMode.
+                    if ((HasLoggedInUser) && (LoggedInUser.Id == SelectedFolder.UserId) && (!LoggedInUser.ViewOnlyMode))
+                    {
+                        // if saved
+                        bool saved = await FolderService.SaveFolder(ref selectedFolder);
+
+                        // Get the url                        
+                        url = "/User/" + LoggedInUser.UserName + "/" + SelectedFolder.Name;
+                    }
+                    else if ((HasLoggedInUser) && (LoggedInUser.ViewOnlyMode) && (HasSelectedFolder))
+                    {
+                        // Set the Url (Display Purposes only)
+                        url = "/Gallery/" + LoggedInUser.UserName + "/" + SelectedFolder.Name;
+                    }
+
+                    // Unselect all other folders
+                    UnselectFolders(folderId);
+
+                    // Get the current uri (again possibly)
+                    var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+
+                    // if we are at the same url
+                    if (uri.ToString().Contains(url))
+                    {
+                        // do nothing
+                        
+                    }
+                    else
+                    {
+                        // This is for display only
+                        Navigation.NavigateTo(url, replace: true);
+                    }
+
+                    // Force Reload
+                    ForceReload = true;
+
+                    // Redisplay
+                    Refresh();
                 }
             }
             #endregion
@@ -275,6 +324,9 @@ namespace DataJuggler.BlazorGallery.Shared
                                         {
                                             // Set the LoggedInuser
                                             LoggedInUser = user;
+
+                                            // Setup the screen
+                                            ScreenType = ScreenTypeEnum.Index;
                                         }
                                     }
                                 }
@@ -307,21 +359,48 @@ namespace DataJuggler.BlazorGallery.Shared
 
                    // If the Folders collection exists and has one or more items
                    if (ListHelper.HasOneOrMoreItems(Folders))
-                   {
-                        // Iterate the collection of Folder objects
-                        foreach (Folder folder in Folders)
+                   {   
+                        // unselect the rest
+                        foreach(Folder folder in Folders)
                         {
-                            // If the value for the property folder.Selected is true
-                            if (folder.Selected)
+                            if ((HasLoggedInUser) && (LoggedInUser.ViewOnlyMode))
                             {
-                                // Set the SelectedFolder
-                                SelectedFolder = folder;
-
-                                // Load the image
-                                SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
-
-                                // break out of the loop
-                                break;
+                                if (HasSelectedFolder)
+                                {
+                                    // if the SelectedFolder exists and this is the folder id
+                                    if (SelectedFolder.Id != folder.Id)
+                                    {
+                                        // unselect
+                                        folder.Selected = false;
+                                    }
+                                    else if (!folder.HasImages)
+                                    {
+                                        // Select this folder
+                                        FolderSelected(folder.Id);
+                                    }
+                                }                                
+                            }
+                            else
+                            {
+                                // if this is the SelectedFolder
+                                if ((folder.Selected) && ((!HasSelectedFolder) || (SelectedFolder.Id != folder.Id)))
+                                {
+                                    // Select this folder
+                                    FolderSelected(folder.Id);
+                                }
+                                else if ((HasSelectedFolder) && (SelectedFolder.Id == folder.Id))
+                                {
+                                    if (!folder.Selected)
+                                    {
+                                        // Select this folder
+                                        FolderSelected(folder.Id);
+                                    }
+                                }
+                                else
+                                {
+                                    // just for in memory use, not saved to the database
+                                    folder.Selected = false;
+                                }
                             }
                         }
 
@@ -342,6 +421,94 @@ namespace DataJuggler.BlazorGallery.Shared
                     // Update the UI
                     Refresh();
                 }
+            }
+            #endregion
+
+            #region OnInitialized()
+            /// <summary>
+            /// Initializing so the LocationChanged event can be set
+            /// </summary>
+
+            protected async override void OnInitialized()
+            {
+                var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+                string queryString = uri.ToString();
+                if (TextHelper.Exists(queryString))
+                {
+                    // get the index of the quesiton mark
+                    int index = queryString.IndexOf("/Gallery");
+
+                    // If the value for index is greater than zero
+                    if (index > 0)
+                    {
+                        // get the substring
+                        string temp = queryString.Substring(index);
+
+                        // If the temp string exists
+                        if (TextHelper.Exists(temp))
+                        {
+                            char[] delimiterChars = { '/' };
+
+                            // get the words
+                            List<Word> words = TextHelper.GetWords(temp, delimiterChars);
+
+                            // if there are two or more words
+                            if (ListHelper.HasXOrMoreItems(words, 2))
+                            {
+                                // get the first word (should be gallery
+                                string word1 = words[0].Text;
+                                string userName = words[1].Text;
+                                string folderName = "Home";
+
+                                // if there are 3 or more words
+                                if (ListHelper.HasXOrMoreItems(words, 3))
+                                {   
+                                    // Set the FolderName
+                                    folderName = words[2].Text;
+                                }
+                                
+                                // if we are opening a Gallery
+                                if (word1 == "Gallery")
+                                {   
+                                    // Find the user
+                                    User user = await UserService.FindUserByUserName(userName);
+
+                                    // If the user object exists
+                                    if (NullHelper.Exists(user))
+                                    {
+                                        // Set the LoggedInUser
+                                        LoggedInUser = user;
+                                        LoggedInUser.ViewOnlyMode = true;
+
+                                        // Set the ScreenType
+                                        ScreenType = ScreenTypeEnum.Index;
+
+                                        // Find the SelectedFolde
+                                        SelectedFolder = await FolderService.FindFolderByUserIdAndFolderName(user.Id, folderName);
+
+                                        // if the value for HasSelectedFolder is true
+                                        if (HasSelectedFolder)
+                                        {
+                                            // Unselect all other folders for this user (not saved)
+                                            UnselectFolders(SelectedFolder.Id);
+
+                                            // Select this folder
+                                            FolderSelected(SelectedFolder.Id);
+
+                                            // Set to true
+                                            ForceReload = true;
+
+                                            // Update again
+                                            Refresh();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                base.OnInitialized();
             }
             #endregion
 
@@ -462,8 +629,11 @@ namespace DataJuggler.BlazorGallery.Shared
                                 // Set the SelectedFolder
                                 SelectedFolder = folder;
 
-                                // Unselect all other folders
-                                UnselectFolders(folder.Id);
+                                if ((HasLoggedInUser) && (LoggedInUser.Id == SelectedFolder.UserId))
+                                {
+                                    // Unselect all other folders
+                                    UnselectFolders(folder.Id);
+                                }
 
                                 // hide the textbox
                                 AddFolderMode = false;
@@ -626,22 +796,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 }
                 else if (component is Join)
                 {
-                }
-                else if (component is Gallery)
-                {
-                    // Set the value
-                    Gallery = component as Gallery;
-
-                    // if the value for HasGallery is true
-                    if (HasGallery)
-                    {
-                        // Set to Gallery
-                        ScreenType = ScreenTypeEnum.Gallery;
-
-                        // Update the UI
-                        Refresh();
-                    }
-                }
+                }                
             }
             #endregion
 
@@ -696,7 +851,7 @@ namespace DataJuggler.BlazorGallery.Shared
                     // Set the email address
                     LoginComponent.EmailAddress = emailAddress;
                 }
-                else if (ScreenType == ScreenTypeEnum.MainScreen)
+                else if (ScreenType == ScreenTypeEnum.Index)
                 {
                     // if the parent exists
                     if (HasLoggedInUser)
@@ -751,20 +906,27 @@ namespace DataJuggler.BlazorGallery.Shared
             /// </summary>
             public async void UnselectFolders(int selectedFolderId)
             {
-                // Iterate the collection of Folder objects
-                foreach (Folder tempFolder in Folders)
+                if (ListHelper.HasOneOrMoreItems(Folders))
                 {
-                    // if the FolderId is not the new folder
-                    if (tempFolder.Id != selectedFolderId)
+                    // Iterate the collection of Folder objects
+                    foreach (Folder tempFolder in Folders)
                     {
-                        // no longer selected
-                        tempFolder.Selected = false;
+                        // if the FolderId is not the new folder
+                        if (tempFolder.Id != selectedFolderId)
+                        {
+                            // no longer selected
+                            tempFolder.Selected = false;
 
-                        // clone this object
-                        Folder clone = tempFolder.Clone();
+                            // if the LoggedInUser is the ower of the folder and not in ViewOnlyMode
+                            if ((HasLoggedInUser) && (!LoggedInUser.ViewOnlyMode) && (SelectedFolder.UserId == LoggedInUser.Id))
+                            {
+                                // clone this object
+                                Folder clone = tempFolder.Clone();
 
-                        // save this folder
-                        bool saved = await FolderService.SaveFolder(ref clone);
+                                // save this folder
+                                bool saved = await FolderService.SaveFolder(ref clone);
+                            }
+                        }
                     }
                 }
             }
@@ -873,17 +1035,6 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
-            #region Gallery
-            /// <summary>
-            /// This property gets or sets the value for 'Gallery'.
-            /// </summary>
-            public Gallery Gallery
-            {
-                get { return gallery; }
-                set { gallery = value; }
-            }
-            #endregion
-            
             #region HasAdmin
             /// <summary>
             /// This property returns true if this object has an 'Admin'.
@@ -948,23 +1099,6 @@ namespace DataJuggler.BlazorGallery.Shared
                     
                     // return value
                     return hasFolders;
-                }
-            }
-            #endregion
-            
-            #region HasGallery
-            /// <summary>
-            /// This property returns true if this object has a 'Gallery'.
-            /// </summary>
-            public bool HasGallery
-            {
-                get
-                {
-                    // initial value
-                    bool hasGallery = (this.Gallery != null);
-                    
-                    // return value
-                    return hasGallery;
                 }
             }
             #endregion
@@ -1062,6 +1196,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return indexPage; }
                 set { indexPage = value; }
+            }
+            #endregion
+            
+            #region Initialized
+            /// <summary>
+            /// This property gets or sets the value for 'Initialized'.
+            /// </summary>
+            public bool Initialized
+            {
+                get { return initialized; }
+                set { initialized = value; }
             }
             #endregion
             

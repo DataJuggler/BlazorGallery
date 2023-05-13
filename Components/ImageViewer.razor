@@ -11,7 +11,7 @@
     background-size: 100% 100%;
 </Styled>
 
-@if ((HasLoggedInUser) && (HasSelectedFolder) && (SelectedFolder.UserId == LoggedInUser.Id))
+@if ((HasLoggedInUser) && (HasSelectedFolder) && (SelectedFolder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
 {
     <div class="col">
         @if (ShowRemoveButton)

@@ -7,7 +7,7 @@
 @using BlazorStyled
 @using DataJuggler.BlazorGallery.Components
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-
+@inject NavigationManager Navigation
 @inject ProtectedLocalStorage ProtectedLocalStore
 
 <PageTitle>Blazor Gallery</PageTitle>
@@ -36,7 +36,7 @@
 </Styled>
 
 <div class="page">
-    @if (!HasLoggedInUser)
+    @if ((!HasLoggedInUser) || (LoggedInUser.ViewOnlyMode))
     {
         @if (ScreenType == ScreenTypeEnum.Login)
         {
@@ -45,11 +45,7 @@
         else if (ScreenType == ScreenTypeEnum.SignUp)
         {
             <Join Parent=this></Join>
-        }
-        else if (ScreenType == ScreenTypeEnum.Gallery)
-        {
-            <DataJuggler.BlazorGallery.Pages.Gallery Parent="this"></DataJuggler.BlazorGallery.Pages.Gallery>
-        }
+        }        
         else
         {
             <div class="topright">
@@ -72,7 +68,7 @@
                     foreach (Folder folder in Folders)
                     {
                         <div class="nav-item px-3">
-                            @if (folder.Name != "Home")
+                            @if ((folder.Name != "Home") && (folder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
                             {
                                 <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
                             }
@@ -93,7 +89,7 @@
                     }
                 }
             </div>
-            @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount))
+            @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
             {
                 <button class="addbutton" title="Add A New Folder" @onclick=AddFolder></button>
             }
@@ -105,7 +101,7 @@
                         Width="164" Caption="Name:"  LabelWidth="80"></ValidationComponent>
                 </div>
             }
-            @if ((HasSelectedFolder) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder))
+            @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode))
             {
                 <FileUpload CustomSuccessMessage="Your file uploaded successfully." Parent="this"
                     OnReset="OnReset" ResetButtonClassName="@ResetButton" ShowStatus="false"
@@ -125,10 +121,10 @@
     </div>
     <main>
         <article class="content px-4">
-            @if (HasLoggedInUser)
-            { 
+            @if ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.MainScreen))
+            {
                 <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
-            }           
+            }          
         </article>
     </main>
 </div>

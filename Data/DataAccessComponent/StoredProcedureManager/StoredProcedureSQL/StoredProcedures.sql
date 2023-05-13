@@ -6,7 +6,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Insert a new Admin
 -- =========================================================
 
@@ -66,7 +66,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Update an existing Admin
 -- =========================================================
 
@@ -128,7 +128,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Find an existing Admin
 -- =========================================================
 
@@ -185,7 +185,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Delete an existing Admin
 -- =========================================================
 
@@ -239,7 +239,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Returns all Admin objects
 -- =========================================================
 
@@ -290,7 +290,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Insert a new Folder
 -- =========================================================
 
@@ -351,7 +351,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Update an existing Folder
 -- =========================================================
 
@@ -415,7 +415,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Find an existing Folder
 -- =========================================================
 
@@ -472,7 +472,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Delete an existing Folder
 -- =========================================================
 
@@ -526,7 +526,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Returns all Folder objects
 -- =========================================================
 
@@ -577,7 +577,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Insert a new Image
 -- =========================================================
 
@@ -643,7 +643,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Update an existing Image
 -- =========================================================
 
@@ -717,7 +717,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Find an existing Image
 -- =========================================================
 
@@ -774,7 +774,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Delete an existing Image
 -- =========================================================
 
@@ -828,7 +828,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Returns all Image objects
 -- =========================================================
 
@@ -879,7 +879,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Insert a new User
 -- =========================================================
 
@@ -947,7 +947,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Update an existing User
 -- =========================================================
 
@@ -1025,7 +1025,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Find an existing User
 -- =========================================================
 
@@ -1082,7 +1082,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Delete an existing User
 -- =========================================================
 
@@ -1136,7 +1136,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Returns all User objects
 -- =========================================================
 
@@ -1188,9 +1188,71 @@ set ANSI_NULLS ON
 set QUOTED_IDENTIFIER ON
 Go
 -- =========================================================
+-- Procure Name: Folder_FindByUserIdAndName
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   5/13/2023
+-- Description:    Find an existing Folder by
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Folder_FindByUserIdAndName'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Folder_FindByUserIdAndName
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Folder_FindByUserIdAndName') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Folder_FindByUserIdAndName >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Folder_FindByUserIdAndName >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Folder_FindByUserIdAndName
+
+    -- Create @Name Paramater
+    @Name nvarchar(40),
+
+
+    -- Create @UserId Paramater
+    @UserId int
+
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [CreatedDate],[Id],[Name],[Selected],[UserId]
+
+    -- From tableName
+    From [Folder]
+
+    -- Find Matching Record
+    Where [Name] = @Name And [UserId] = @UserId
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
 -- Procure Name: User_FindByEmailAddress
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Find an existing User for the EmailAddress given.
 -- =========================================================
 
@@ -1247,7 +1309,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FindByUserName
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Find an existing User for the UserName given.
 -- =========================================================
 
@@ -1304,7 +1366,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAllForUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Returns all Folder objects for the UserId given.
 -- =========================================================
 
@@ -1362,7 +1424,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_FetchAllForFolderId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   5/9/2023
+-- Create Date:   5/13/2023
 -- Description:    Returns all Image objects for the FolderId given.
 -- =========================================================
 
