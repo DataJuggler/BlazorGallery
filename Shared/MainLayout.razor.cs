@@ -60,7 +60,8 @@ namespace DataJuggler.BlazorGallery.Shared
         private ScreenTypeEnum screenType;        
         private Sprite sprite;
         private bool initialized;
-        private Login loginComponent;        
+        private Login loginComponent;  
+        private string validationMessage;
         private string userUrl;
         private const int AdminId = 1;
         public const int FolderHeight = 48;
@@ -538,6 +539,9 @@ namespace DataJuggler.BlazorGallery.Shared
             /// </summary>
             public async void OnFileUploaded(UploadedFileInfo file)
             {
+                // Erase
+                ValidationMessage = "";
+
                 // if the file was uploaded
                 if (!file.Aborted)
                 {
@@ -592,8 +596,16 @@ namespace DataJuggler.BlazorGallery.Shared
                     // for debugging only
                     if (file.HasException)
                     {
-                        // for debugging only
-                        string message = file.Exception.Message;
+                        if (file.Exception.Message == "The file uploaded was too large.")
+                        {
+                            // for debugging only
+                            ValidationMessage = "Uploaded files must be under 20 megs.";
+                        }
+                        else
+                        {
+                            // for debugging only
+                            ValidationMessage = file.Exception.Message;
+                        }
                     }
                 }
             }
@@ -1208,6 +1220,22 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region HasValidationMessage
+            /// <summary>
+            /// This property returns true if the 'ValidationMessage' exists.
+            /// </summary>
+            public bool HasValidationMessage
+            {
+                get
+                {
+                    // initial value
+                    bool hasValidationMessage = (!String.IsNullOrEmpty(this.ValidationMessage));
+                    
+                    // return value
+                    return hasValidationMessage;
+                }
+            }
+            #endregion
             #region IndexPage
             /// <summary>
             /// This property gets or sets the value for 'IndexPage'.
@@ -1380,6 +1408,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return userUrl; }
                 set { userUrl = value; }
+            }
+            #endregion
+            
+            #region ValidationMessage
+            /// <summary>
+            /// This property gets or sets the value for 'ValidationMessage'.
+            /// </summary>
+            public string ValidationMessage
+            {
+                get { return validationMessage; }
+                set { validationMessage = value; }
             }
             #endregion
             

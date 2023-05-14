@@ -240,8 +240,10 @@
     top: 1vh;
     left: 24%;
     float: left;    
-    width: 32%;
+    width: 40%;
     height: 6vh;
+    font-size: 24px;
+    color: firebrick;
 }
 .topright
 {

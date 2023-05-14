@@ -130,6 +130,12 @@
         <article class="content px-4">
             @if ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.MainScreen))
             {
+                <div class="topleft">
+                    @if (HasValidationMessage)
+                    {
+                        @ValidationMessage
+                    }
+                </div>
                 <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
             }          
         </article>
