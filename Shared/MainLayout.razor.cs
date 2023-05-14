@@ -59,8 +59,8 @@ namespace DataJuggler.BlazorGallery.Shared
         private int folderToDeleteId; 
         private ScreenTypeEnum screenType;        
         private Sprite sprite;
-        private Login loginComponent;
-        private bool initialized;
+        private Login loginComponent;        
+        private string userUrl;
         private const int AdminId = 1;
         public const int FolderHeight = 48;
         public const int UploadLimit = 20480000;
@@ -223,11 +223,18 @@ namespace DataJuggler.BlazorGallery.Shared
                         // do nothing
                         
                     }
+                    else if (uri.ToString().Contains(UserUrl))
+                    {
+                        // do nothing
+                    }
                     else
                     {
                         // This is for display only
                         Navigation.NavigateTo(url, replace: true);
                     }
+
+                    // erase
+                    UserUrl = "";
 
                     // Force Reload
                     ForceReload = true;
@@ -433,10 +440,14 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
                 string queryString = uri.ToString();
+                
                 if (TextHelper.Exists(queryString))
                 {
                     // get the index of the quesiton mark
                     int index = queryString.IndexOf("/Gallery");
+
+                    // Defaut value
+                    UserUrl = "NotSet";
 
                     // If the value for index is greater than zero
                     if (index > 0)
@@ -465,6 +476,11 @@ namespace DataJuggler.BlazorGallery.Shared
                                 {   
                                     // Set the FolderName
                                     folderName = words[2].Text;
+                                }
+                                else
+                                {
+                                    // Set the HomeUrl
+                                    UserUrl = "/Gallery" + "/" + LoggedInUser;
                                 }
                                 
                                 // if we are opening a Gallery
@@ -1199,17 +1215,6 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
-            #region Initialized
-            /// <summary>
-            /// This property gets or sets the value for 'Initialized'.
-            /// </summary>
-            public bool Initialized
-            {
-                get { return initialized; }
-                set { initialized = value; }
-            }
-            #endregion
-            
             #region LoggedInUser
             /// <summary>
             /// This property gets or sets the value for 'LoggedInUser'.
@@ -1349,6 +1354,17 @@ namespace DataJuggler.BlazorGallery.Shared
                     // return value
                     return topStyle;
                 }
+            }
+            #endregion
+            
+            #region UserUrl
+            /// <summary>
+            /// This property gets or sets the value for 'UserUrl'.
+            /// </summary>
+            public string UserUrl
+            {
+                get { return userUrl; }
+                set { userUrl = value; }
             }
             #endregion
             

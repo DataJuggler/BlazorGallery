@@ -7,9 +7,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.1.1</Version>
-	<Description>A project template for creating an Image Gallery in Blazor.
-You will need SQL Server to run this project. See the Read Me for more info.</Description>
+	<Version>1.1.2</Version>
+	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
+You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
+Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<PackageProjectUrl>https://github.com/DataJuggler/BlazorGallery</PackageProjectUrl>
 	<PackageIcon></PackageIcon>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -18,7 +19,9 @@ You will need SQL Server to run this project. See the Read Me for more info.</De
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>This is the first working version of BlazorGallery.  To run this project, create a SQL Server database named
 BlazorGallery, then execute the SQL file BlazorGalleryDatabase.sql. Finally, build a connection string and
-set a user level environment variable named BlazorGalleryConnString. </PackageReleaseNotes>
+set a user level environment variable named BlazorGalleryConnString holding the connection string a second 
+user level environment variable named BlazorGalleryKeyCode, and make up a string for its value. 
+BlazorGalleryKeyCode is used to create password hashes when a user signs up.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
