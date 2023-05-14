@@ -48,6 +48,13 @@
         }        
         else
         {
+            @if ((HasLoggedInUser) && (LoggedInUser.ViewOnlyMode))
+            {
+                @if (HasSelectedFolder)
+                {
+                    <h5 class="topleft">Viewing Gallery @LoggedInUser.Name/@SelectedFolder.Name</h5>
+                }
+            }
             <div class="topright">
                 <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
                 <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>

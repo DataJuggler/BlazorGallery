@@ -209,6 +209,15 @@
     top: 20vh;
     left: 20%;
 }
+.topleft
+{
+    position: absolute;
+    top: 1vh;
+    left: 24%;
+    float: left;    
+    width: 32%;
+    height: 6vh;
+}
 .topright
 {
     position: absolute;

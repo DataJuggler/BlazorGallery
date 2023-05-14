@@ -59,6 +59,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private int folderToDeleteId; 
         private ScreenTypeEnum screenType;        
         private Sprite sprite;
+        private bool initialized;
         private Login loginComponent;        
         private string userUrl;
         private const int AdminId = 1;
@@ -223,7 +224,7 @@ namespace DataJuggler.BlazorGallery.Shared
                         // do nothing
                         
                     }
-                    else if (uri.ToString().Contains(UserUrl))
+                    else if ((uri.ToString().Contains(UserUrl)) && (!Initialized))
                     {
                         // do nothing
                     }
@@ -523,6 +524,9 @@ namespace DataJuggler.BlazorGallery.Shared
                         }
                     }
                 }
+
+                // Set to true
+                Initialized = true;
 
                 base.OnInitialized();
             }
@@ -1212,6 +1216,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return indexPage; }
                 set { indexPage = value; }
+            }
+            #endregion
+            
+            #region Initialized
+            /// <summary>
+            /// This property gets or sets the value for 'Initialized'.
+            /// </summary>
+            public bool Initialized
+            {
+                get { return initialized; }
+                set { initialized = value; }
             }
             #endregion
             
