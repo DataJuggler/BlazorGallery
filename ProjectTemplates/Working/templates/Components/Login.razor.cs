@@ -327,8 +327,8 @@ namespace DataJuggler.BlazorGallery.Components
                                     await HandleRememberPassword();
                                 }
 
-                                // Return to the Main Screen
-                                ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
+                                // Setup the Index page
+                                ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
 
                                 // Update the login information for this user
                                 user.LastLoginDate = DateTime.Now;

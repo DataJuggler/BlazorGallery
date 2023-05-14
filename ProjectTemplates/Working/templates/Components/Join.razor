@@ -11,26 +11,26 @@
             Caption="User Name:" IsRequired="true" MinimumLength="5" 
             Unit="%" Width=30 LabelWidth=10 Column2Width="30"  Position="relative" Top=0
             MaximumLength="20" IsUniqueCallbackRequired="true"
-            LabelColor="Black" TextBoxClassName="Up4"
+            LabelColor="Black" TextBoxClassName="Up4" LabelClassName="down8"
             ValidationMessage="User Name Must Be Between 5 And 20 Characters">
         </ValidationComponent> 
-        <ValidationComponent Name="NameComponent" Parent=this LabelColor="Black"
+        <ValidationComponent Name="NameComponent" Parent=this LabelColor="Black" LabelClassName="down7"
             Unit="%" Width=30 LabelWidth=10 Column2Width="30"Position="relative" Top=8
             Caption="Name:" IsRequired="false" MaximumLength="50" TextBoxClassName="up4"
             IsUniqueCallbackRequired="false">
         </ValidationComponent>
-        <ValidationComponent Name="EmailAddressComponent" Parent=this TextBoxClassName="up4"
+        <ValidationComponent Name="EmailAddressComponent" Parent=this TextBoxClassName="up4" LabelClassName="down6"
             Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=16
             LabelColor="Black" IsUniqueCallbackRequired="true" Caption="Email Address:"
             MaximumLength="80" IsRequired="true" ValidationMessage="You must enter a valid email address">
         </ValidationComponent>
-        <ValidationComponent Name="PasswordComponent" Parent=this LabelColor="Black"
+        <ValidationComponent Name="PasswordComponent" Parent=this LabelColor="Black" LabelClassName="down5"
             Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=24
             Caption="Password:" IsRequired="true" MaximumLength="20" TextBoxClassName="up4"
             MinimumLength="8" IsUniqueCallbackRequired="false"
             PasswordMode="true" ValidationMessage="You must enter a password.">
         </ValidationComponent>
-        <ValidationComponent Name="ConfirmPasswordComponent" Parent=this LabelColor="Black"         
+        <ValidationComponent Name="ConfirmPasswordComponent" Parent=this LabelColor="Black" LabelClassName="down4"
             Caption="Confirm Password:" IsRequired="true" MaximumLength="20"
             Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=32
             MinimumLength="8" IsUniqueCallbackRequired="false" TextBoxClassName="up4"
@@ -47,14 +47,14 @@
 </div>
 @if (TextHelper.Exists(ValidationMessage))
 {
-    <div class="validationmessage2">
+    <div class="validationmessage">
         @ValidationMessage
     </div>
  }
  
  @if (ShowProgress)
- { 
-     <div class="progresscontainer2">
+ {
+    <div class="progresscontainer2">
          <div class=@ProgressStyle>
             <span class="text-white">@PercentString</span>
             <div class="slice">
@@ -64,11 +64,8 @@
         </div>
      </div>
 }
- <Sprite Subscriber=this Visible="true" Interval="50" Position="fixed" 
-         XPosition="-200" YPosition="-200" Width="100" Height="100">
- </Sprite>
-
-
-
+<Sprite Subscriber=this Visible="true" Interval="50" Position="fixed"
+        XPosition="-500" YPosition="100" Width="120" Height="120" ZIndex="-1">
+</Sprite>
 
                    

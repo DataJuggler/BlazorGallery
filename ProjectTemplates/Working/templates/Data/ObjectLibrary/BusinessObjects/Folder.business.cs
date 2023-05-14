@@ -18,6 +18,7 @@ namespace ObjectLibrary.BusinessObjects
         #region Private Variables
         private bool loadByUserId;
         private List<Image> images;
+        private bool findByUserIdAndName;
         #endregion
 
         #region Constructor
@@ -43,6 +44,17 @@ namespace ObjectLibrary.BusinessObjects
         #endregion
 
         #region Properties
+
+            #region FindByUserIdAndName
+            /// <summary>
+            /// This property gets or sets the value for 'FindByUserIdAndName'.
+            /// </summary>
+            public bool FindByUserIdAndName
+            {
+                get { return findByUserIdAndName; }
+                set { findByUserIdAndName = value; }
+            }
+            #endregion
 
             #region HasImages
             /// <summary>

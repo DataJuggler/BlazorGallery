@@ -1,4 +1,6 @@
 ﻿@page "/"
+@page "/User/{UserName}/{FolderName}"
+@page "/Gallery/{UserName}/{FolderName}"
 @using DataJuggler.Blazor.FileUpload
 @using BlazorStyled;
 @using DataGateway.Services
@@ -11,10 +13,13 @@
 
 @if (HasLoggedInUser)
 {
-    <div class="topright">
-        Welcome @LoggedInUser.Name
-        <button class="signout" @onclick=SignOut></button>
-    </div>
+    @if (!LoggedInUser.ViewOnlyMode)
+    {
+        <div class="topright">
+            Welcome @LoggedInUser.Name
+            <button class="signout" @onclick=SignOut></button>
+        </div>
+    }
     @if ((HasSelectedFolder) && (SelectedFolder.HasImages))
     {
         <div class="flex-grid">

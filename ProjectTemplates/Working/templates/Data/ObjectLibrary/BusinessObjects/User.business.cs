@@ -16,7 +16,8 @@ namespace ObjectLibrary.BusinessObjects
 
         #region Private Variables
         private bool findByUserName;
-        private bool findByEmailAddress;
+        private bool findByEmailAddress;    
+        private bool viewOnlyMode;
         #endregion
 
         #region Constructor
@@ -65,6 +66,17 @@ namespace ObjectLibrary.BusinessObjects
             }
             #endregion
 
+            #region ViewOnlyMode
+            /// <summary>
+            /// This property gets or sets the value for 'ViewOnlyMode'.
+            /// </summary>
+            public bool ViewOnlyMode
+            {
+                get { return viewOnlyMode; }
+                set { viewOnlyMode = value; }
+            }
+            #endregion
+            
         #endregion
 
     }

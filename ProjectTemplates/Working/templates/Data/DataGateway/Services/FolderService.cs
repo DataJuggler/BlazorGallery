@@ -48,6 +48,31 @@ namespace DataGateway.Services
                 return Task.FromResult(folder);
             }
             #endregion
+
+            #region FindFolderByUserIdAndFolderName(int userId, string folderName)
+            /// <summary>
+            /// This method is used to find a Folder object by the name of the folder and the UserId
+            /// </summary>
+            /// <returns></returns>
+            public static Task<Folder> FindFolderByUserIdAndFolderName(int userId, string folderName)
+            {
+                // initial value
+                Folder folder = null;
+                
+                // If the id is set
+                if ((userId > 0) && (TextHelper.Exists(folderName)))
+                {
+                    // Create a new instance of a 'Gateway' object, and set the connectionName
+                    Gateway gateway = new Gateway(Connection.Name);
+                    
+                    // load the folder
+                    folder = gateway.FindFolderByUserIdAndName(folderName, userId);
+                }
+                
+                // return value
+                return Task.FromResult(folder);
+            }
+            #endregion
             
             #region GetFolderList()
             /// <summary>

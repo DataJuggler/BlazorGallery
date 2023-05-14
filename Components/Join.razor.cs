@@ -77,8 +77,6 @@ namespace DataJuggler.BlazorGallery.Components
 
         #region Events
 
-            
-            
         #endregion
 
         #region Methods
@@ -302,7 +300,7 @@ namespace DataJuggler.BlazorGallery.Components
                         if (ListHelper.HasOneOrMoreItems(message.Parameters))                        
                         {   
                             // if User Name
-                            if ((TextHelper.IsEqual(message.Parameters[0].Name, "User Name")) && (NullHelper.Exists(message.Parameters[0].Value)))
+                            if ((TextHelper.IsEqual(message.Parameters[0].Name, "User Name:")) && (NullHelper.Exists(message.Parameters[0].Value)))
                             {
                                 // get the userName
                                 string userName = message.Parameters[0].Value.ToString();
@@ -354,7 +352,7 @@ namespace DataJuggler.BlazorGallery.Components
                                 }
                             }   
                             //if EmailAddress
-                            else if ((TextHelper.IsEqual(message.Parameters[0].Name, "Email Address")) && (NullHelper.Exists(message.Parameters[0].Value)))
+                            else if ((TextHelper.IsEqual(message.Parameters[0].Name, "Email Address:")) && (NullHelper.Exists(message.Parameters[0].Value)))
                             {
                                 // get the email
                                 string email = message.Parameters[0].Value.ToString();

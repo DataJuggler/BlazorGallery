@@ -1,26 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.1.1</PackageVersion>
+    <PackageVersion>1.1.3</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
     <Description>BlazorGallery is a Blazor project template, allowing you to easily create an image gallery with file upload and
-saving the data in SQL Server. Create custom folders to showcase your favorite projects and graphics.
+saving the data in SQL Server. Create custom folders to showcase your favorite projects and graphics. You can now share your galleries
+with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     </Description>
     <PackageTags>C#;SQL;SQLServer;Blazor;FileUpload;Images;Gallery;</PackageTags>	
     <TargetFramework>net7.0</TargetFramework>
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.1.1</Version>
+    <Version>1.1.3</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/DataJuggler/BlazorGallery</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
     <RepositoryType>Git/GitHub</RepositoryType>
-    <PackageReleaseNotes>5.10.2023: Released version 1.1.0 with updated instructions. Upload folder is still not being created via Nuget,
+    <PackageReleaseNotes>5.14.2023: Fixed many issues with the Login and Join components and you now have public routing of url's.
+		5.10.2023: Released version 1.1.0 with updated instructions. Upload folder is still not being created via Nuget,
 so you must create an Upload folder under wwwroot.
 5.10.2023: Released first working version!!!	
 5.5.2023: Added a logo.

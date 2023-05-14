@@ -154,6 +154,22 @@
     background-color: transparent;
     border: none;    
 }
+.progresscontainer
+{
+    position: fixed;
+    left: 32%;
+    top: 29.2vh;
+    transform: scale(.8);
+    transform-origin: left;
+}
+.progresscontainer2
+{
+    position: fixed;
+    left: 24%;
+    top: 29.2vh;
+    transform: scale(.8);
+    transform-origin: left;
+}
 .removebutton
 {
     background-image: url('../Images/RemoveButton.png');
@@ -190,11 +206,20 @@
     background-color: transparent;
     border: none;    
 }
-.signupbuttons
+.signupbutton
 {
     position: relative;
     left: -6%;
     top: 8vh;
+}
+.signupcontrols
+{  
+    line-height: 24px;
+    font-size: 24px;
+    font-family: Arial, Verdana;
+    color: black;
+    margin-top: 2vh;
+    margin-left: 2%;    
 }
 .signupcontainer
 {  
@@ -209,6 +234,15 @@
     top: 20vh;
     left: 20%;
 }
+.topleft
+{
+    position: absolute;
+    top: 1vh;
+    left: 24%;
+    float: left;    
+    width: 32%;
+    height: 6vh;
+}
 .topright
 {
     position: absolute;
@@ -217,6 +251,19 @@
     float: right;    
     width: 20%;
     height: 8vh;
+}
+.validationmessage
+{
+    position: fixed;
+    top: 12vh;
+    width: 80%;
+    left: 14%;
+    color: red;
+    height: 4vh;
+    line-height: 4vh;
+    font-size: 24px;
+    text-align: center;
+    color: firebrick;
 }
 .yesbutton
 {
