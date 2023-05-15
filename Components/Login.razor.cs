@@ -344,6 +344,31 @@ namespace DataJuggler.BlazorGallery.Components
                 }
                 catch (Exception error)
                 {
+                    // Create a new instance of an 'ErrorLog' object.
+                    ErrorLog log = new ErrorLog();
+
+                    // local
+                    string viewOnlyMode = "ViewOnlyMode";
+
+                    // probably won't be set here
+                    log.UserId = LoggedInUserId;
+
+                    // if not view only 
+                    if (!loggedInUser.ViewOnlyMode)
+                    {
+                        // erase
+                        viewOnlyMode = "Real User";
+                    }
+
+                    // set 
+                    log.FolderId = SelectedFolderId;
+                    log.Error = error.ToString();
+                    log.Message = viewOnlyMode + error.Message;
+                    log.CreatedDate = DateTime.Now;
+                    
+                    // perform the save
+                    await ErrorLogService.SaveErrorLog(ref log);
+
                     // for debugging only for now
                     DebugHelper.WriteDebugError("ProcessVerifyPassword", "Login.razor.cs", error);
                 }
@@ -730,6 +755,23 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region HasSelectedFolder
+            /// <summary>
+            /// This property returns true if this object has a 'SelectedFolder'.
+            /// </summary>
+            public bool HasSelectedFolder
+            {
+                get
+                {
+                    // initial value
+                    bool hasSelectedFolder = (this.SelectedFolder != null);
+                    
+                    // return value
+                    return hasSelectedFolder;
+                }
+            }
+            #endregion
+            
             #region HasUserNameComponent
             /// <summary>
             /// This property returns true if this object has an 'UserNameComponent'.
@@ -766,6 +808,31 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return loggedInUser; }
                 set { loggedInUser = value; }
+            }
+            #endregion
+            
+            #region LoggedInUserId
+            /// <summary>
+            /// This read only property returns the value of LoggedInUserId from the object LoggedInUser.
+            /// </summary>
+            public int LoggedInUserId
+            {
+                
+                get
+                {
+                    // initial value
+                    int loggedInUserId = 0;
+                    
+                    // if LoggedInUser exists
+                    if (LoggedInUser != null)
+                    {
+                        // set the return value
+                        loggedInUserId = LoggedInUser.Id;
+                    }
+                    
+                    // return value
+                    return loggedInUserId;
+                }
             }
             #endregion
             
@@ -926,6 +993,56 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return rememberLoginComponent; }
                 set { rememberLoginComponent = value; }
+            }
+            #endregion
+            
+            #region SelectedFolder
+            /// <summary>
+            /// This read only property returns the value of SelectedFolder from the object ParentMainLayout.
+            /// </summary>
+            public Folder SelectedFolder
+            {
+                
+                get
+                {
+                    // initial value
+                    Folder selectedFolder = null;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        selectedFolder = ParentMainLayout.SelectedFolder;
+                    }
+                    
+                    // return value
+                    return selectedFolder;
+                }
+            }
+            #endregion
+            
+            #region SelectedFolderId
+            /// <summary>
+            /// This read only property returns the value of SelectedFolderId from the object SelectedFolder.
+            /// </summary>
+            public int SelectedFolderId
+            {
+                
+                get
+                {
+                    // initial value
+                    int selectedFolderId = 0;
+                    
+                    // if SelectedFolder exists
+                    if (SelectedFolder != null)
+                    {
+                        // set the return value
+                        selectedFolderId = SelectedFolder.Id;
+                    }
+                    
+                    // return value
+                    return selectedFolderId;
+                }
             }
             #endregion
             

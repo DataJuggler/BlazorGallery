@@ -48,6 +48,43 @@ namespace DataGateway
 
         #region Methods
         
+            #region DeleteActivityLog(int id, ActivityLog tempActivityLog = null)
+            /// <summary>
+            /// This method is used to delete ActivityLog objects.
+            /// </summary>
+            /// <param name="id">Delete the ActivityLog with this id</param>
+            /// <param name="tempActivityLog">Pass in a tempActivityLog to perform a custom delete.</param>
+            public bool DeleteActivityLog(int id, ActivityLog tempActivityLog = null)
+            {
+                // initial value
+                bool deleted = false;
+        
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempActivityLog does not exist
+                    if (tempActivityLog == null)
+                    {
+                        // create a temp ActivityLog
+                        tempActivityLog = new ActivityLog();
+                    }
+        
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempActivityLog.UpdateIdentity(id);
+                    }
+        
+                    // perform the delete
+                    deleted = this.AppController.ControllerManager.ActivityLogController.Delete(tempActivityLog);
+                }
+        
+                // return value
+                return deleted;
+            }
+            #endregion
+        
             #region DeleteAdmin(int id, Admin tempAdmin = null)
             /// <summary>
             /// This method is used to delete Admin objects.
@@ -78,6 +115,43 @@ namespace DataGateway
         
                     // perform the delete
                     deleted = this.AppController.ControllerManager.AdminController.Delete(tempAdmin);
+                }
+        
+                // return value
+                return deleted;
+            }
+            #endregion
+        
+            #region DeleteErrorLog(int id, ErrorLog tempErrorLog = null)
+            /// <summary>
+            /// This method is used to delete ErrorLog objects.
+            /// </summary>
+            /// <param name="id">Delete the ErrorLog with this id</param>
+            /// <param name="tempErrorLog">Pass in a tempErrorLog to perform a custom delete.</param>
+            public bool DeleteErrorLog(int id, ErrorLog tempErrorLog = null)
+            {
+                // initial value
+                bool deleted = false;
+        
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempErrorLog does not exist
+                    if (tempErrorLog == null)
+                    {
+                        // create a temp ErrorLog
+                        tempErrorLog = new ErrorLog();
+                    }
+        
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempErrorLog.UpdateIdentity(id);
+                    }
+        
+                    // perform the delete
+                    deleted = this.AppController.ControllerManager.ErrorLogController.Delete(tempErrorLog);
                 }
         
                 // return value
@@ -242,6 +316,43 @@ namespace DataGateway
             }
             #endregion
 
+            #region FindActivityLog(int id, ActivityLog tempActivityLog = null)
+            /// <summary>
+            /// This method is used to find 'ActivityLog' objects.
+            /// </summary>
+            /// <param name="id">Find the ActivityLog with this id</param>
+            /// <param name="tempActivityLog">Pass in a tempActivityLog to perform a custom find.</param>
+            public ActivityLog FindActivityLog(int id, ActivityLog tempActivityLog = null)
+            {
+                // initial value
+                ActivityLog activityLog = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempActivityLog does not exist
+                    if (tempActivityLog == null)
+                    {
+                        // create a temp ActivityLog
+                        tempActivityLog = new ActivityLog();
+                    }
+
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempActivityLog.UpdateIdentity(id);
+                    }
+
+                    // perform the find
+                    activityLog = this.AppController.ControllerManager.ActivityLogController.Find(tempActivityLog);
+                }
+
+                // return value
+                return activityLog;
+            }
+            #endregion
+
             #region FindAdmin(int id, Admin tempAdmin = null)
             /// <summary>
             /// This method is used to find 'Admin' objects.
@@ -276,6 +387,43 @@ namespace DataGateway
 
                 // return value
                 return admin;
+            }
+            #endregion
+
+            #region FindErrorLog(int id, ErrorLog tempErrorLog = null)
+            /// <summary>
+            /// This method is used to find 'ErrorLog' objects.
+            /// </summary>
+            /// <param name="id">Find the ErrorLog with this id</param>
+            /// <param name="tempErrorLog">Pass in a tempErrorLog to perform a custom find.</param>
+            public ErrorLog FindErrorLog(int id, ErrorLog tempErrorLog = null)
+            {
+                // initial value
+                ErrorLog errorLog = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempErrorLog does not exist
+                    if (tempErrorLog == null)
+                    {
+                        // create a temp ErrorLog
+                        tempErrorLog = new ErrorLog();
+                    }
+
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempErrorLog.UpdateIdentity(id);
+                    }
+
+                    // perform the find
+                    errorLog = this.AppController.ControllerManager.ErrorLogController.Find(tempErrorLog);
+                }
+
+                // return value
+                return errorLog;
             }
             #endregion
 
@@ -531,6 +679,27 @@ namespace DataGateway
             }
             #endregion
 
+            #region LoadActivityLogs(ActivityLog tempActivityLog = null)
+            /// <summary>
+            /// This method loads a collection of 'ActivityLog' objects.
+            /// </summary>
+            public List<ActivityLog> LoadActivityLogs(ActivityLog tempActivityLog = null)
+            {
+                // initial value
+                List<ActivityLog> activityLogs = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    activityLogs = this.AppController.ControllerManager.ActivityLogController.FetchAll(tempActivityLog);
+                }
+
+                // return value
+                return activityLogs;
+            }
+            #endregion
+
             #region LoadAdmins(Admin tempAdmin = null)
             /// <summary>
             /// This method loads a collection of 'Admin' objects.
@@ -549,6 +718,27 @@ namespace DataGateway
 
                 // return value
                 return admins;
+            }
+            #endregion
+
+            #region LoadErrorLogs(ErrorLog tempErrorLog = null)
+            /// <summary>
+            /// This method loads a collection of 'ErrorLog' objects.
+            /// </summary>
+            public List<ErrorLog> LoadErrorLogs(ErrorLog tempErrorLog = null)
+            {
+                // initial value
+                List<ErrorLog> errorLogs = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    errorLogs = this.AppController.ControllerManager.ErrorLogController.FetchAll(tempErrorLog);
+                }
+
+                // return value
+                return errorLogs;
             }
             #endregion
 
@@ -667,6 +857,28 @@ namespace DataGateway
             }
             #endregion
 
+            #region SaveActivityLog(ref ActivityLog activityLog)
+            /// <summary>
+            /// This method is used to save 'ActivityLog' objects.
+            /// </summary>
+            /// <param name="activityLog">The ActivityLog to save.</param>
+            public bool SaveActivityLog(ref ActivityLog activityLog)
+            {
+                // initial value
+                bool saved = false;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the save
+                    saved = this.AppController.ControllerManager.ActivityLogController.Save(ref activityLog);
+                }
+
+                // return value
+                return saved;
+            }
+            #endregion
+
             #region SaveAdmin(ref Admin admin)
             /// <summary>
             /// This method is used to save 'Admin' objects.
@@ -682,6 +894,28 @@ namespace DataGateway
                 {
                     // perform the save
                     saved = this.AppController.ControllerManager.AdminController.Save(ref admin);
+                }
+
+                // return value
+                return saved;
+            }
+            #endregion
+
+            #region SaveErrorLog(ref ErrorLog errorLog)
+            /// <summary>
+            /// This method is used to save 'ErrorLog' objects.
+            /// </summary>
+            /// <param name="errorLog">The ErrorLog to save.</param>
+            public bool SaveErrorLog(ref ErrorLog errorLog)
+            {
+                // initial value
+                bool saved = false;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the save
+                    saved = this.AppController.ControllerManager.ErrorLogController.Save(ref errorLog);
                 }
 
                 // return value
@@ -821,3 +1055,4 @@ namespace DataGateway
     #endregion
 
 }
+

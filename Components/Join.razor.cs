@@ -268,12 +268,18 @@ namespace DataJuggler.BlazorGallery.Components
                             {
                                 // Show a messagge
                                 ValidationMessage = "Oops, something went wrong. Please try again with a different password.";
+
+                                // Update the UI
+                                Refresh();
                             }
                         }
                         else
                         {
                             // Show a messagge
                             ValidationMessage = "Oops, something went wrong. Please try again with a different password.";
+
+                            // Update the UI
+                            Refresh();
                         }
                     }
                 }

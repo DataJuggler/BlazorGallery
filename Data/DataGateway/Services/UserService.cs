@@ -3,11 +3,12 @@
 #region using statements
 
 using ApplicationLogicComponent.Connection;
-using DataJuggler.UltimateHelper;
 using DataGateway;
+using System;
 using ObjectLibrary.BusinessObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataJuggler.UltimateHelper;
 
 #endregion
 
@@ -160,6 +161,20 @@ namespace DataGateway.Services
                 
                 // load the sites
                 saved = gateway.SaveUser(ref user);
+
+                // if the value for saved is false
+                if (!saved)
+                {
+                    // Get the error
+                    Exception error = gateway.GetLastException();
+
+                    // If the error object exists
+                    if (NullHelper.Exists(error))
+                    {
+                        // raise the error
+                        throw(error);
+                    }
+                }
                 
                 // return the value of saved
                 return Task.FromResult(saved);

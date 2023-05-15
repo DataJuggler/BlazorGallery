@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DataJuggler.UltimateHelper" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ApplicationLogicComponent\ApplicationLogicComponent.csproj" />
     <ProjectReference Include="..\DataAccessComponent\DataAccessComponent.csproj" />
     <ProjectReference Include="..\ObjectLibrary\ObjectLibrary.csproj" />

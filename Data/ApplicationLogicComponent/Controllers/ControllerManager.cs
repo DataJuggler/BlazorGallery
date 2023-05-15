@@ -25,7 +25,9 @@ namespace ApplicationLogicComponent.Controllers
         #region Private Variables
         private ErrorHandler errorProcessor;
         private ApplicationController appController;
+        private ActivityLogController activitylogController;
         private AdminController adminController;
+        private ErrorLogController errorlogController;
         private FolderController folderController;
         private ImageController imageController;
         private UserController userController;
@@ -55,7 +57,9 @@ namespace ApplicationLogicComponent.Controllers
             private void Init()
             {
                 // Create Child Controllers
+                this.ActivityLogController = new ActivityLogController(this.ErrorProcessor, this.AppController);
                 this.AdminController = new AdminController(this.ErrorProcessor, this.AppController);
+                this.ErrorLogController = new ErrorLogController(this.ErrorProcessor, this.AppController);
                 this.FolderController = new FolderController(this.ErrorProcessor, this.AppController);
                 this.ImageController = new ImageController(this.ErrorProcessor, this.AppController);
                 this.UserController = new UserController(this.ErrorProcessor, this.AppController);
@@ -82,11 +86,27 @@ namespace ApplicationLogicComponent.Controllers
             }
             #endregion
 
+            #region ActivityLogController
+            public ActivityLogController ActivityLogController
+            {
+                get { return activitylogController; }
+                set { activitylogController = value; }
+            }
+            #endregion
+
             #region AdminController
             public AdminController AdminController
             {
                 get { return adminController; }
                 set { adminController = value; }
+            }
+            #endregion
+
+            #region ErrorLogController
+            public ErrorLogController ErrorLogController
+            {
+                get { return errorlogController; }
+                set { errorlogController = value; }
             }
             #endregion
 
