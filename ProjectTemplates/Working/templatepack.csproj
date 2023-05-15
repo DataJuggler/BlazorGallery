@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.1.6</PackageVersion>
+    <PackageVersion>1.1.8</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
@@ -14,7 +14,7 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.1.6</Version>
+    <Version>1.1.8</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -47,6 +47,7 @@ so you must create an Upload folder under wwwroot.
 	<EmbeddedResource Remove="templates\obj\**" />
 	<None Remove="templates\bin\**" />
 	<None Remove="templates\obj\**" />
+	<None Remove="templates\wwwroot\Upload\ReadMe.txt" />
     <Content Include="templates\.template.config\template.json" />
   </ItemGroup>
   <ItemGroup>	
@@ -56,7 +57,11 @@ so you must create an Upload folder under wwwroot.
   </ItemGroup>
   <ItemGroup>
     <Folder Include="templates\Data\" />
-	<Folder Include="templates\wwwroot\Upload" />
+	<Folder Include="templates\wwwroot\Upload\" />
+	<None Update="templates\wwwroot\Upload\ReadMe.txt">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	</None>
 	<None Update="templates\ReadMe.md">
 		<Pack>True</Pack>
 		<PackagePath>\</PackagePath>

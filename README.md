@@ -20,10 +20,6 @@ or
 
 Clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
 
-# Important!
-If you created the project from Nuget CLI, you must create an Upload folder in wwwroot of this project (next to images)
-Still not sure why this folder is not part of the package.
-
 1. Create a SQL Server Database named BlazorGallery
 2. Execute BlazorGalleryDatabase.sql located in the SQL folder of this project.
 3. Execute Insert Admin.sql
@@ -32,19 +28,22 @@ Tip: DataTier.Net (used to build the datatier for this project) comes with a Con
 in the tools folder.
 https://github.com/DataJuggler/DataTier.Net
 
-5. Create a user level environment variable named BlazorGalleryConnString and paste in the connection string from
-step 4.
-6. Create a user level environment variable named BlazorGalleryKeyCode and make up a string for its value.
-This keycode is used to create password hashes when an account is created by a user.
-7. Go to https://github.com/DataJuggler/BlazorGallery/ and leave a star
-8. Go to https://youtube.com/DataJuggler" and subscribe. 
-9. Tell a developer you know how easy Blazor Gallery makes it to create a Blazor SQL Server site.
+5. Create a user level environment variable named BlazorGalleryConnString and paste 
+in the connection string from step 4.
+6. Create a user level environment variable named BlazorGalleryKeyCode and 
+make up a string for its value. This keycode is used to create password hashes 
+when an account is created by a user.
+7. Create a user level environment variable named BlazorGalleryURL
+and set its value to https://localhost:44330 or the domain name if you are publishing.
+8. Go to https://github.com/DataJuggler/BlazorGallery/ and leave a star
+9. Go to https://youtube.com/DataJuggler" and subscribe. 
+10. Tell a developer you know how easy Blazor Gallery makes it to create a Blazor SQL
+Server image galleries.
 
 Everything should work if you followed the above steps.
 
-I am currently working on building routing, so you can create a public URL
-(domain)/User/Folder. Once I get the routing done I will publish another update. ETA, Friday 12, 2023 but it may take 
-longer.
+# Routing
+Routing has been completed. 
 
 Blazor Gallery Nuget Package was made with help from Build Copy. 
 
