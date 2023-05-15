@@ -26,6 +26,8 @@ using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using DataJuggler.UltimateHelper.Objects;
 using System.Reflection;
+using Microsoft.JSInterop;
+using Timer = System.Timers;
 
 #endregion
 
@@ -63,11 +65,50 @@ namespace DataJuggler.BlazorGallery.Shared
         private Login loginComponent;  
         private string validationMessage;
         private string userUrl;
+        private string checkMarkStyle;
+        private double checkMarkTop;
+        private string checkMarkImage;
+        private string checkMarkContainerStyle;
+        private Timer.Timer timer;
+        private bool copyButtonHasBeenClicked;        
         private const int AdminId = 1;
         public const int FolderHeight = 48;
         public const int UploadLimit = 20480000;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
-        public const int FolderTop = 140;
+        public const int FolderTop = 140;        
+        public const int FolderAdjustment = 160;
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Create a new instance of a MainLayout object
+        /// </summary>
+        public MainLayout()
+        {
+            // default
+            CheckMarkImage = "../Images/Transparent.png";
+        }
+        #endregion
+
+        #region Events
+            
+            #region TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+            /// <summary>
+            /// event is fired when Timer Elapsed
+            /// </summary>
+            private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                // destroy
+                Timer.Dispose();
+                
+                // hide
+                CheckMarkImage = "../Images/Transparent.png";
+                
+                // update the UI
+                Refresh();
+            }
+            #endregion
+            
         #endregion
 
         #region Methods
@@ -82,7 +123,68 @@ namespace DataJuggler.BlazorGallery.Shared
                 AddFolderMode = true;
 
                 // Set the Top
-                Top = FolderTop + ((Folders.Count + 1) * FolderHeight);
+                Top = FolderTop + ((Folders.Count + 1) * FolderHeight);               
+            }
+            #endregion
+            
+            #region CopyFolder(int folderId, int buttonNumber)
+            /// <summary>
+            /// Copy Folder
+            /// </summary>
+            public async void CopyFolder(int folderId, int buttonNumber)
+            {
+                // find the folder
+                Folder folder = await FolderService.FindFolder(folderId);
+                
+                // if the folder exists and the LoggedInUser exists
+                if ((NullHelper.Exists(folder)) && (HasLoggedInUser) && (HasFolders))
+                {
+                    // Set to true
+                    CopyButtonHasBeenClicked = true;
+
+                    // Find the index of this folder
+                    int folderIndex = FindFolderIndex(folderId);
+
+                    // Set the top
+                    CheckMarkTop = ((Folders.Count - folderIndex) * (FolderHeight + 3)) * -1;
+
+                    // if the fileupload is currently showing
+                    if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode))
+                    {
+                        // do nothing
+                    }
+                    else
+                    {
+                        // check mark needs to be down more when not showing the file upload
+                        CheckMarkTop = CheckMarkTop + 32;
+                    }
+
+                    // set the top
+                    top = 60 + (buttonNumber * 32);
+
+                    string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.User);
+                    string gallery = root + "/Gallery/" + LoggedInUser.UserName + "/" + folder.Name.Replace(" ", "%20");
+                    
+                    await BlazorJSBridge.CopyToClipboard(JSRuntime, gallery);
+
+                    // set to visible
+                    CheckMarkImage = "../Images/Check.png";
+                    
+                    // Update the UI
+                    Refresh();
+                    
+                    // Start the timer
+                    Timer = new Timer.Timer(3000);
+                    Timer.Elapsed += TimerElapsed;
+                    Timer.Start();
+
+                    // if the value for CopyButtonHasBeenClicked is true
+                    if (CopyButtonHasBeenClicked)
+                    {
+                        // Adjust for weird movement
+                        Top = Top + FolderAdjustment;
+                    }
+                }
             }
             #endregion
             
@@ -131,6 +233,40 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
 
+            #region FindFolderIndex(int folderId)
+            /// <summary>
+            /// returns the Folder Index
+            /// </summary>
+            public int FindFolderIndex(int folderId)
+            {
+                // initial value
+                int index = -1;
+
+                // local 
+                int tempIndex = -1;
+
+                // Iterate the collection of Folder objects
+                foreach (Folder folder in Folders)
+                {   
+                    // Increment the value for tempIndex
+                    tempIndex++;
+
+                    // if this is the folder being sought
+                    if (folder.Id == folderId)
+                    {
+                        // set the return value
+                        index = tempIndex;
+
+                        // exit loop
+                        break;
+                    }
+                }
+                
+                // return value
+                return index;
+            }
+            #endregion
+            
             #region FindHomeFolder()
             /// <summary>
             /// returns the Home Folder
@@ -1001,6 +1137,67 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region CheckBoxStyle
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkStyle'.
+            /// </summary>
+            public string CheckMarkStyle
+            {
+                get { return checkMarkStyle; }
+                set { checkMarkStyle = value; }
+            }
+            #endregion
+            
+            #region CheckMarkContainerStyle
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkContainerStyle'.
+            /// </summary>
+            public string CheckMarkContainerStyle
+            {
+                get { return checkMarkContainerStyle; }
+                set { checkMarkContainerStyle = value; }
+            }
+            #endregion
+            
+            #region CheckMarkImage
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkImage'.
+            /// </summary>
+            public string CheckMarkImage
+            {
+                get { return checkMarkImage; }
+                set { checkMarkImage = value; }
+            }
+            #endregion
+            
+            #region CheckMarkTop
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkTop'.
+            /// </summary>
+            public double CheckMarkTop
+            {
+                get { return checkMarkTop; }
+                set { checkMarkTop = value; }
+            }
+            #endregion
+            
+            #region CheckMarkTopStyle
+            /// <summary>
+            /// This read only property returns the value of CheckMarkTopStyle from the object CheckMarkTop.
+            /// </summary>
+            public string CheckMarkTopStyle
+            {  
+                get
+                {
+                    // initial value
+                    string checkMarkTopStyle = CheckMarkTop + "px";
+                    
+                    // return value
+                    return checkMarkTopStyle;
+                }
+            }
+            #endregion
+            
             #region Children
             /// <summary>
             /// This property gets or sets the value for 'Children'.
@@ -1020,6 +1217,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return confirmationComponent; }
                 set { confirmationComponent = value; }
+            }
+            #endregion
+            
+            #region CopyButtonHasBeenClicked
+            /// <summary>
+            /// This property gets or sets the value for 'CopyButtonHasBeenClicked'.
+            /// </summary>
+            public bool CopyButtonHasBeenClicked
+            {
+                get { return copyButtonHasBeenClicked; }
+                set { copyButtonHasBeenClicked = value; }
             }
             #endregion
             
@@ -1220,6 +1428,23 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region HasTimer
+            /// <summary>
+            /// This property returns true if this object has a 'Timer'.
+            /// </summary>
+            public bool HasTimer
+            {
+                get
+                {
+                    // initial value
+                    bool hasTimer = (this.Timer != null);
+                    
+                    // return value
+                    return hasTimer;
+                }
+            }
+            #endregion
+            
             #region HasValidationMessage
             /// <summary>
             /// This property returns true if the 'ValidationMessage' exists.
@@ -1236,6 +1461,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 }
             }
             #endregion
+
             #region IndexPage
             /// <summary>
             /// This property gets or sets the value for 'IndexPage'.
@@ -1348,7 +1574,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 set { selectedFolder = value; }
             }
             #endregion
-            
+                        
             #region ShowConfirmation
             /// <summary>
             /// This property gets or sets the value for 'ShowConfirmation'.
@@ -1368,6 +1594,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return sprite; }
                 set { sprite = value; }
+            }
+            #endregion
+            
+            #region Timer
+            /// <summary>
+            /// This property gets or sets the value for 'Timer'.
+            /// </summary>
+            public Timer.Timer Timer
+            {
+                get { return timer; }
+                set { timer = value; }
             }
             #endregion
             

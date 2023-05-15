@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.1.4</Version>
+	<Version>1.1.6</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -44,10 +44,6 @@ BlazorGalleryKeyCode is used to create password hashes when a user signs up.</Pa
   </ItemGroup>
 
   <ItemGroup>
-	<Folder Include="wwwroot\Upload\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\Upload\.gitignore" />
   </ItemGroup>
 
@@ -64,6 +60,10 @@ BlazorGalleryKeyCode is used to create password hashes when a user signs up.</Pa
   </ItemGroup>
 
   <ItemGroup>
+	  <Folder Include="wwwroot\Upload\" >
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>		  
+	  </Folder>
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

@@ -7,6 +7,7 @@
 @using BlazorStyled
 @using DataJuggler.BlazorGallery.Components
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+@inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @inject ProtectedLocalStorage ProtectedLocalStore
 
@@ -14,7 +15,7 @@
 
 <Styled @bind-Classname=@BlueButton>
     background-image: url('../Images/UploadButtonBlue.png');
-    position: absolute;    
+    position: fixed;        
     left: 2%;
     top: @TopStyle;
     background-size: 100% 100%;
@@ -33,6 +34,26 @@
     cursor: pointer;
     border: none;
     background-color: transparent;
+</Styled>
+<Styled @bind-Classname="@CheckMarkContainerStyle">
+    position: relative;
+    top: @CheckMarkTopStyle;
+    float: left;
+    height: 32px;
+    min-height: 32px;
+    width: 32px;
+    left: 0%;    
+</Styled>
+<Styled @bind-Classname="@CheckMarkStyle">
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    position: relative;
+    top: 0px;
+    left: 0px;    
+    background-size: 100% 100%;
+    background-image: url(@CheckMarkImage);
+    z-index: 120;
 </Styled>
 
 <div class="page">
@@ -62,7 +83,7 @@
         }
     }
     <div class="fixedsidebar">
-        <div class="logo"></div>   
+        <div class="logo"></div>           
         @if (HasLoggedInUser)
         {
             <div class="folders down16">
@@ -72,29 +93,34 @@
                 <div class="height8"></div>
                 @if (HasFolders)
                 {
+                    int buttonNumber = 0;
+
                     foreach (Folder folder in Folders)
-                    {
+                    {  
+                        buttonNumber++;
+
                         <div class="nav-item px-3">
-                            @if ((folder.Name != "Home") && (folder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
-                            {
-                                <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
-                            }
-                            else
-                            {
-                                <div class="displayinlineblock width16"></div>
-                            }
-                            @if (folder.Selected)
-                            {
-                                <button class="imagefolder right16"><span class="fontsize14 colorfirebrick fontbold right56 text-nowrap">@folder.Name</span></button>
-                            }
-                            else
-                            {
-                                <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colornavy right56 fontbold">@folder.Name</span></button>
-                            }
-                        </div>
-                        <div class="height16 displayblock"></div>
-                    }
+                        <button class="copybutton down16 right16" title="Copy This Folder's URL'" @onclick="() => CopyFolder(folder.Id, buttonNumber)"></button>                            
+                        @if ((folder.Name != "Home") && (folder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
+                        {
+                            <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
+                        }
+                        else
+                        {
+                            <div class="displayinlineblock width16"></div>
+                        }
+                        @if (folder.Selected)
+                        {
+                            <button class="imagefolder right16"><span class="fontsize14 colorfirebrick fontbold right56 text-nowrap">@folder.Name</span></button>
+                        }
+                        else
+                        {
+                            <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colornavy right56 fontbold">@folder.Name</span></button>
+                        }
+                    </div>
+                    <div class="height16 displayblock"></div>
                 }
+            }
             </div>
             @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
             {
@@ -121,6 +147,9 @@
                     FileTooLargeMessage=@FileTooLargeMessage>
                 </FileUpload>
             }
+            <div class="@CheckMarkContainerStyle">
+                <div class="@CheckMarkStyle"></div>
+            </div>
             <div>
                 <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>
             </div>
@@ -134,7 +163,7 @@
                     @if (HasValidationMessage)
                     {
                         @ValidationMessage
-                    }
+                    }                    
                 </div>
                 <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
             }          
