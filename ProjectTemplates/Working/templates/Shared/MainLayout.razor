@@ -42,7 +42,7 @@
     height: 32px;
     min-height: 32px;
     width: 32px;
-    left: 0%;    
+    left: 1px;    
 </Styled>
 <Styled @bind-Classname="@CheckMarkStyle">
     width: 32px;
@@ -166,7 +166,11 @@
                     }                    
                 </div>
                 <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
-            }          
+            }
+            else if  (ScreenType == ScreenTypeEnum.TermsOfservice)
+            {
+                <TermsOfServiceComponent Parent="this" Prompt="Do you access these terms?"></TermsOfServiceComponent>
+            }
         </article>
     </main>
 </div>

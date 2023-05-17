@@ -13,6 +13,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataManager\Readers\TermsOfServiceReader.cs" />
+    <Compile Remove="DataManager\Readers\UserTermsOfServiceReader.cs" />
+    <Compile Remove="DataManager\TermsOfServiceManager.cs" />
+    <Compile Remove="DataManager\UserTermsOfServiceManager.cs" />
+    <Compile Remove="DataManager\Writers\TermsOfServiceWriter.cs" />
+    <Compile Remove="DataManager\Writers\TermsOfServiceWriterBase.cs" />
+    <Compile Remove="DataManager\Writers\UserTermsOfServiceWriter.cs" />
+    <Compile Remove="DataManager\Writers\UserTermsOfServiceWriterBase.cs" />
+    <Compile Remove="StoredProcedureManager\DeleteProcedures\DeleteTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\DeleteProcedures\DeleteUserTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\FetchProcedures\FetchAllTermsOfServicesStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\FetchProcedures\FetchAllUserTermsOfServicesStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\FetchProcedures\FindTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\FetchProcedures\FindUserTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\InsertProcedures\InsertTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\InsertProcedures\InsertUserTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\UpdateProcedures\UpdateTermsOfServiceStoredProcedure.cs" />
+    <Compile Remove="StoredProcedureManager\UpdateProcedures\UpdateUserTermsOfServiceStoredProcedure.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DataJuggler.Net7" Version="7.0.10" />
     <PackageReference Include="DataJuggler.UltimateHelper" Version="7.1.2" />
   </ItemGroup>

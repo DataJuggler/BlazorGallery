@@ -298,7 +298,7 @@ namespace DataJuggler.BlazorGallery.Components
                         if (NullHelper.Exists(user))
                         {
                             // Get the KeyCode
-                            string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.User);
+                            string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.Machine);
 
                             // verify the user is logged in
                             bool verified = CryptographyHelper.VerifyHash(password, keyCode, user.PasswordHash);
@@ -327,8 +327,17 @@ namespace DataJuggler.BlazorGallery.Components
                                     await HandleRememberPassword();
                                 }
 
-                                // Setup the Index page
-                                ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                                // if the user has not accepted yet
+                                if (LoggedInUser.AcceptedTermsOfServiceDate.Year < 2000)
+                                {
+                                    // Setup the Index page
+                                    ParentMainLayout.SetupScreen(ScreenTypeEnum.TermsOfservice);
+                                }
+                                else
+                                {
+                                    // Setup the Index page
+                                    ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                                }
 
                                 // Update the login information for this user
                                 user.LastLoginDate = DateTime.Now;

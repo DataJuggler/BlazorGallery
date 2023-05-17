@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BusinessObjects\TermsOfService.business.cs" />
+    <Compile Remove="BusinessObjects\TermsOfService.data.cs" />
+    <Compile Remove="BusinessObjects\UserTermsOfService.business.cs" />
+    <Compile Remove="BusinessObjects\UserTermsOfService.data.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DataJuggler.Net7" Version="7.0.10" />
   </ItemGroup>
   

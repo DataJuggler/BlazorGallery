@@ -67,7 +67,7 @@ namespace ApplicationLogicComponent.Connection
                         if (TextHelper.Exists(dataManager.ConnectionName))
                         {
                             // Set the ConnectionString (requires DataJuggler.UltimateHelper version 7.1 or higher)
-                            dataManager.DataConnector.ConnectionString = EnvironmentVariableHelper.GetEnvironmentVariableValue(dataManager.ConnectionName, EnvironmentVariableTarget.User);
+                            dataManager.DataConnector.ConnectionString = EnvironmentVariableHelper.GetEnvironmentVariableValue(dataManager.ConnectionName, EnvironmentVariableTarget.Machine);
                         }
                     }
                     

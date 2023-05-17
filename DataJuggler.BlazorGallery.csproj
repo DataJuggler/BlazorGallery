@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.1.8</Version>
+	<Version>1.1.9</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -17,7 +17,11 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
-	<PackageReleaseNotes>5.15.2023: I fixed the Upload issue not showing up in the folder for a Nuget package.
+	<PackageReleaseNotes>v1.1.9
+5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
+or they are sent to Google.
+
+5.15.2023: I fixed the Upload issue not showing up in the folder for a Nuget package.
 The issue was resolved by including a file ReadMe.txt in the Upload folder and packing
 the read me file similar to the other two ReadMe.md files. 
 

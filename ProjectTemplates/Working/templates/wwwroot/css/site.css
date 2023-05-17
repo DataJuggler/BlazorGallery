@@ -28,6 +28,14 @@
     background-color: transparent;
     border: none;    
 }
+.centerscreen
+{
+    position: absolute;
+    left: 22%;
+    top: 4vh;
+    width: 800px;
+    height: 480px;
+}
 .col 
 {
   justify-content: flex-start; 
@@ -269,8 +277,7 @@
     position: fixed;
     top: 12vh;
     width: 80%;
-    left: 14%;
-    color: red;
+    left: 14%;    
     height: 4vh;
     line-height: 4vh;
     font-size: 24px;

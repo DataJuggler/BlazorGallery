@@ -18,6 +18,7 @@ namespace ObjectLibrary.BusinessObjects
     {
 
         #region Private Variables
+        private DateTime acceptedTermsOfServiceDate;
         private bool active;
         private DateTime createdDate;
         private string emailAddress;
@@ -50,6 +51,31 @@ namespace ObjectLibrary.BusinessObjects
         #endregion
 
         #region Properties
+
+            #region DateTime AcceptedTermsOfServiceDate
+            public DateTime AcceptedTermsOfServiceDate
+            {
+                get
+                {
+                    return acceptedTermsOfServiceDate;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (AcceptedTermsOfServiceDate != value);
+
+                    // Set the value
+                    acceptedTermsOfServiceDate = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
 
             #region bool Active
             public bool Active

@@ -1,5 +1,11 @@
 # DataJuggler.BlazorGallery
-Blazor Gallery is now working. 
+Blazor Gallery is now live https://blazorgallery.com
+
+News
+
+v1.1.9
+5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
+or they are sent to Google.
 
 5.10.2023 - New video published
 
@@ -28,12 +34,12 @@ Tip: DataTier.Net (used to build the datatier for this project) comes with a Con
 in the tools folder.
 https://github.com/DataJuggler/DataTier.Net
 
-5. Create a user level environment variable named BlazorGalleryConnString and paste 
+5. Create a system level environment variable named BlazorGalleryConnString and paste 
 in the connection string from step 4.
-6. Create a user level environment variable named BlazorGalleryKeyCode and 
+6. Create a system level environment variable named BlazorGalleryKeyCode and 
 make up a string for its value. This keycode is used to create password hashes 
 when an account is created by a user.
-7. Create a user level environment variable named BlazorGalleryURL
+7. Create a system level environment variable named BlazorGalleryURL
 and set its value to https://localhost:44330 or the domain name if you are publishing.
 8. Go to https://github.com/DataJuggler/BlazorGallery/ and leave a star
 9. Go to https://youtube.com/DataJuggler" and subscribe. 

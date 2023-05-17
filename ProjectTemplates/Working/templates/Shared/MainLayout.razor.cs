@@ -162,7 +162,7 @@ namespace DataJuggler.BlazorGallery.Shared
                     // set the top
                     top = 60 + (buttonNumber * 32);
 
-                    string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.User);
+                    string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.Machine);
                     string gallery = root + "/Gallery/" + LoggedInUser.UserName + "/" + folder.Name.Replace(" ", "%20");
                     
                     await BlazorJSBridge.CopyToClipboard(JSRuntime, gallery);
@@ -456,7 +456,7 @@ namespace DataJuggler.BlazorGallery.Shared
                                 if (NullHelper.Exists(user))
                                 {
                                     // get the key
-                                    string key = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.User);
+                                    string key = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.Machine);
 
                                     // if the key was found
                                     if (TextHelper.Exists(key))
@@ -470,8 +470,20 @@ namespace DataJuggler.BlazorGallery.Shared
                                             // Set the LoggedInuser
                                             LoggedInUser = user;
 
-                                            // Setup the screen
-                                            ScreenType = ScreenTypeEnum.Index;
+                                            // If the user has not accepted yet
+                                            if (LoggedInUser.AcceptedTermsOfServiceDate.Year < 2000)
+                                            {
+                                                // Setup the screen
+                                                ScreenType = ScreenTypeEnum.TermsOfservice;
+
+                                                // Setup the screen
+                                                Refresh();
+                                            }
+                                            else
+                                            {
+                                                // Setup the screen
+                                                ScreenType = ScreenTypeEnum.Index;
+                                            }
                                         }
                                     }
                                 }
@@ -712,6 +724,12 @@ namespace DataJuggler.BlazorGallery.Shared
                         // if the value for saved is true
                         if (saved)
                         {
+                            // set the storage used
+                            LoggedInUser.StorageUsed += image.FileSize;
+                            
+                            // Save the logged in user
+                            saved = await UserService.SaveUser(ref loggedInUser);
+
                             // Load the imagess
                             SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
 
@@ -1030,6 +1048,14 @@ namespace DataJuggler.BlazorGallery.Shared
                         // Refresh
                         Refresh();
                     }
+                }
+                else if (screenType == ScreenTypeEnum.TermsOfservice)
+                {
+                    // Force a reload
+                    ForceReload = true;
+
+                    // Refresh
+                    Refresh();
                 }
 
                 // Update the UI

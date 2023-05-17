@@ -28,7 +28,9 @@ namespace DataAccessComponent.DataManager
         #region Private Variables
         private DataConnector dataConnector;
         private string connectionName;
+        private ActivityLogManager activitylogManager;
         private AdminManager adminManager;
+        private ErrorLogManager errorlogManager;
         private FolderManager folderManager;
         private ImageManager imageManager;
         private UserManager userManager;
@@ -61,7 +63,9 @@ namespace DataAccessComponent.DataManager
                 this.DataConnector = new DataConnector();
 
                 // Create Child Object Managers
+                this.ActivityLogManager = new ActivityLogManager(this);
                 this.AdminManager = new AdminManager(this);
+                this.ErrorLogManager = new ErrorLogManager(this);
                 this.FolderManager = new FolderManager(this);
                 this.ImageManager = new ImageManager(this);
                 this.UserManager = new UserManager(this);
@@ -88,11 +92,27 @@ namespace DataAccessComponent.DataManager
             }
             #endregion
 
+            #region ActivityLogManager
+            public ActivityLogManager ActivityLogManager
+            {
+                get { return activitylogManager; }
+                set { activitylogManager = value; }
+            }
+            #endregion
+
             #region AdminManager
             public AdminManager AdminManager
             {
                 get { return adminManager; }
                 set { adminManager = value; }
+            }
+            #endregion
+
+            #region ErrorLogManager
+            public ErrorLogManager ErrorLogManager
+            {
+                get { return errorlogManager; }
+                set { errorlogManager = value; }
             }
             #endregion
 

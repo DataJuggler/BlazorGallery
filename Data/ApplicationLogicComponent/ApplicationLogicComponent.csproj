@@ -12,7 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.UltimateHelper" Version="7.1.2" />
+    <Compile Remove="Controllers\TermsOfServiceController.cs" />
+    <Compile Remove="Controllers\UserTermsOfServiceController.cs" />
+    <Compile Remove="DataOperations\TermsOfServiceMethods.cs" />
+    <Compile Remove="DataOperations\UserTermsOfServiceMethods.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +26,10 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="DataOperations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DataJuggler.UltimateHelper" Version="7.1.2" />
   </ItemGroup>
 
 </Project>

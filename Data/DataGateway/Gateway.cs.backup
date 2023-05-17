@@ -529,7 +529,7 @@ namespace DataGateway
                 return image;
             }
             #endregion
-
+                
             #region FindUser(int id, User tempUser = null)
             /// <summary>
             /// This method is used to find 'User' objects.
@@ -618,7 +618,7 @@ namespace DataGateway
                 return user;
             }
             #endregion
-                
+
             #region GetDataConnector()
             /// <summary>
             /// This method (safely) returns the Data Connector from the
@@ -835,7 +835,7 @@ namespace DataGateway
                     return images;
                 }
                 #endregion
-                
+
             #region LoadUsers(User tempUser = null)
             /// <summary>
             /// This method loads a collection of 'User' objects.

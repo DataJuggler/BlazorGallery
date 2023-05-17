@@ -16,7 +16,8 @@ namespace ObjectLibrary.Enumerations
         MainScreen = 0,
         SignUp = 1,
         Login = 2,
-        Index = 3
+        Index = 3,
+        TermsOfservice = 4
     }
     #endregion
 

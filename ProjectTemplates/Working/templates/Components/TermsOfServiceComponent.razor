@@ -1,0 +1,45 @@
+﻿@using BlazorStyled
+@inject NavigationManager NavManager
+
+<Styled @bind-Classname=@ComponentStyle>
+    width: 240px;
+    height: 120px;
+    position: relative;
+    left: 24%;
+    top: 0vh;
+    display: block;
+</Styled>
+
+<div class="centerscreen">
+   <div class=WordSection1>
+        <p class="" align=center style='text-align:center'><b><span
+        style='font-size:14.0pt'>Blazor Gallery Terms of Service</span></b></p>        
+        <p class=""><span style='font-size:14.0pt'>Blazor Gallery is a free
+            site allowing graphics designers, photographers and 3D artists to showcase
+            their portfolios. By using this site, you agree to abide by all applicable laws 
+            and rules covered in these terms of service.</span>
+        </p>        
+        <div class="fontbold">Content Uploading</div>
+        <p class=""><span style='font-size:14.0pt'>You agree that you are the creator of the content
+            and that you have the right to upload and share all images being uploaded.</span></p>
+        <p class=""><b><span style='font-size:14.0pt'>This site is a demo for
+        an opensource project, and therefore we do not allow nudity, pornography or
+        adult themed content.</span></b></p>        
+        <p class=""><span style='font-size:14.0pt'>Please ensure all images
+        uploaded are safe to be shown in a work environment and are tasteful. Images
+        depicting violence or cruelty towards people or animals is strictly forbidden. Any violations to these
+        terms of service may result in account closure and your content being deleted
+        from our servers.</span>
+        </p>        
+        <p class=""><span style='font-size:14.0pt'>This server is paid for
+        out of my own pocket, and I am not currently working, so any donations to help
+        pay for storage and bandwidth are appreciated.</span></p>
+        <p class=""><span style='font-size:14.0pt'>Welcome to Blazor Gallery
+        and I hope you enjoy this site.</span></p>
+    </div>
+    <div class="@ComponentStyle">
+        <div class="displayinlineblock"><span style='font-size:14.0pt'>@Prompt</span></div>
+        <button class="yesbutton" @onclick="YesClicked"></button>
+        <button class="nobutton" @onclick="NoClicked"></button>
+    </div>
+</div>

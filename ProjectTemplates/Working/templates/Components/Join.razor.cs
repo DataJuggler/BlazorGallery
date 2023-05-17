@@ -61,7 +61,7 @@ namespace DataJuggler.BlazorGallery.Components
         private string progressStyle;
         private Sprite invisibleSprite;
         private bool loginInProcess;
-        private int extraPercent;
+        private int extraPercent;        
         #endregion
 
         #region Consructor
@@ -222,22 +222,24 @@ namespace DataJuggler.BlazorGallery.Components
                 // get the user
                 User user = userObject as User;
 
+            try
+            {
                 // if the user exists
                 if (NullHelper.Exists(user))
                 {
-                     // Get the KeyCode
-                    string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeycode", EnvironmentVariableTarget.User);
+                    // Get the KeyCode
+                    string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeycode", EnvironmentVariableTarget.Machine);
 
                     // If the keyCode string exists
                     if (TextHelper.Exists(keyCode))
                     {
                         // Set the PasswordHash, this takes the longest time
-                        user.PasswordHash = CryptographyHelper.GeneratePasswordHash(Password, keyCode, 3);  
+                        user.PasswordHash = CryptographyHelper.GeneratePasswordHash(Password, keyCode, 3);
 
                         // if the password hash was created
                         if (TextHelper.Exists(user.PasswordHash))
                         {
-                             // save the user
+                            // save the user
                             bool saved = await UserService.SaveUser(ref user);
 
                             // if saved
@@ -266,25 +268,48 @@ namespace DataJuggler.BlazorGallery.Components
                             }
                             else
                             {
-                                // Show a messagge
-                                ValidationMessage = "Oops, something went wrong. Please try again with a different password.";
+                                // if not saved
+                                if (!saved)
+                                {
+                                    // Show a messagge
+                                    ValidationMessage = "Oops, something went wrong. Save Failed.";
+                                }
+
+                                // Update the UI
+                                Refresh();
                             }
                         }
                         else
                         {
                             // Show a messagge
-                            ValidationMessage = "Oops, something went wrong. Please try again with a different password.";
+                            ValidationMessage = "Oops, something went wrong. Password Hash could not be generated.";
+
+                            // Update the UI
+                            Refresh();
                         }
+                    }
+                    else
+                    {
+                        // Show a messagge
+                        ValidationMessage = "Oops, something went wrong. Keycode does not exist.";
+
+                        // Update the UI
+                        Refresh();
                     }
                 }
             }
-            #endregion
-            
-            #region ReceiveData(Message message)
-            /// <summary>
-            /// method returns the Data
-            /// </summary>
-            public async void ReceiveData(Message message)
+            catch (Exception error)
+            {
+                DebugHelper.WriteDebugError("ProcessNewUserSignup", "Join.razor.cs", error);
+            }
+        }
+        #endregion
+
+        #region ReceiveData(Message message)
+        /// <summary>
+        /// method returns the Data
+        /// </summary>
+        public async void ReceiveData(Message message)
             {
                 // locals
                 User user = null;

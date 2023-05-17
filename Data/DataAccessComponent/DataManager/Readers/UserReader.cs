@@ -36,22 +36,24 @@ namespace DataAccessComponent.DataManager.Readers
                 User user = new User();
 
                 // Create field Integers
-                int activefield = 0;
-                int createdDatefield = 1;
-                int emailAddressfield = 2;
-                int emailVerifiedfield = 3;
-                int idfield = 4;
-                int isAdminfield = 5;
-                int lastLoginDatefield = 6;
-                int namefield = 7;
-                int passwordHashfield = 8;
-                int storageUsedfield = 9;
-                int totalLoginsfield = 10;
-                int userNamefield = 11;
+                int acceptedTermsOfServiceDatefield = 0;
+                int activefield = 1;
+                int createdDatefield = 2;
+                int emailAddressfield = 3;
+                int emailVerifiedfield = 4;
+                int idfield = 5;
+                int isAdminfield = 6;
+                int lastLoginDatefield = 7;
+                int namefield = 8;
+                int passwordHashfield = 9;
+                int storageUsedfield = 10;
+                int totalLoginsfield = 11;
+                int userNamefield = 12;
 
                 try
                 {
                     // Load Each field
+                    user.AcceptedTermsOfServiceDate = DataHelper.ParseDate(dataRow.ItemArray[acceptedTermsOfServiceDatefield]);
                     user.Active = DataHelper.ParseBoolean(dataRow.ItemArray[activefield], false);
                     user.CreatedDate = DataHelper.ParseDate(dataRow.ItemArray[createdDatefield]);
                     user.EmailAddress = DataHelper.ParseString(dataRow.ItemArray[emailAddressfield]);
