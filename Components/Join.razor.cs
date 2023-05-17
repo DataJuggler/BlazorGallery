@@ -228,7 +228,7 @@ namespace DataJuggler.BlazorGallery.Components
                 if (NullHelper.Exists(user))
                 {
                     // Get the KeyCode
-                    string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeycode", EnvironmentVariableTarget.Machine);
+                    string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.Machine);
 
                     // If the keyCode string exists
                     if (TextHelper.Exists(keyCode))
@@ -305,11 +305,11 @@ namespace DataJuggler.BlazorGallery.Components
         }
         #endregion
 
-        #region ReceiveData(Message message)
-        /// <summary>
-        /// method returns the Data
-        /// </summary>
-        public async void ReceiveData(Message message)
+            #region ReceiveData(Message message)
+            /// <summary>
+            /// method returns the Data
+            /// </summary>
+            public async void ReceiveData(Message message)
             {
                 // locals
                 User user = null;
