@@ -113,6 +113,8 @@ namespace DataJuggler.BlazorGallery.Components
                 user.EmailVerified = false;                
                 user.IsAdmin = false;
                 user.Active = true;
+                user.StorageUsed = 0;
+                user.TotalLogins = 0;
 
                 // return value
                 return user;
@@ -222,58 +224,67 @@ namespace DataJuggler.BlazorGallery.Components
                 // get the user
                 User user = userObject as User;
 
-            try
-            {
-                // if the user exists
-                if (NullHelper.Exists(user))
+                try
                 {
-                    // Get the KeyCode
-                    string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.Machine);
-
-                    // If the keyCode string exists
-                    if (TextHelper.Exists(keyCode))
+                    // if the user exists
+                    if (NullHelper.Exists(user))
                     {
-                        // Set the PasswordHash, this takes the longest time
-                        user.PasswordHash = CryptographyHelper.GeneratePasswordHash(Password, keyCode, 3);
+                        // Get the KeyCode
+                        string keyCode = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryKeyCode", EnvironmentVariableTarget.Machine);
 
-                        // if the password hash was created
-                        if (TextHelper.Exists(user.PasswordHash))
+                        // If the keyCode string exists
+                        if (TextHelper.Exists(keyCode))
                         {
-                            // save the user
-                            bool saved = await UserService.SaveUser(ref user);
+                            // Set the PasswordHash, this takes the longest time
+                            user.PasswordHash = CryptographyHelper.GeneratePasswordHash(Password, keyCode, 3);
 
-                            // if saved
-                            if ((saved) && (HasParentMainLayout))
+                            // if the password hash was created
+                            if (TextHelper.Exists(user.PasswordHash))
                             {
-                                // Create a new instance of a 'Folder' object.
-                                Folder folder = new Folder();
+                                // save the user
+                                bool saved = await UserService.SaveUser(ref user);
 
-                                // Set the UserId
-                                folder.UserId = user.Id;
+                                // if saved
+                                if ((saved) && (HasParentMainLayout))
+                                {
+                                    // Create a new instance of a 'Folder' object.
+                                    Folder folder = new Folder();
 
-                                // Set the name
-                                folder.Name = "Home";
+                                    // Set the UserId
+                                    folder.UserId = user.Id;
 
-                                // Just created
-                                folder.CreatedDate = DateTime.Now;
+                                    // Set the name
+                                    folder.Name = "Home";
 
-                                // Set to true
-                                folder.Selected = true;
+                                    // Just created
+                                    folder.CreatedDate = DateTime.Now;
 
-                                // save the folder async
-                                saved = await FolderService.SaveFolder(ref folder);
+                                    // Set to true
+                                    folder.Selected = true;
 
-                                // Force the user to login, see if they entered real data
-                                ParentMainLayout.SetupScreen(ScreenTypeEnum.Login, user.EmailAddress);
+                                    // save the folder async
+                                    saved = await FolderService.SaveFolder(ref folder);
+
+                                    // Force the user to login, see if they entered real data
+                                    ParentMainLayout.SetupScreen(ScreenTypeEnum.Login, user.EmailAddress);
+                                }
+                                else
+                                {
+                                    // if not saved
+                                    if (!saved)
+                                    {
+                                        // Show a messagge
+                                        ValidationMessage = "Oops, something went wrong. Save Failed.";
+                                    }
+
+                                    // Update the UI
+                                    Refresh();
+                                }
                             }
                             else
                             {
-                                // if not saved
-                                if (!saved)
-                                {
-                                    // Show a messagge
-                                    ValidationMessage = "Oops, something went wrong. Save Failed.";
-                                }
+                                // Show a messagge
+                                ValidationMessage = "Oops, something went wrong. Password Hash could not be generated.";
 
                                 // Update the UI
                                 Refresh();
@@ -282,28 +293,19 @@ namespace DataJuggler.BlazorGallery.Components
                         else
                         {
                             // Show a messagge
-                            ValidationMessage = "Oops, something went wrong. Password Hash could not be generated.";
+                            ValidationMessage = "Oops, something went wrong. Keycode does not exist.";
 
                             // Update the UI
                             Refresh();
                         }
                     }
-                    else
-                    {
-                        // Show a messagge
-                        ValidationMessage = "Oops, something went wrong. Keycode does not exist.";
-
-                        // Update the UI
-                        Refresh();
-                    }
+                }
+                catch (Exception error)
+                {
+                    DebugHelper.WriteDebugError("ProcessNewUserSignup", "Join.razor.cs", error);
                 }
             }
-            catch (Exception error)
-            {
-                DebugHelper.WriteDebugError("ProcessNewUserSignup", "Join.razor.cs", error);
-            }
-        }
-        #endregion
+            #endregion
 
             #region ReceiveData(Message message)
             /// <summary>

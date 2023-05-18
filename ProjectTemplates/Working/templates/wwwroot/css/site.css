@@ -269,8 +269,9 @@
     top: 1vh;
     right: 1%;
     float: right;    
-    width: 20%;
+    width: 28%;
     height: 8vh;
+    white-space: nowrap;
 }
 .validationmessage
 {

@@ -3,8 +3,8 @@ Blazor Gallery is now live https://blazorgallery.com
 
 News
 
-v1.1.9
-5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
+v1.1.11: 5.18.2023: I made the topright div wider and added no text wrapping so the Sign Out button doesn't wrap.
+v1.1.9 5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
 or they are sent to Google.
 
 5.10.2023 - New video published
