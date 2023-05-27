@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.2.1</PackageVersion>
+    <PackageVersion>1.2.2</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
@@ -14,7 +14,7 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -22,9 +22,10 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
     <RepositoryType>Git/GitHub</RepositoryType>
     <PackageReleaseNotes>
-		5.27.2023: Released version 1.2.0 Nuget package, and added a FullScreenMode, Terms of Service Component,
+		5.27.2023: Released version 1.2.2 Nuget package, and added a FullScreenMode, Terms of Service Component,
 		and SetProfileVisibility Component. New database fields including User.ProfileVisility, Image.LikesCount and
 		User.AcceptedTermsOfService. The database script BlazorGalleryDatabase.sql has been updated.
+		I also added a version number visible in the sidebar footer.
 		5.21.2023: Fixed the Upload folder being included in the Nuget package.
 		5.19.2023: Created a favicon.png.
 		5.18.2023: I made the topright div wider and added no text wrapping so the Sign Out button doesn't wrap.

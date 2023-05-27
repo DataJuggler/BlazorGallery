@@ -17,6 +17,15 @@ main {
     left: 0;
     z-index: 15;
 }
+.sidebarfooter
+{
+    position: fixed;
+    bottom: 16px;
+    left: 8px;
+    font-size: 12px;
+    font-family: Verdana;
+    color: navy;
+}
 
 .top-row {
     background-color: #f7f7f7;
