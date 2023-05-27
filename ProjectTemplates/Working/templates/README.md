@@ -15,7 +15,7 @@ v.1.1.2
 5.19.2023: I updated the Nuget package was now you can copy URL's and share URL's publicly
 
 v1.1.9
-5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
+5.17.2023: I added a Terms of Service component and a user must accept the Terms of Service
 or they are sent to Google.
 
 5.10.2023 - New video published
