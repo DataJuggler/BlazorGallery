@@ -10,6 +10,8 @@ using Index = DataJuggler.BlazorGallery.Pages.Index;
 using Microsoft.AspNetCore.Components;
 using System.Runtime.Versioning;
 using DataGateway.Services;
+using DataJuggler.BlazorGallery.Shared;
+using ObjectLibrary.Enumerations;
 
 #endregion
 
@@ -27,9 +29,11 @@ namespace DataJuggler.BlazorGallery.Components
         
         #region Private Variables
         private string imageStyle;
+        private string fullScreenButtonStyle;
         private Image image;
         private string name;
         private bool showRemoveButton;
+        private string imageContainerStyle;
         private const int MaxWidth = 400;
         private IBlazorComponentParent parent;
         #endregion
@@ -109,10 +113,39 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region ViewImage(Image image)
+            /// <summary>
+            /// View Image
+            /// </summary>
+            public void ViewImage(Image image)
+            {
+                // if the value for HasParentMainLayout is true
+                if (HasParentMainLayout)
+                {
+                    // Set the selected image
+                    ParentMainLayout.SelectedImage = image;
+
+                    // Setup the screen to show the image
+                    ParentMainLayout.SetupScreen(ScreenTypeEnum.ViewImage);
+                }
+            }
+            #endregion
+            
         #endregion
 
         #region Properties
 
+            #region FullScreenButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'FullScreenButtonStyle'.
+            /// </summary>
+            public string FullScreenButtonStyle
+            {
+                get { return fullScreenButtonStyle; }
+                set { fullScreenButtonStyle = value; }
+            }
+            #endregion
+            
             #region HasImage
             /// <summary>
             /// This property returns true if this object has an 'Image'.
@@ -181,6 +214,23 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region HasParentMainLayout
+            /// <summary>
+            /// This property returns true if this object has a 'ParentMainLayout'.
+            /// </summary>
+            public bool HasParentMainLayout
+            {
+                get
+                {
+                    // initial value
+                    bool hasParentMainLayout = (this.ParentMainLayout != null);
+                    
+                    // return value
+                    return hasParentMainLayout;
+                }
+            }
+            #endregion
+            
             #region HasSelectedFolder
             /// <summary>
             /// This property returns true if this object has a 'SelectedFolder'.
@@ -207,6 +257,17 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return image; }
                 set { image = value; }
+            }
+            #endregion
+            
+            #region ImageContainerStyle
+            /// <summary>
+            /// This property gets or sets the value for 'ImageContainerStyle'.
+            /// </summary>
+            public string ImageContainerStyle
+            {
+                get { return imageContainerStyle; }
+                set { imageContainerStyle = value; }
             }
             #endregion
             
@@ -318,6 +379,31 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return parentIndexPage;
+                }
+            }
+            #endregion
+            
+            #region ParentMainLayout
+            /// <summary>
+            /// This read only property returns the value of ParentMainLayout from the object ParentIndexPage.
+            /// </summary>
+            public MainLayout ParentMainLayout
+            {
+                
+                get
+                {
+                    // initial value
+                    MainLayout parentMainLayout = null;
+                    
+                    // if ParentIndexPage exists
+                    if (ParentIndexPage != null)
+                    {
+                        // set the return value
+                        parentMainLayout = ParentIndexPage.ParentMainLayout;
+                    }
+                    
+                    // return value
+                    return parentMainLayout;
                 }
             }
             #endregion

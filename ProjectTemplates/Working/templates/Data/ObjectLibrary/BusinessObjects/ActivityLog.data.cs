@@ -4,6 +4,8 @@
 
 using ObjectLibrary.Enumerations;
 using System;
+using DataJuggler.Net7.Delegates;
+using DataJuggler.Net7.Enumerations;
 
 #endregion
 
@@ -22,6 +24,7 @@ namespace ObjectLibrary.BusinessObjects
         private int folderId;
         private int id;
         private int userId;
+        private ItemChangedCallback callback;
         #endregion
 
         #region Methods
@@ -51,7 +54,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (Activity != value);
+
+                    // Set the value
                     activity = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -65,7 +79,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (CreatedDate != value);
+
+                    // Set the value
                     createdDate = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -79,7 +104,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (Detail != value);
+
+                    // Set the value
                     detail = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -93,7 +129,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (FolderId != value);
+
+                    // Set the value
                     folderId = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -117,7 +164,18 @@ namespace ObjectLibrary.BusinessObjects
                 }
                 set
                 {
+                    // local
+                    bool hasChanges = (UserId != value);
+
+                    // Set the value
                     userId = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion
@@ -132,6 +190,34 @@ namespace ObjectLibrary.BusinessObjects
 
                     // return value
                     return isNew;
+                }
+            }
+            #endregion
+
+            #region ItemChangedCallback Callback
+            public ItemChangedCallback Callback
+            {
+                get
+                {
+                    return callback;
+                }
+                set
+                {
+                    callback = value;
+                }
+            }
+            #endregion
+
+            #region bool HasCallback
+            public bool HasCallback
+            {
+                get
+                {
+                    // Initial Value
+                    bool hasCallback = (this.Callback != null);
+
+                    // return value
+                    return hasCallback;
                 }
             }
             #endregion

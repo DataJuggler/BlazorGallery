@@ -13,7 +13,7 @@
 
 @if (HasLoggedInUser)
 {
-    @if (!LoggedInUser.ViewOnlyMode)
+    @if ((!LoggedInUser.ViewOnlyMode) && (ScreenType != ScreenTypeEnum.ViewImage))
     {
         <div class="topright">
             Welcome @LoggedInUser.Name

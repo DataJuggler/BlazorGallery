@@ -70,6 +70,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private string checkMarkImage;
         private string checkMarkContainerStyle;
         private Timer.Timer timer;
+        private Image selectedImage;
         private bool copyButtonHasBeenClicked;        
         private const int AdminId = 1;
         public const int FolderHeight = 48;
@@ -479,6 +480,14 @@ namespace DataJuggler.BlazorGallery.Shared
                                                 // Setup the screen
                                                 Refresh();
                                             }
+                                            else if (LoggedInUser.ProfileVisibility == ProfileVisibilityEnum.NotSelected)
+                                            {
+                                                // Setup the screen
+                                                ScreenType = ScreenTypeEnum.SetProfileVisibility;
+
+                                                // Setup the screen
+                                                Refresh();
+                                            }
                                             else
                                             {
                                                 // Setup the screen
@@ -705,6 +714,7 @@ namespace DataJuggler.BlazorGallery.Shared
                         // Create a new instance of an 'Image' object.
                         Image image = new Image();
 
+                        // Create a new instance of a 'FileInfo' object.
                         FileInfo fileInfo = new FileInfo(file.FullPath);
 
                         // Set the size
@@ -724,6 +734,17 @@ namespace DataJuggler.BlazorGallery.Shared
                         // if the value for saved is true
                         if (saved)
                         {
+                            // Create a new instance of an 'ActivityLog' object.
+                            ActivityLog activityLog = new ActivityLog();
+                            activityLog.Activity = "Upload Image";
+                            activityLog.CreatedDate = DateTime.Now;
+                            activityLog.FolderId = SelectedFolder.Id;
+                            activityLog.Detail = fileInfo.Name + " " +  image.FileSize;
+                            activityLog.UserId = LoggedInUserId;
+
+                            // perform the save
+                            saved = await ActivityLogService.SaveActivityLog(ref activityLog);
+
                             // set the storage used
                             LoggedInUser.StorageUsed += image.FileSize;
                             
@@ -1053,6 +1074,22 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // Force a reload
                     ForceReload = true;
+
+                    // Refresh
+                    Refresh();
+                }
+                else if (screenType == ScreenTypeEnum.SetProfileVisibility)
+                {
+                    // Force a reload
+                    ForceReload = true;
+
+                    // Refresh
+                    Refresh();
+                }
+                else if (screenType == ScreenTypeEnum.ViewImage)
+                {
+                    // Force a reload
+                    // ForceReload = true;
 
                     // Refresh
                     Refresh();
@@ -1454,6 +1491,23 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region HasSelectedImage
+            /// <summary>
+            /// This property returns true if this object has a 'SelectedImage'.
+            /// </summary>
+            public bool HasSelectedImage
+            {
+                get
+                {
+                    // initial value
+                    bool hasSelectedImage = (this.SelectedImage != null);
+                    
+                    // return value
+                    return hasSelectedImage;
+                }
+            }
+            #endregion
+            
             #region HasTimer
             /// <summary>
             /// This property returns true if this object has a 'Timer'.
@@ -1601,6 +1655,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
                         
+            #region SelectedImage
+            /// <summary>
+            /// This property gets or sets the value for 'SelectedImage'.
+            /// </summary>
+            public Image SelectedImage
+            {
+                get { return selectedImage; }
+                set { selectedImage = value; }
+            }
+            #endregion
+            
             #region ShowConfirmation
             /// <summary>
             /// This property gets or sets the value for 'ShowConfirmation'.

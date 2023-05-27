@@ -76,10 +76,13 @@
                     <h5 class="topleft">Viewing Gallery @LoggedInUser.Name/@SelectedFolder.Name</h5>
                 }
             }
-            <div class="topright">
-                <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
-                <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
-            </div>
+            @if (ScreenType != ScreenTypeEnum.ViewImage)
+            {
+                <div class="topright">
+                    <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
+                    <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
+                </div>
+            }
         }
     }
     <div class="fixedsidebar">
@@ -120,6 +123,7 @@
                     </div>
                     <div class="height16 displayblock"></div>
                 }
+                <div class="sidebarfooter">v1.2.0</div>
             }
             </div>
             @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
@@ -167,9 +171,17 @@
                 </div>
                 <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
             }
-            else if  (ScreenType == ScreenTypeEnum.TermsOfservice)
+            else if (ScreenType == ScreenTypeEnum.TermsOfservice)
             {
                 <TermsOfServiceComponent Parent="this" Prompt="Do you agree to these terms?"></TermsOfServiceComponent>
+            }
+            else if (ScreenType == ScreenTypeEnum.SetProfileVisibility)
+            {
+                <ProfileVisibility Parent="this" Prompt="Make your profile public?"></ProfileVisibility>
+            }
+            else if (screenType == ScreenTypeEnum.ViewImage)
+            {
+                <FullScreenImageViewer Parent="this" Image=@SelectedImage></FullScreenImageViewer>
             }
         </article>
     </main>

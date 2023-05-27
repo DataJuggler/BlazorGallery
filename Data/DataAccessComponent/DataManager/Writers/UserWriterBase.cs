@@ -117,7 +117,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateInsertParameters(User user)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[12];
+                SqlParameter[] parameters = new SqlParameter[13];
                 SqlParameter param = null;
 
                 // verify userexists
@@ -210,23 +210,29 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[8]
                     parameters[8] = param;
 
-                    // Create [StorageUsed] parameter
-                    param = new SqlParameter("@StorageUsed", user.StorageUsed);
+                    // Create [ProfileVisibility] parameter
+                    param = new SqlParameter("@ProfileVisibility", user.ProfileVisibility);
 
                     // set parameters[9]
                     parameters[9] = param;
 
-                    // Create [TotalLogins] parameter
-                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
+                    // Create [StorageUsed] parameter
+                    param = new SqlParameter("@StorageUsed", user.StorageUsed);
 
                     // set parameters[10]
                     parameters[10] = param;
 
-                    // Create [UserName] parameter
-                    param = new SqlParameter("@UserName", user.UserName);
+                    // Create [TotalLogins] parameter
+                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
 
                     // set parameters[11]
                     parameters[11] = param;
+
+                    // Create [UserName] parameter
+                    param = new SqlParameter("@UserName", user.UserName);
+
+                    // set parameters[12]
+                    parameters[12] = param;
                 }
 
                 // return value
@@ -273,7 +279,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateUpdateParameters(User user)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[13];
+                SqlParameter[] parameters = new SqlParameter[14];
                 SqlParameter param = null;
 
                 // verify userexists
@@ -372,27 +378,33 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[8]
                     parameters[8] = param;
 
-                    // Create parameter for [StorageUsed]
-                    param = new SqlParameter("@StorageUsed", user.StorageUsed);
+                    // Create parameter for [ProfileVisibility]
+                    param = new SqlParameter("@ProfileVisibility", user.ProfileVisibility);
 
                     // set parameters[9]
                     parameters[9] = param;
 
-                    // Create parameter for [TotalLogins]
-                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
+                    // Create parameter for [StorageUsed]
+                    param = new SqlParameter("@StorageUsed", user.StorageUsed);
 
                     // set parameters[10]
                     parameters[10] = param;
 
-                    // Create parameter for [UserName]
-                    param = new SqlParameter("@UserName", user.UserName);
+                    // Create parameter for [TotalLogins]
+                    param = new SqlParameter("@TotalLogins", user.TotalLogins);
 
                     // set parameters[11]
                     parameters[11] = param;
 
+                    // Create parameter for [UserName]
+                    param = new SqlParameter("@UserName", user.UserName);
+
+                    // set parameters[12]
+                    parameters[12] = param;
+
                     // Create parameter for [Id]
                     param = new SqlParameter("@Id", user.Id);
-                    parameters[12] = param;
+                    parameters[13] = param;
                 }
 
                 // return value

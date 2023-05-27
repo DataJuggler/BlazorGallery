@@ -46,9 +46,10 @@ namespace DataAccessComponent.DataManager.Readers
                 int lastLoginDatefield = 7;
                 int namefield = 8;
                 int passwordHashfield = 9;
-                int storageUsedfield = 10;
-                int totalLoginsfield = 11;
-                int userNamefield = 12;
+                int profileVisibilityfield = 10;
+                int storageUsedfield = 11;
+                int totalLoginsfield = 12;
+                int userNamefield = 13;
 
                 try
                 {
@@ -63,6 +64,7 @@ namespace DataAccessComponent.DataManager.Readers
                     user.LastLoginDate = DataHelper.ParseDate(dataRow.ItemArray[lastLoginDatefield]);
                     user.Name = DataHelper.ParseString(dataRow.ItemArray[namefield]);
                     user.PasswordHash = DataHelper.ParseString(dataRow.ItemArray[passwordHashfield]);
+                    user.ProfileVisibility = (ProfileVisibilityEnum) DataHelper.ParseInteger(dataRow.ItemArray[profileVisibilityfield], 0);
                     user.StorageUsed = DataHelper.ParseInteger(dataRow.ItemArray[storageUsedfield], 0);
                     user.TotalLogins = DataHelper.ParseInteger(dataRow.ItemArray[totalLoginsfield], 0);
                     user.UserName = DataHelper.ParseString(dataRow.ItemArray[userNamefield]);

@@ -1,0 +1,21 @@
+﻿@using BlazorStyled
+
+<Styled @bind-Classname=@ImageStyle>
+    max-height: @ImageHeightStyle;
+    height: @ImageHeightStyle;
+    width: @ScaledDownWidthStyle;
+    object-fit: cover;
+    border: none;
+    background-color: transparent;
+    background-image: url(@ImageRelativePath);
+    background-size: 100% 100%;
+    position: fixed;
+    left: 24%;
+    top: 2vh;
+</Styled>
+
+<div class="col">   
+    <button title="Go Back" class="backbutton" @onclick="GoBack"></button>
+    <img class="@ImageStyle" src="@ImageRelativePath">
+</div>
+

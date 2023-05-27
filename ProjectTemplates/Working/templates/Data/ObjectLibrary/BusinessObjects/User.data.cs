@@ -28,6 +28,7 @@ namespace ObjectLibrary.BusinessObjects
         private DateTime lastLoginDate;
         private string name;
         private string passwordHash;
+        private ProfileVisibilityEnum profileVisibility;
         private int storageUsed;
         private int totalLogins;
         private string userName;
@@ -276,6 +277,31 @@ namespace ObjectLibrary.BusinessObjects
 
                     // Set the value
                     passwordHash = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region ProfileVisibilityEnum ProfileVisibility
+            public ProfileVisibilityEnum ProfileVisibility
+            {
+                get
+                {
+                    return profileVisibility;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (ProfileVisibility != value);
+
+                    // Set the value
+                    profileVisibility = value;
 
                     // if the Callback exists and changes occurred
                     if ((HasCallback) && (hasChanges))

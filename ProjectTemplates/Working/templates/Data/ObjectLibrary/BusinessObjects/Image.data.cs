@@ -24,6 +24,7 @@ namespace ObjectLibrary.BusinessObjects
         private string fullPath;
         private int height;
         private int id;
+        private int likes;
         private string name;
         private string relativePath;
         private int userId;
@@ -180,6 +181,31 @@ namespace ObjectLibrary.BusinessObjects
                 get
                 {
                     return id;
+                }
+            }
+            #endregion
+
+            #region int Likes
+            public int Likes
+            {
+                get
+                {
+                    return likes;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (Likes != value);
+
+                    // Set the value
+                    likes = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
                 }
             }
             #endregion

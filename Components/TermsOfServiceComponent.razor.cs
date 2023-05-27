@@ -75,8 +75,16 @@ namespace DataJuggler.BlazorGallery.Components
                     // if the value for saved is true
                     if (saved)
                     {
-                        // This forces a reload
-                        ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                        if (LoggedInUser.ProfileVisibility == ProfileVisibilityEnum.NotSelected)
+                        {
+                            // This forces a reload
+                            ParentMainLayout.SetupScreen(ScreenTypeEnum.SetProfileVisibility);
+                        }
+                        else
+                        {
+                            // This forces a reload
+                            ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                        }
                     }
                 }
             }

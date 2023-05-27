@@ -328,6 +328,31 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
             
+            #region ScreenType
+            /// <summary>
+            /// This read only property returns the value of ScreenType from the object ParentMainLayout.
+            /// </summary>
+            public ScreenTypeEnum ScreenType
+            {
+                
+                get
+                {
+                    // initial value
+                    ScreenTypeEnum screenType = ScreenTypeEnum.MainScreen;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        screenType = ParentMainLayout.ScreenType;
+                    }
+                    
+                    // return value
+                    return screenType;
+                }
+            }
+            #endregion
+            
             #region SelectedFolder
             /// <summary>
             /// This read only property returns the value of SelectedFolder from the object Parent.

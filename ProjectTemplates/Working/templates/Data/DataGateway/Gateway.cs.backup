@@ -700,6 +700,35 @@ namespace DataGateway
             }
             #endregion
 
+                #region LoadActivityLogsForActivityAndUserId(string activity, int userId)
+                /// <summary>
+                /// This method is used to load 'ActivityLog' objects by ActivityAndUserId
+                /// </summary>
+                public List<ActivityLog> LoadActivityLogsForActivityAndUserId(string activity, int userId)
+                {
+                    // initial value
+                    List<ActivityLog> activityLogs = null;
+                    
+                    // Create a temp ActivityLog object
+                    ActivityLog tempActivityLog = new ActivityLog();
+                    
+                    // Set the value for LoadByActivityAndUserId to true
+                    tempActivityLog.LoadByActivityAndUserId = true;
+                    
+                    // Set the value for Activity
+                    tempActivityLog.Activity = activity;
+                    
+                    // Set the value for UserId
+                    tempActivityLog.UserId = userId;
+                    
+                    // Perform the load
+                    activityLogs = LoadActivityLogs(tempActivityLog);
+                    
+                    // return value
+                    return activityLogs;
+                }
+                #endregion
+                
             #region LoadAdmins(Admin tempAdmin = null)
             /// <summary>
             /// This method loads a collection of 'Admin' objects.

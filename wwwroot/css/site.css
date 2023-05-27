@@ -10,6 +10,18 @@
     background-color: transparent;
     float: right;
 }
+.backbutton
+{
+    background-image: url('../Images/BackButton.png');
+    background-size: 100% 100%;    
+    width: 32px;
+    height: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    left: 20.8%;
+}
 .bigline
 {  
     height: 1vh;

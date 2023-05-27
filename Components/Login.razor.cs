@@ -333,6 +333,11 @@ namespace DataJuggler.BlazorGallery.Components
                                     // Setup the Index page
                                     ParentMainLayout.SetupScreen(ScreenTypeEnum.TermsOfservice);
                                 }
+                                else if (LoggedInUser.ProfileVisibility == ProfileVisibilityEnum.NotSelected)
+                                {
+                                    // Setup the Index page
+                                    ParentMainLayout.SetupScreen(ScreenTypeEnum.SetProfileVisibility);
+                                }
                                 else
                                 {
                                     // Setup the Index page

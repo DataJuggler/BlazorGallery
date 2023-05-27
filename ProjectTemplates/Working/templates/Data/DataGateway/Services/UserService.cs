@@ -64,7 +64,7 @@ namespace DataGateway.Services
                 {
                     // Create a new instance of a 'Gateway' object, and set the connectionName
                     Gateway gateway = new Gateway(Connection.Name);
-                    
+
                     // load the user
                     user = gateway.FindUserByEmailAddress(emailAddress);
                 }

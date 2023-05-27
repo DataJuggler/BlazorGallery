@@ -1,0 +1,25 @@
+﻿@using BlazorStyled
+
+<Styled @bind-Classname=@ComponentStyle>
+    width: 240px;
+    height: 120px;
+    position: relative;
+    left: 24%;
+    top: 0vh;
+    display: block;
+</Styled>
+
+<div class="centerscreen">
+   <div class=WordSection1>
+        <b>Profile Visibility</b><br /><br />
+        If you choose to share your profile publicly, random images from your profile may be shown in the main
+        gallery of this site and your username will show in search (coming soon).<br />
+        If you choose to keep your profile private, your folders will only be available to people who know the
+        URL of the folder. Example: https://blazorgallery.com/Gallery/JulieT/Samples
+    </div>
+    <div class="@ComponentStyle">
+        <div class="displayinlineblock"><span style='font-size:14.0pt'>@Prompt</span></div>
+        <button class="yesbutton" @onclick="YesClicked"></button>
+        <button class="nobutton" @onclick="NoClicked"></button>
+    </div>
+</div>
