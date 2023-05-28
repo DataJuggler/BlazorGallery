@@ -1,4 +1,9 @@
 # DataJuggler.BlazorGallery
+BlazorGallery is a working SQL Server C# Blazor image gallery project and Nuget package, that can be setup in about 5 to 10 minutes.
+
+
+
+# Live Demo
 Blazor Gallery is now live https://blazorgallery.com
 
 # Screenshot
@@ -29,7 +34,7 @@ https://youtu.be/yQz1dqYiy2g
 I learned this week how to create a Nuget package for a Blazor site. Never again will I have to delete
 Weather Forecast and Counter pages.
 
-Instructions to run this project:
+# Instructions to run this project:
 
 To Install Via Nuget and DOT NET CLI 
 
@@ -63,7 +68,10 @@ Server image galleries.
 Everything should work if you followed the above steps.
 
 # Routing
-Routing has been completed. 
+Routing has been completed. You can now share public galleries with a url such as:
+https://blazorgallery.com/Gallery/User/Folder
+
+If the folder is not specified, the Home folder for that UserName is shown. 
 
 Blazor Gallery Nuget Package was made with help from Build Copy. 
 
