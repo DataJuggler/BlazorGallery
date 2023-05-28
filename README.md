@@ -7,14 +7,14 @@ Blazor Gallery is now live https://blazorgallery.com
 # Screenshot
 <img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot.png height=480 width=886 />
 
-News
+# News
 
 v1.2.0:
 5.27.2023: I added a View Full Screen button to each image and created a FullScreenImageViewer component.
 It is not actually full screen, but in ViewImage mode, only the selected image is shown.
-I also added a field for LikesCount and ProfileVisibility property to table User. These two fields are not shown 
-yet, but i did create a component that prompts a user if they wish to show their profiles publicly.
-My plan is to create a public gallery and all images get time on the main screen, and the more likes an image
+I also added a field for Image.LikesCount and User.ProfileVisibility. These two fields are not shown 
+yet, but i did create a component that prompts a user if they wish to show their profile publicly.
+My plan is to create a public gallery and all images are allocated a certain amount of time on the main screen. The more likes an image
 gets, the longer it gets to stay.  The Nuget package and database scripts have also been updated.
 
 v.1.1.2
