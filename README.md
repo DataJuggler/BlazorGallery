@@ -44,6 +44,8 @@ or
 
 Clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
 
+# Setup Instructions
+
 1. Create a SQL Server Database named BlazorGallery
 2. Execute BlazorGalleryDatabase.sql located in the SQL folder of this project.
 3. Execute Insert Admin.sql located in the SQL folder of this project.
