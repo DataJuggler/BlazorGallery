@@ -1,6 +1,9 @@
 # DataJuggler.BlazorGallery
 Blazor Gallery is now live https://blazorgallery.com
 
+# Screenshot
+<img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot.png height=480 width=886 />
+
 News
 
 v1.2.0:
