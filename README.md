@@ -80,7 +80,7 @@ If the folder is not specified, the Home folder for that UserName is shown if it
 # Feature Requests
 What features would you like to see in a portfolio site? 
 
-Here are a few ideas I have thought of so, far. Feel free to reach out here or in a video comment and describe your idea.
+Here are a few ideas I have thought of. Feel free to reach out here or in a video comment and describe your idea.
 
 # In Progress
 
