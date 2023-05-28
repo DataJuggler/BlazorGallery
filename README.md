@@ -1,8 +1,6 @@
 # DataJuggler.BlazorGallery
 BlazorGallery is a working SQL Server C# Blazor image gallery project and Nuget package, that can be setup in about 5 to 10 minutes.
 
-
-
 # Live Demo
 Blazor Gallery is now live https://blazorgallery.com
 
@@ -20,7 +18,7 @@ My plan is to create a public gallery and all images get time on the main screen
 gets, the longer it gets to stay.  The Nuget package and database scripts have also been updated.
 
 v.1.1.2
-5.19.2023: I updated the Nuget package was now you can copy URL's and share URL's publicly
+5.19.2023: I added a Copy button to each folder. Now you can copy URL's and share URL's publicly for posting on social media.
 
 v1.1.9
 5.17.2023: I added a Terms of Service component and a user must accept the Terms of Service
