@@ -46,7 +46,7 @@ Clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
 
 1. Create a SQL Server Database named BlazorGallery
 2. Execute BlazorGalleryDatabase.sql located in the SQL folder of this project.
-3. Execute Insert Admin.sql
+3. Execute Insert Admin.sql located in the SQL folder of this project.
 4. Create a connection string to your BlazorGallery database. 
 Tip: DataTier.Net (used to build the datatier for this project) comes with a ConnectionStringBuilder app
 in the tools folder.
@@ -60,9 +60,12 @@ when an account is created by a user.
 7. Create a system level environment variable named BlazorGalleryURL
 and set its value to https://localhost:44330 or the domain name if you are publishing.
 8. Go to https://github.com/DataJuggler/BlazorGallery/ and leave a star
-9. Go to https://youtube.com/DataJuggler" and subscribe. 
+9. Go to https://youtube.com/DataJuggler and subscribe. 
 10. Tell a developer you know how easy Blazor Gallery makes it to create a Blazor SQL
 Server image galleries.
+11. Tell a graphics designer, photographer or 3D artist about Blazor Gallery.
+
+# Infamous Last Words
 
 Everything should work if you followed the above steps.
 
@@ -70,7 +73,31 @@ Everything should work if you followed the above steps.
 Routing has been completed. You can now share public galleries with a url such as:
 https://blazorgallery.com/Gallery/User/Folder
 
-If the folder is not specified, the Home folder for that UserName is shown. 
+If the folder is not specified, the Home folder for that UserName is shown if it exists. 
+
+# Feature Requests
+What features would you like to see in a portfolio site? 
+
+Here are a few ideas I have thought of so, far. Feel free to reach out here or in a video comment and describe your idea.
+
+# In Progress
+
+I am about to start working on Public Galleries - Such as Main that are not specific to one user. This will be shown on the main screen to anyone not logged and / or
+logged in users. The plan is to allow everyone some time on the main screen. Liked and commented images are allowed to expire slower.
+
+# My THoughts 
+
+1. Add video
+2. Add ability for people to comment, like, follow, etc. other users.
+3. Add ability to block users.
+4. For now the Gallery routing is kind of limited, because I impersonate the owner of the gallery in ViewOnlyMode. From here I need to add the
+   ability for logged in users to be able to view other galleries, and retain they are logged in, so a user can like, comment, etc.
+5. Contests - I recently bought a domain antcontest.com, which is a play on contestant. People could create contests for best AI Image Gallery
+6. Access To Premium Galleries (maybe) - If people wanted to sell access to a gallery for a certain number of credits.
+
+Those are just a few ideas.
+   
+# How I Built The Nuget Package
 
 Blazor Gallery Nuget Package was made with help from Build Copy. 
 
