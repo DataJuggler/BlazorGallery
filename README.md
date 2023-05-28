@@ -49,9 +49,9 @@ Clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
 1. Create a SQL Server Database named BlazorGallery
 2. Execute BlazorGalleryDatabase.sql located in the SQL folder of this project.
 3. Execute Insert Admin.sql located in the SQL folder of this project.
-4. Create a connection string to your BlazorGallery database. 
+4. Create a connection string to your BlazorGallery database.<br>
 Tip: DataTier.Net (used to build the datatier for this project) comes with a ConnectionStringBuilder app
-in the tools folder.
+in the tools folder, or install the realease version and Connection String Builder is installed also.
 https://github.com/DataJuggler/DataTier.Net
 
 5. Create a system level environment variable named BlazorGalleryConnString and paste 
