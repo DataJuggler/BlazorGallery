@@ -36,8 +36,9 @@ Weather Forecast and Counter pages.
 
 # Instructions to run this project:
 
-To Install Via Nuget and DOT NET CLI 
+To Install Via Nuget and DOT NET CLI, navigatge to the folder you wish to create your project in
 
+    cd c:\Projects\BlazorGallery
     dotnet new install DataJuggler.BlazorGallery
     dotnet new DataJuggler.BlazorGallery
 
@@ -85,6 +86,8 @@ Here is a video showing you how to setup this project, build the data tier for B
 
 How To Create A Nuget Package For A Blazor Site<br>
 https://youtu.be/K5WbNKUPDGs
+
+# Blazor Gallery Data Tier Uses All Stored Procedures
 
 Blazor Gallery was built using DataTier.Net
 
