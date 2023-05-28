@@ -34,7 +34,7 @@ Weather Forecast and Counter pages.
 
 # Instructions to run this project:
 
-To Install Via Nuget and DOT NET CLI, navigatge to the folder you wish to create your project in
+To Install Via Nuget and DOT NET CLI, navigate to the folder you wish to create your project in
 
     cd c:\Projects\BlazorGallery
     dotnet new install DataJuggler.BlazorGallery
