@@ -18,6 +18,7 @@ namespace ObjectLibrary.BusinessObjects
         #region Private Variables
         private bool loadByUserId;
         private List<Image> images;
+        private bool renameMode;
         private bool findByUserIdAndName;
         #endregion
 
@@ -120,6 +121,17 @@ namespace ObjectLibrary.BusinessObjects
             }
             #endregion
 
+            #region RenameMode
+            /// <summary>
+            /// This property gets or sets the value for 'RenameMode'.
+            /// </summary>
+            public bool RenameMode
+            {
+                get { return renameMode; }
+                set { renameMode = value; }
+            }
+            #endregion
+            
         #endregion
 
     }

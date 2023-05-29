@@ -112,13 +112,24 @@
                         {
                             <div class="displayinlineblock width16"></div>
                         }
-                        @if (folder.Selected)
+                        @if (folder.RenameMode)
                         {
-                            <button class="imagefolder right16"><span class="fontsize14 colorfirebrick fontbold right56 text-nowrap">@folder.Name</span></button>
+                            <div class="right60">
+                                <ValidationComponent Name="RenameFolderTextBox" Parent="this" SetFocusOnFirstRender=true
+                                    Text="@folder.Name" Unit="px" Width="160" Column1Width="48" Caption="Name:">
+                                </ValidationComponent>
+                            </div>
                         }
                         else
                         {
-                            <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colornavy right56 fontbold">@folder.Name</span></button>
+                            @if (folder.Selected)
+                            {
+                                    <button class="imagefolder right16"><span class="fontsize14 colorfirebrick fontbold right56 text-nowrap" @ondblclick="() => RenameFolder(folder)">@folder.Name</span></button>
+                            }
+                            else
+                            {
+                                <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colornavy right56 fontbold">@folder.Name</span></button>
+                            }
                         }
                     </div>
                     <div class="height16 displayblock"></div>

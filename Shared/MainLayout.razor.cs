@@ -50,8 +50,10 @@ namespace DataJuggler.BlazorGallery.Shared
         private Folder selectedFolder;
         private User loggedInUser;
         private bool addFolderMode;
+        private Folder folderBeingRenamed;
         private FileUpload fileUpload;
         private ValidationComponent newFolderNameComponent;
+        private ValidationComponent renameFolderComponent;
         private int top;
         private bool forceReload;
         private string resetButton;
@@ -806,7 +808,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // if EscapePressed
                     if (message.Text == "EscapePressed")
-                    {
+                    {  
                         // no longer editing
                         AddFolderMode = false;
 
@@ -935,6 +937,59 @@ namespace DataJuggler.BlazorGallery.Shared
                         Refresh();
                     }                    
                 }
+                else if (message.Sender.Name == "RenameFolderTextBox")
+                {
+                    // if EscapePressed
+                    if (message.Text == "EscapePressed")
+                    {  
+                        // no longer editing
+                        if (NullHelper.Exists(FolderBeingRenamed))
+                        {
+                            // no longer being renamed
+                            FolderBeingRenamed.RenameMode = false;
+
+                            // Exit edit mode
+                            Refresh();
+                        }
+                    }
+                    else if (message.Text == "EnterPressed")
+                    {
+                        // no longer editing
+                        if (NullHelper.Exists(FolderBeingRenamed))
+                        {
+                            // Set the new name
+                            FolderBeingRenamed.Name = RenameFolderComponent.Text;
+
+                            // no longer being renamed
+                            FolderBeingRenamed.RenameMode = false;
+
+                            if (SelectedFolder.Id != FolderBeingRenamed.Id)
+                            {
+                                // Unselect all other folders
+                                UnselectFolders(FolderBeingRenamed.Id);
+                            }
+
+                            // Select this folder
+                            FolderBeingRenamed.Selected = true;
+
+                            // perform the save
+                            bool saved = await FolderService.SaveFolder(ref folderBeingRenamed);
+
+                            // if saved
+                            if (saved)
+                            {
+                                // Update the SelectedFolder
+                                SelectedFolder = FolderBeingRenamed;
+
+                                // Reload
+                                ForceReload = true;
+
+                                // Exit edit mode
+                                Refresh();
+                            }
+                        }
+                    }
+                }
             }
             #endregion
             
@@ -977,11 +1032,22 @@ namespace DataJuggler.BlazorGallery.Shared
                 }
                 else if (component is ValidationComponent)
                 {
-                    // set the NewFolderNameComponent
-                    NewFolderNameComponent = component as ValidationComponent;
+                    if (component.Name == "NewFolderNameComponent")
+                    {
+                        // set the NewFolderNameComponent
+                        NewFolderNameComponent = component as ValidationComponent;
 
-                    // Set Focus
-                    NewFolderNameComponent.SetFocus();
+                        // Set Focus
+                        NewFolderNameComponent.SetFocus();
+                    }
+                    else if (component.Name == "RenameFolderTextBox")
+                    {
+                        // set the RenameFolderComponent
+                        RenameFolderComponent = component as ValidationComponent;
+
+                        // Set Focus
+                        RenameFolderComponent.SetFocus();
+                    }
                 }
                 else if (component is FileUpload)
                 {
@@ -1044,6 +1110,24 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
 
+            #region RenameFolder(Folder folder)
+            /// <summary>
+            /// Rename a Folder
+            /// </summary>
+            public void RenameFolder(Folder folder)
+            {
+                // If the folder object exists
+                if (NullHelper.Exists(folder))
+                {
+                    // Set to true
+                    folder.RenameMode = true;
+                    
+                    // Set the FolderBeingRenamed
+                    FolderBeingRenamed = folder;
+                }
+            }
+            #endregion
+            
             #region SetupScreen(ScreenTypeEnum screenType, string emailAddress = "")
             /// <summary>
             /// This method Setup Screen
@@ -1305,6 +1389,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region FolderBeingRenamed
+            /// <summary>
+            /// This property gets or sets the value for 'FolderBeingRenamed'.
+            /// </summary>
+            public Folder FolderBeingRenamed
+            {
+                get { return folderBeingRenamed; }
+                set { folderBeingRenamed = value; }
+            }
+            #endregion
+            
             #region Folders
             /// <summary>
             /// This property gets or sets the value for 'Folders'.
@@ -1474,6 +1569,23 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region HasRenameFolderComponent
+            /// <summary>
+            /// This property returns true if this object has a 'RenameFolderComponent'.
+            /// </summary>
+            public bool HasRenameFolderComponent
+            {
+                get
+                {
+                    // initial value
+                    bool hasRenameFolderComponent = (this.RenameFolderComponent != null);
+                    
+                    // return value
+                    return hasRenameFolderComponent;
+                }
+            }
+            #endregion
+            
             #region HasSelectedFolder
             /// <summary>
             /// This property returns true if this object has a 'SelectedFolder'.
@@ -1619,6 +1731,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return newFolderNameComponent; }
                 set { newFolderNameComponent = value; }
+            }
+            #endregion
+            
+            #region RenameFolderComponent
+            /// <summary>
+            /// This property gets or sets the value for 'RenameFolderComponent'.
+            /// </summary>
+            public ValidationComponent RenameFolderComponent
+            {
+                get { return renameFolderComponent; }
+                set { renameFolderComponent = value; }
             }
             #endregion
             
