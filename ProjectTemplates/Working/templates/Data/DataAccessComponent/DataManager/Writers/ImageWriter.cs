@@ -25,6 +25,40 @@ namespace DataAccessComponent.DataManager.Writers
 
         #region Static Methods
 
+            #region CreateDeleteImageStoredProcedure(Image image)
+            /// <summary>
+            /// This method creates an instance of an
+            /// 'DeleteImage'StoredProcedure' object and
+            /// creates the sql parameter[] array needed
+            /// to execute the procedure 'Image_Delete'.
+            /// </summary>
+            /// <param name="image">The 'Image' to Delete.</param>
+            /// <returns>An instance of a 'DeleteImageStoredProcedure' object.</returns>
+            public static new DeleteImageStoredProcedure CreateDeleteImageStoredProcedure(Image image)
+            {
+                // Initial Value
+                DeleteImageStoredProcedure deleteImageStoredProcedure = new DeleteImageStoredProcedure();
+
+                // if image.DeleteByFolderId is true
+                if (image.DeleteByFolderId)
+                {
+                        // Change the procedure name
+                        deleteImageStoredProcedure.ProcedureName = "Image_DeleteByFolderId";
+                        
+                        // Create the @FolderId parameter
+                        deleteImageStoredProcedure.Parameters = SqlParameterHelper.CreateSqlParameters("@FolderId", image.FolderId);
+                }
+                else
+                {
+                    // Now Create Parameters For The DeleteProc
+                    deleteImageStoredProcedure.Parameters = CreatePrimaryKeyParameter(image);
+                }
+
+                // return value
+                return deleteImageStoredProcedure;
+            }
+            #endregion
+            
             #region CreateFetchAllImagesStoredProcedure(Image image)
             /// <summary>
             /// This method creates an instance of a

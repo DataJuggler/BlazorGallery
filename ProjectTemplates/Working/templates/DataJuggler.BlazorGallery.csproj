@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.2.4</Version>
+	<Version>1.2.5</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -17,19 +17,35 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
-	<PackageReleaseNotes>v1.1.9
-5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
-or they are sent to Google.
+	<PackageReleaseNotes>
+		v1.2.5
+		5.31.2023: I have added numerous features including, but not limited to:
+		1. View Large Image button on every image. Click to see an almost full screen image
+		2. You can now rename folders by double clicking. Hit Enter to Save or Escape to cancel.
+		3. I changed the logo and images to a dark theme.
+		4. Redid the layout to be position: fixed, so things do not jump around when the Copy URL button is clicked.
 
-5.15.2023: I fixed the Upload issue not showing up in the folder for a Nuget package.
-The issue was resolved by including a file ReadMe.txt in the Upload folder and packing
-the read me file similar to the other two ReadMe.md files. 
+		v1.2.0:
+		5.27.2023: I added a View Full Screen button to each image and created a FullScreenImageViewer component.
+		It is not actually full screen, but in ViewImage mode, only the selected image is shown.
+		I also added a field for Image.LikesCount and User.ProfileVisibility. These two fields are not shown
+		yet, but i did create a component that prompts a user if they wish to show their profile publicly.
+		My plan is to create a public gallery and all images are allocated a certain amount of time on the main screen. The more likes an image
+		gets, the longer it gets to stay.  The Nuget package and database scripts have also been updated.
 
-This is the first working version of BlazorGallery.  To run this project, create a SQL Server database named
-BlazorGallery, then execute the SQL file BlazorGalleryDatabase.sql. Finally, build a connection string and
-set a user level environment variable named BlazorGalleryConnString holding the connection string a second 
-user level environment variable named BlazorGalleryKeyCode, and make up a string for its value. 
-BlazorGalleryKeyCode is used to create password hashes when a user signs up.</PackageReleaseNotes>
+		v1.1.9
+		5.17.2023: I added a Terms of Service component and a user must accept thea Terms of Service
+		or they are sent to Google.
+
+		5.15.2023: I fixed the Upload issue not showing up in the folder for a Nuget package.
+		The issue was resolved by including a file ReadMe.txt in the Upload folder and packing
+		the read me file similar to the other two ReadMe.md files.
+
+		This is the first working version of BlazorGallery.  To run this project, create a SQL Server database named
+		BlazorGallery, then execute the SQL file BlazorGalleryDatabase.sql. Finally, build a connection string and
+		set a user level environment variable named BlazorGalleryConnString holding the connection string a second
+		user level environment variable named BlazorGalleryKeyCode, and make up a string for its value.
+		BlazorGalleryKeyCode is used to create password hashes when a user signs up.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

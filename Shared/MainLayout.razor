@@ -13,6 +13,27 @@
 
 <PageTitle>Blazor Gallery</PageTitle>
 
+<Styled @bind-Classname=@NewFolderStyle>
+    border: none;
+    width: 280px;
+    height: 32px;
+    background-size: 100% 100%;
+    background-color: transparent;
+    position: fixed;
+    top: @AddButtonTopStyle;
+    left: 10.8%;
+</Styled>
+<Styled @bind-Classname=@AddButtonStyle>
+    background-image: url('../Images/AddButton.png');
+    border: none;
+    width: 32px;
+    height: 32px;
+    background-size: 100% 100%;
+    background-color: transparent;    
+    position: fixed;
+    top: @AddButtonTopStyle;
+    left: 16.8%;
+</Styled>
 <Styled @bind-Classname=@BlueButton>
     background-image: url('../Images/UploadButtonBlue.png');
     position: fixed;        
@@ -36,7 +57,7 @@
     background-color: transparent;
 </Styled>
 <Styled @bind-Classname="@CheckMarkContainerStyle">
-    position: relative;
+    position: fixed;
     top: @CheckMarkTopStyle;
     float: left;
     height: 32px;
@@ -89,8 +110,8 @@
         <div class="logo"></div>           
         @if (HasLoggedInUser)
         {
-            <div class="folders down16">
-                <div class="colornavy fontbold right32 fontsize18">
+            <div class="folders">
+                <div class="colorgray204 fontbold fontsize24 right64 fontsite">
                     Folders
                 </div>
                 <div class="height8"></div>
@@ -103,7 +124,7 @@
                         buttonNumber++;
 
                         <div class="nav-item px-3">
-                        <button class="copybutton down16 right16" title="Copy This Folder's URL'" @onclick="() => CopyFolder(folder.Id, buttonNumber)"></button>                            
+                        <button class="copybutton down16 right16" title="Copy This Folder's URL'" @onclick="() => CopyFolder(folder.Id)"></button>                            
                         @if ((folder.Name != "Home") && (folder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
                         {
                             <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
@@ -112,11 +133,12 @@
                         {
                             <div class="displayinlineblock width16"></div>
                         }
-                        @if (folder.RenameMode)
+                        @if ((RenameFolderMode) && (HasFolderBeingRenamed) && (FolderBeingRenamedId == folder.Id))
                         {
-                            <div class="right60">
-                                <ValidationComponent Name="RenameFolderTextBox" Parent="this" SetFocusOnFirstRender=true
-                                    Text="@folder.Name" Unit="px" Width="160" Column1Width="48" Caption="Name:">
+                            <div class="right60 up14">
+                                <ValidationComponent Name="RenameFolderTextBox" Parent="this" Unit="px"
+                                    SetFocusOnFirstRender=true Position="relative" HeightUnit="px" Text="@folder.Name" 
+                                    Width="160" Column1Width="48" Caption="Name:" LabelClassName="colorgray204 left2">
                                 </ValidationComponent>
                             </div>
                         }
@@ -124,29 +146,31 @@
                         {
                             @if (folder.Selected)
                             {
-                                    <button class="imagefolder right16"><span class="fontsize14 colorfirebrick fontbold right56 text-nowrap" @ondblclick="() => RenameFolder(folder)">@folder.Name</span></button>
+                                    <button class="imagefolder right16"><span class="fontsize14 colortomato fontbold right56 text-nowrap fontsite" @ondblclick="() => RenameFolder(folder)">@folder.Name</span></button>
                             }
                             else
                             {
-                                <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colornavy right56 fontbold">@folder.Name</span></button>
+                                    <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">@folder.Name</span></button>
                             }
                         }
                     </div>
                     <div class="height16 displayblock"></div>
                 }
-                <div class="sidebarfooter">version 1.2.3</div>
+                <div class="sidebarfooter">version 1.2.4</div>
             }
             </div>
             @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
             {
-                <button class="addbutton" title="Add A New Folder" @onclick=AddFolder></button>
+                <button class="@AddButtonStyle" title="Add A New Folder" @onclick=AddFolder></button>
             }
             @if (AddFolderMode)
             {
-                <div class="down32">
-                    <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8"
-                        SetFocusOnFirstRender="true" Unit="px"
-                        Width="164" Caption="Name:"  LabelWidth="80"></ValidationComponent>
+                <div class="@NewFolderStyle">
+                    <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8" Unit="px"
+                        LabelClassName="displayinlineblock colorgray204 left2" SetFocusOnFirstRender="true" Width="260"                         
+                        Column1Width="40" Column2Width="200" HeightUnit="px" Height=24 Caption="Name:"
+                        Left="-80" Top="36">                        
+                    </ValidationComponent>
                 </div>
             }
             @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode))

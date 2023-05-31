@@ -16,6 +16,7 @@ namespace ObjectLibrary.BusinessObjects
 
         #region Private Variables
         private bool loadByFolderId;
+        private bool deleteByFolderId;
         #endregion
 
         #region Constructor
@@ -41,6 +42,17 @@ namespace ObjectLibrary.BusinessObjects
         #endregion
 
         #region Properties
+
+            #region DeleteByFolderId
+            /// <summary>
+            /// This property gets or sets the value for 'DeleteByFolderId'.
+            /// </summary>
+            public bool DeleteByFolderId
+            {
+                get { return deleteByFolderId; }
+                set { deleteByFolderId = value; }
+            }
+            #endregion
 
             #region LoadByFolderId
             /// <summary>

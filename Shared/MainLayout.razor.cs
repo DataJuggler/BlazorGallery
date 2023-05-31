@@ -50,6 +50,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private Folder selectedFolder;
         private User loggedInUser;
         private bool addFolderMode;
+        private bool renameFolderMode;
         private Folder folderBeingRenamed;
         private FileUpload fileUpload;
         private ValidationComponent newFolderNameComponent;
@@ -73,13 +74,14 @@ namespace DataJuggler.BlazorGallery.Shared
         private string checkMarkContainerStyle;
         private Timer.Timer timer;
         private Image selectedImage;
-        private bool copyButtonHasBeenClicked;        
+        private string addButtonStyle;
+        private double addButtonTop;
+        private string newFolderStyle;
         private const int AdminId = 1;
-        public const int FolderHeight = 48;
+        public const int FolderHeight = 51;
         public const int UploadLimit = 20480000;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
-        public const int FolderTop = 140;        
-        public const int FolderAdjustment = 160;
+        public const int FolderTop = 140;         
         #endregion
 
         #region Constructor
@@ -126,7 +128,13 @@ namespace DataJuggler.BlazorGallery.Shared
                 AddFolderMode = true;
 
                 // Set the Top
-                Top = FolderTop + ((Folders.Count + 1) * FolderHeight);               
+                Top = 132 + (Folders.Count * FolderHeight);
+
+                // This is needed to set focus to the component when it rerenders
+                ForceReload = true;
+
+                // Update
+                Refresh();
             }
             #endregion
             
@@ -134,36 +142,26 @@ namespace DataJuggler.BlazorGallery.Shared
             /// <summary>
             /// Copy Folder
             /// </summary>
-            public async void CopyFolder(int folderId, int buttonNumber)
+            public async void CopyFolder(int folderId)
             {
                 // find the folder
                 Folder folder = await FolderService.FindFolder(folderId);
                 
                 // if the folder exists and the LoggedInUser exists
                 if ((NullHelper.Exists(folder)) && (HasLoggedInUser) && (HasFolders))
-                {
-                    // Set to true
-                    CopyButtonHasBeenClicked = true;
-
+                { 
                     // Find the index of this folder
                     int folderIndex = FindFolderIndex(folderId);
 
+                    // Set the buttonNumber
+                    int buttonNumber = folderIndex + 1;
+                    int reverseButtonNumber = Folders.Count - buttonNumber;
+
                     // Set the top
-                    CheckMarkTop = ((Folders.Count - folderIndex) * (FolderHeight + 3)) * -1;
+                    CheckMarkTop = buttonNumber * FolderHeight + 60 - (Folders.Count + buttonNumber);
 
-                    // if the fileupload is currently showing
-                    if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode))
-                    {
-                        // do nothing
-                    }
-                    else
-                    {
-                        // check mark needs to be down more when not showing the file upload
-                        CheckMarkTop = CheckMarkTop + 32;
-                    }
-
-                    // set the top
-                    top = 60 + (buttonNumber * 32);
+                    // set the top, which sets the Upload button top
+                    Top = 132 + (Folders.Count * FolderHeight);
 
                     string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.Machine);
                     string gallery = root + "/Gallery/" + LoggedInUser.UserName + "/" + folder.Name.Replace(" ", "%20");
@@ -180,13 +178,6 @@ namespace DataJuggler.BlazorGallery.Shared
                     Timer = new Timer.Timer(3000);
                     Timer.Elapsed += TimerElapsed;
                     Timer.Start();
-
-                    // if the value for CopyButtonHasBeenClicked is true
-                    if (CopyButtonHasBeenClicked)
-                    {
-                        // Adjust for weird movement
-                        Top = Top + FolderAdjustment;
-                    }
                 }
             }
             #endregion
@@ -499,7 +490,7 @@ namespace DataJuggler.BlazorGallery.Shared
                                     }
                                 }
                             }
-                        }
+                        }                       
                     }
                     catch (Exception error)
                     {
@@ -572,16 +563,19 @@ namespace DataJuggler.BlazorGallery.Shared
                             }
                         }
 
-                        // Set the Top
-                        Top = FolderTop + (Folders.Count * FolderHeight);
+                        // Set the Top                        
+                        Top = 132 + (Folders.Count * FolderHeight);   
+
+                        // Set the Add Button Top
+                        AddButtonTop = 60 + (Folders.Count * FolderHeight);   
                    }
                 }
 
                 // call base method
                 await base.OnAfterRenderAsync(firstRender);
 
-                // if firstRender
-                if ((firstRender) || (ForceReload))
+                // if firstRender or ForceReload
+                if (firstRender || ForceReload)
                 {
                     // only force reload once
                     ForceReload = false;
@@ -896,6 +890,9 @@ namespace DataJuggler.BlazorGallery.Shared
                                             // if the value for removed is true
                                             if (removed)
                                             {
+                                                // remove the images from the database and file system
+                                                removed = await ImageService.RemoveImagesForFolder(folder.Id);
+
                                                 // Update the UI
                                                 ForceReload = true;
                                                 Refresh();
@@ -945,8 +942,11 @@ namespace DataJuggler.BlazorGallery.Shared
                         // no longer editing
                         if (NullHelper.Exists(FolderBeingRenamed))
                         {
-                            // no longer being renamed
-                            FolderBeingRenamed.RenameMode = false;
+                            // remove
+                            RenameFolderMode = false;
+
+                            // destroy
+                            FolderBeingRenamed = null;
 
                             // Exit edit mode
                             Refresh();
@@ -955,14 +955,15 @@ namespace DataJuggler.BlazorGallery.Shared
                     else if (message.Text == "EnterPressed")
                     {
                         // no longer editing
-                        if (NullHelper.Exists(FolderBeingRenamed))
+                        if (HasFolderBeingRenamed)
                         {
                             // Set the new name
                             FolderBeingRenamed.Name = RenameFolderComponent.Text;
 
                             // no longer being renamed
-                            FolderBeingRenamed.RenameMode = false;
+                            RenameFolderMode = false;
 
+                            // if the folder being renamed is not the selected folder
                             if (SelectedFolder.Id != FolderBeingRenamed.Id)
                             {
                                 // Unselect all other folders
@@ -980,6 +981,9 @@ namespace DataJuggler.BlazorGallery.Shared
                             {
                                 // Update the SelectedFolder
                                 SelectedFolder = FolderBeingRenamed;
+
+                                // Reload the images
+                                SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
 
                                 // Reload
                                 ForceReload = true;
@@ -1069,6 +1073,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 }
                 else if (component is Join)
                 {
+                    
                 }                
             }
             #endregion
@@ -1120,10 +1125,16 @@ namespace DataJuggler.BlazorGallery.Shared
                 if (NullHelper.Exists(folder))
                 {
                     // Set to true
-                    folder.RenameMode = true;
+                    RenameFolderMode = true;
                     
                     // Set the FolderBeingRenamed
                     FolderBeingRenamed = folder;
+
+                    // This is needed to set focus to the component when it rerenders
+                    ForceReload = true;
+
+                    // Update
+                    Refresh();
                 }
             }
             #endregion
@@ -1251,6 +1262,46 @@ namespace DataJuggler.BlazorGallery.Shared
         
         #region Properties
             
+            #region AddButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'AddButtonStyle'.
+            /// </summary>
+            public string AddButtonStyle
+            {
+                get { return addButtonStyle; }
+                set { addButtonStyle = value; }
+            }
+            #endregion
+            
+            #region AddButtonTop
+            /// <summary>
+            /// This property gets or sets the value for 'AddButtonTop'.
+            /// </summary>
+            public double AddButtonTop
+            {
+                get { return addButtonTop; }
+                set { addButtonTop = value; }
+            }
+            #endregion
+            
+            #region AddButtonTopStyle
+            /// <summary>
+            /// This read only property returns the value of AddButtonTopStyle from the object AddButtonTop.
+            /// </summary>
+            public string AddButtonTopStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string addButtonTopStyle = AddButtonTop + "px";
+                    
+                    // return value
+                    return addButtonTopStyle;
+                }
+            }
+            #endregion
+            
             #region AddFolderMode
             /// <summary>
             /// This property gets or sets the value for 'AddFolderMode'.
@@ -1367,17 +1418,6 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
-            #region CopyButtonHasBeenClicked
-            /// <summary>
-            /// This property gets or sets the value for 'CopyButtonHasBeenClicked'.
-            /// </summary>
-            public bool CopyButtonHasBeenClicked
-            {
-                get { return copyButtonHasBeenClicked; }
-                set { copyButtonHasBeenClicked = value; }
-            }
-            #endregion
-            
             #region FileUpload
             /// <summary>
             /// This property gets or sets the value for 'FileUpload'.
@@ -1397,6 +1437,31 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return folderBeingRenamed; }
                 set { folderBeingRenamed = value; }
+            }
+            #endregion
+            
+            #region FolderBeingRenamedId
+            /// <summary>
+            /// This read only property returns the value of FolderBeingRenamedId from the object FolderBeingRenamed.
+            /// </summary>
+            public int FolderBeingRenamedId
+            {
+                
+                get
+                {
+                    // initial value
+                    int folderBeingRenamedId = 0;
+                    
+                    // if the value for HasFolderBeingRenamed is true
+                    if (HasFolderBeingRenamed)
+                    {
+                        // set the return value
+                        folderBeingRenamedId = FolderBeingRenamed.Id;
+                    }
+                    
+                    // return value
+                    return folderBeingRenamedId;
+                }
             }
             #endregion
             
@@ -1480,6 +1545,23 @@ namespace DataJuggler.BlazorGallery.Shared
                     
                     // return value
                     return hasFileUpload;
+                }
+            }
+            #endregion
+            
+            #region HasFolderBeingRenamed
+            /// <summary>
+            /// This property returns true if this object has a 'FolderBeingRenamed'.
+            /// </summary>
+            public bool HasFolderBeingRenamed
+            {
+                get
+                {
+                    // initial value
+                    bool hasFolderBeingRenamed = (this.FolderBeingRenamed != null);
+                    
+                    // return value
+                    return hasFolderBeingRenamed;
                 }
             }
             #endregion
@@ -1734,6 +1816,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region NewFolderStyle
+            /// <summary>
+            /// This property gets or sets the value for 'NewFolderStyle'.
+            /// </summary>
+            public string NewFolderStyle
+            {
+                get { return newFolderStyle; }
+                set { newFolderStyle = value; }
+            }
+            #endregion
+            
             #region RenameFolderComponent
             /// <summary>
             /// This property gets or sets the value for 'RenameFolderComponent'.
@@ -1742,6 +1835,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return renameFolderComponent; }
                 set { renameFolderComponent = value; }
+            }
+            #endregion
+            
+            #region RenameFolderMode
+            /// <summary>
+            /// This property gets or sets the value for 'RenameFolderMode'.
+            /// </summary>
+            public bool RenameFolderMode
+            {
+                get { return renameFolderMode; }
+                set { renameFolderMode = value; }
             }
             #endregion
             

@@ -7,31 +7,6 @@ Blazor Gallery is now live https://blazorgallery.com
 # Screenshot
 <img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot.png height=480 width=886 />
 
-# News
-
-v1.2.0:
-5.27.2023: I added a View Full Screen button to each image and created a FullScreenImageViewer component.
-It is not actually full screen, but in ViewImage mode, only the selected image is shown.
-I also added a field for Image.LikesCount and User.ProfileVisibility. These two fields are not shown 
-yet, but i did create a component that prompts a user if they wish to show their profile publicly.
-My plan is to create a public gallery and all images are allocated a certain amount of time on the main screen. The more likes an image
-gets, the longer it gets to stay.  The Nuget package and database scripts have also been updated.
-
-v.1.1.2
-5.19.2023: I added a Copy button to each folder. Now you can copy URL's and share URL's publicly for posting on social media.
-
-v1.1.9
-5.17.2023: I added a Terms of Service component and a user must accept the Terms of Service
-or they are sent to Google.
-
-5.10.2023 - New video published
-
-How To Create A Complete Blazor SQL Server Project In 5 Minutes
-https://youtu.be/yQz1dqYiy2g
-
-I learned this week how to create a Nuget package for a Blazor site. Never again will I have to delete
-Weather Forecast and Counter pages.
-
 # Instructions to run this project:
 
 To Install Via Nuget and DOT NET CLI, navigate to the folder you wish to create your project in
@@ -70,6 +45,38 @@ Server image galleries.
 # Infamous Last Words
 
 Everything should work if you followed the above steps.
+
+# News
+
+v1.2.5
+5.31.2023: I have added numerous features including, but not limited to:    
+    1. You can now rename folders by double clicking
+    2. I changed the logo and images to a dark theme. 
+    3. Redid the layout to be fixed, so things do not jump around when the Copy URL button is clicked.
+
+
+v1.2.0:
+5.27.2023: I added a View Full Screen button to each image and created a FullScreenImageViewer component.
+It is not actually full screen, but in ViewImage mode, only the selected image is shown.
+I also added a field for Image.LikesCount and User.ProfileVisibility. These two fields are not shown 
+yet, but i did create a component that prompts a user if they wish to show their profile publicly.
+My plan is to create a public gallery and all images are allocated a certain amount of time on the main screen. The more likes an image
+gets, the longer it gets to stay.  The Nuget package and database scripts have also been updated.
+
+v.1.1.2
+5.19.2023: I added a Copy button to each folder. Now you can copy URL's and share URL's publicly for posting on social media.
+
+v1.1.9
+5.17.2023: I added a Terms of Service component and a user must accept the Terms of Service
+or they are sent to Google.
+
+5.10.2023 - New video published
+
+How To Create A Complete Blazor SQL Server Project In 5 Minutes
+https://youtu.be/yQz1dqYiy2g
+
+I learned this week how to create a Nuget package for a Blazor site. Never again will I have to delete
+Weather Forecast and Counter pages.
 
 # Routing
 Routing has been completed. You can now share public galleries with a url such as:

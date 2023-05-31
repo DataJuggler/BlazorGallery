@@ -1,15 +1,5 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-.addbutton
-{
-    background-image: url('../Images/AddButton.png');
-    border: none;
-    width: 32px;
-    height: 32px;
-    background-size: 100% 100%;
-    background-color: transparent;
-    float: right;
-}
 .backbutton
 {
     background-image: url('../Images/BackButton.png');
@@ -52,6 +42,10 @@
 {
   justify-content: flex-start; 
 }
+.colorgray204
+{  
+    color: rgb(204, 204, 204);
+}
 .copybutton
 {
     background-image: url('../Images/CopyButton.png');
@@ -73,7 +67,7 @@
 }
 .fixedsidebar
 {
-    background-image: url('../Images/SideBarBrown.png');
+    background-image: url('../Images/SideBarBlack.png');
     width: 256px;
     height: 100vh;   
     position: fixed;
@@ -83,6 +77,9 @@
     background-size: 100% 100%;
     overflow: hidden;
     border-right: 1px solid black;    
+    font-family: Calibri;
+    font-size: 14px;
+    color: rgb(204, 204, 204);
 }
 .flex-grid 
 {
@@ -98,9 +95,19 @@
   object-fit: cover;
   gap: 0px;
 }
+.folders
+{
+    position: fixed;
+    top: 8vh;
+    left: 1%;
+}
 .fontbold
 {
     font-weight: bold;
+}
+.fontsite
+{
+    font-family: 'Candara', 'Verdana', 'Tahoma';
 }
 .fontsize12
 {
@@ -110,9 +117,9 @@
 {
     font-size: 14px;    
 }
-.fontsize18
+.fontsize24
 {
-    font-size: 18px;    
+    font-size: 24px;    
 }
 .imagefolder
 {
@@ -164,11 +171,12 @@
 }
 .logo
 {
-    background-image: url('../Images/Logo.png');
-    width: 256px;
-    height: 64px;
-    position: relative;
-    top: 1.2vh;
+    background-image: url('../Images/Logo2.png');
+    width: 20%;
+    height: 8vh;
+    position: fixed;
+    top: 1vh;
+    left: 0%;
     background-size: 100% 100%;
 }
 .nobutton

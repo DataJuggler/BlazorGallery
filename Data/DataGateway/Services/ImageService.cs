@@ -8,6 +8,7 @@ using DataGateway;
 using ObjectLibrary.BusinessObjects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
 
 #endregion
 
@@ -108,6 +109,45 @@ namespace DataGateway.Services
                     
                     // load the sites
                     deleted = gateway.DeleteImage(imageId);
+                }
+                
+                // return the value of deleted
+                return Task.FromResult(deleted);
+            }
+        #endregion
+
+            #region RemoveImagesForFolder(int folderId)
+            /// <summary>
+            /// This method is used to delete a Image
+            /// </summary>
+            /// <returns></returns>
+            public static Task<bool> RemoveImagesForFolder(int folderId)
+            {
+                // initial value
+                bool deleted = false;
+                
+                // If the value for folderId is greater than zero
+                if (folderId > 0)
+                {
+                    // Create a new instance of a 'Gateway' object, and set the connectionName
+                    Gateway gateway = new Gateway(Connection.Name);
+
+                    // load the iamges
+                    List<Image> images = gateway.LoadImagesForFolderId(folderId);
+                    
+                    // load the sites
+                    deleted = gateway.DeleteImagesByFolderId(folderId);
+
+                    // if the value for deleted is true
+                    if (deleted)
+                    {
+                        // Iterate the collection of Image objects
+                        foreach (Image image in images)
+                        {
+                            // perform the delete
+                            File.Delete(image.FullPath);
+                        }
+                    }
                 }
                 
                 // return the value of deleted
