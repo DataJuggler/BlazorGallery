@@ -26,7 +26,7 @@ Clone this project from GitHub https://github.com/DataJuggler/BlazorGallery
 3. Execute Insert Admin.sql located in the SQL folder of this project.
 4. Create a connection string to your BlazorGallery database.<br>
 Tip: DataTier.Net (used to build the datatier for this project) comes with a ConnectionStringBuilder app
-in the tools folder, or install the realease version and Connection String Builder is installed also.
+in the tools folder, or install the release version and Connection String Builder is installed also.
 https://github.com/DataJuggler/DataTier.Net
 
 5. Create a system level environment variable named BlazorGalleryConnString and paste 
@@ -91,10 +91,10 @@ Here are a few ideas I have thought of. Feel free to reach out here or in a vide
 
 # In Progress
 
-I am about to start working on Public Galleries - Such as Main that are not specific to one user. This will be shown on the main screen to anyone not logged and / or
-logged in users. The plan is to allow everyone some time on the main screen. Liked and commented images are allowed to expire slower.
+This week I am working on renaming folders (mostly done), and deleting of images from the database and file system when a folder is deleted.
+I also plan on implementing Forgot Password and CHange Password if I have time.
 
-# My THoughts 
+# Possible Feature Requests Coming
 
 1. Add video
 2. Add ability for people to comment, like, follow, etc. other users.
