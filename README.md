@@ -7,6 +7,9 @@ Blazor Gallery is now live https://blazorgallery.com
 # Screenshot
 <img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot2.png height=480 width=886 />
 
+# New Video
+[![Blazor Gallery Deserves A Star Video](https://youtu.be/HAMgeaCuvHY/0.jpg)](https://youtu.be/HAMgeaCuvHY)
+
 # Instructions to run this project:
 
 To Install Via Nuget and DOT NET CLI, navigate to the folder you wish to create your project in
