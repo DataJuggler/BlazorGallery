@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.2.5</PackageVersion>
+    <PackageVersion>1.2.6</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
@@ -22,7 +22,7 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
     <RepositoryType>Git/GitHub</RepositoryType>
     <PackageReleaseNotes>
-		v1.2.5
+		v1.2.6
 		5.31.2023: I have added numerous features including, but not limited to:
 		1. You can now rename folders by double clicking
 		2. I changed the logo and images to a dark theme.
