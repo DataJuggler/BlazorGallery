@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.2.7</Version>
+	<Version>1.2.8</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>

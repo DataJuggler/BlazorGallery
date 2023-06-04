@@ -2,24 +2,20 @@
 
 #region using statements
 
-using Azure;
 using Azure.Communication.Email;
+using DataGateway.Services;
 using DataJuggler.Blazor.Components;
 using DataJuggler.Blazor.Components.Interfaces;
+using DataJuggler.Blazor.Components.Util;
 using DataJuggler.BlazorGallery.Shared;
-using Microsoft.AspNetCore.Components;
-using ObjectLibrary.BusinessObjects;
-using System.Runtime.Versioning;
-using Timer = System.Timers;
 using DataJuggler.RandomShuffler;
 using DataJuggler.RandomShuffler.Enumerations;
-using DataGateway.Services;
-using DataJuggler.Blazor.Components.Util;
 using DataJuggler.UltimateHelper;
-using DataJuggler.UltimateHelper.Objects;
+using Microsoft.AspNetCore.Components;
+using ObjectLibrary.BusinessObjects;
 using ObjectLibrary.Enumerations;
-using DataJuggler.Cryptography;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using System.Runtime.Versioning;
+using Timer = System.Timers;
 
 #endregion
 
@@ -353,7 +349,7 @@ namespace DataJuggler.BlazorGallery.Components
                             EmailClient emailClient = new EmailClient(emailConnectionString);
 
                             // Set the subject
-                            string subject = "Welcome to Blazor Image Gallery.";
+                            string subject = "Welcome to Blazor Gallery.";
                             string htmlContent = "<html><body><h1>Blazor Gallery</h1><br/><h2>Your Code Is: " + code.ToString() + "</h2><br><br>" +
                             "<div>Blazor Gallery is created by Data Juggler and released free and opensource.<br><a href=https://datajuggler.com>https://datajuggler.com</a></div></body></html>";
                             string sender = "DoNotReply@datajuggler.com";
