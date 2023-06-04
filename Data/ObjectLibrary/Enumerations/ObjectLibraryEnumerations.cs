@@ -31,7 +31,8 @@ namespace ObjectLibrary.Enumerations
         Index = 3,
         TermsOfservice = 4,
         SetProfileVisibility = 5,
-        ViewImage = 6
+        ViewImage = 6,
+        EmailVerification = 7
     }
     #endregion
 

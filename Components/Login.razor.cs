@@ -79,12 +79,6 @@ namespace DataJuggler.BlazorGallery.Components
         }
         #endregion
 
-        #region Events
-
-            
-            
-        #endregion
-
         #region Methods
 
             #region Cancel()
@@ -338,6 +332,11 @@ namespace DataJuggler.BlazorGallery.Components
                                     // Setup the Index page
                                     ParentMainLayout.SetupScreen(ScreenTypeEnum.SetProfileVisibility);
                                 }
+                                else if ((!LoggedInUser.EmailVerified) && TextHelper.Exists(EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryEmail", EnvironmentVariableTarget.Machine)))
+                                {
+                                    // Setup the Index page
+                                    ParentMainLayout.SetupScreen(ScreenTypeEnum.EmailVerification);
+                                }
                                 else
                                 {
                                     // Setup the Index page
@@ -395,21 +394,7 @@ namespace DataJuggler.BlazorGallery.Components
             /// </summary>
             public void ReceiveData(Message message)
             {
-                // locals
-                //User user = null;
-                //bool refreshRequired = false;
-
-                //// If the message object exists
-                //if (NullHelper.Exists(message))
-                //{
-                   
-                //}
-
-                //if (refreshRequired)
-                //{
-                //    // update the UI
-                //    Refresh();
-                //}
+               
             }
             #endregion
             

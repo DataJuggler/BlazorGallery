@@ -48,6 +48,12 @@ Everything should work if you followed the above steps.
 
 # News
 
+v1.2.7
+6.3.2023: I have finished adding Email verification using Azure Email Service.
+The way I wrote this, if you want to implement Email Verification Required, set an Environment
+Variable named BlazorGalleryEmail to the connection string of your Azure Email Service sender email.
+If you don't set this, you can test in Visual Studio without email verification required.
+
 v1.2.5
 5.31.2023: I have added numerous features including, but not limited to:    
     1. You can now rename folders by double clicking

@@ -233,6 +233,32 @@ namespace DataGateway
             }
             #endregion
         
+                #region DeleteImagesByFolderId(int folderId)
+                /// <summary>
+                /// This method is used to delete 'Image' objects for the FolderId given.
+                /// </summary>
+                public bool DeleteImagesByFolderId(int folderId)
+                {
+                    // initial value
+                    bool deleted = false;
+                    
+                    // Create a temp Image object
+                    Image tempImage = new Image();
+                    
+                    // Set the value for DeleteByFolderId to true
+                    tempImage.DeleteByFolderId = true;
+                    
+                    // Set the value for FolderId
+                    tempImage.FolderId = folderId;
+                    
+                    // Perform the delete
+                    deleted = DeleteImage(0, tempImage);
+                    
+                    // return value
+                    return deleted;
+                }
+                #endregion
+                
             #region DeleteUser(int id, User tempUser = null)
             /// <summary>
             /// This method is used to delete User objects.

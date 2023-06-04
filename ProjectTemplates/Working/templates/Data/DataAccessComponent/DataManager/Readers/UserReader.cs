@@ -38,26 +38,30 @@ namespace DataAccessComponent.DataManager.Readers
                 // Create field Integers
                 int acceptedTermsOfServiceDatefield = 0;
                 int activefield = 1;
-                int createdDatefield = 2;
-                int emailAddressfield = 3;
-                int emailVerifiedfield = 4;
-                int idfield = 5;
-                int isAdminfield = 6;
-                int lastLoginDatefield = 7;
-                int namefield = 8;
-                int passwordHashfield = 9;
-                int profileVisibilityfield = 10;
-                int storageUsedfield = 11;
-                int totalLoginsfield = 12;
-                int userNamefield = 13;
+                int codeEmailedfield = 2;
+                int createdDatefield = 3;
+                int emailAddressfield = 4;
+                int emailedCodeDatefield = 5;
+                int emailVerifiedfield = 6;
+                int idfield = 7;
+                int isAdminfield = 8;
+                int lastLoginDatefield = 9;
+                int namefield = 10;
+                int passwordHashfield = 11;
+                int profileVisibilityfield = 12;
+                int storageUsedfield = 13;
+                int totalLoginsfield = 14;
+                int userNamefield = 15;
 
                 try
                 {
                     // Load Each field
                     user.AcceptedTermsOfServiceDate = DataHelper.ParseDate(dataRow.ItemArray[acceptedTermsOfServiceDatefield]);
                     user.Active = DataHelper.ParseBoolean(dataRow.ItemArray[activefield], false);
+                    user.CodeEmailed = DataHelper.ParseInteger(dataRow.ItemArray[codeEmailedfield], 0);
                     user.CreatedDate = DataHelper.ParseDate(dataRow.ItemArray[createdDatefield]);
                     user.EmailAddress = DataHelper.ParseString(dataRow.ItemArray[emailAddressfield]);
+                    user.EmailedCodeDate = DataHelper.ParseDate(dataRow.ItemArray[emailedCodeDatefield]);
                     user.EmailVerified = DataHelper.ParseBoolean(dataRow.ItemArray[emailVerifiedfield], false);
                     user.UpdateIdentity(DataHelper.ParseInteger(dataRow.ItemArray[idfield], 0));
                     user.IsAdmin = DataHelper.ParseBoolean(dataRow.ItemArray[isAdminfield], false);

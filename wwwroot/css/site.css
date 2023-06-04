@@ -65,6 +65,15 @@
     visibility: hidden;
     display: none;    
 }
+.emailcomponent
+{
+    display: block;
+    position: fixed;
+    left: 24%;
+    top: 8vh;
+    width: 60%;
+    height: 32vh;    
+}
 .fixedsidebar
 {
     background-image: url('../Images/SideBarBlack.png');
@@ -208,6 +217,14 @@
     transform: scale(.8);
     transform-origin: left;
 }
+.progresscontainer3
+{
+    position: fixed;
+    left: 36%;
+    top: 29.2vh;
+    transform: scale(.8);
+    transform-origin: left;
+}
 .removebutton
 {
     background-image: url('../Images/RemoveButton.png');
@@ -218,12 +235,12 @@
     background-color: transparent;
     border: none;
 }
-.resetbutton
+.sendbutton
 {
-    background-image: url('../Images/ResetButtonBlue.png');   
+    background-image: url('../Images/SendButton.png');
     position: relative;
-    left: 0;
-    top: 32px;
+    left: 0px;
+    top: 16px;
     background-size: 100% 100%;
     width: 120px;
     height: 32px;
@@ -235,7 +252,7 @@
 {
     background-image: url('../Images/SignOutButton.png');
     position: relative;
-    left: 8;
+    left: 8px;
     top: 8px;
     background-size: 100% 100%;
     width: 120px;
@@ -304,6 +321,19 @@
     font-size: 24px;
     text-align: center;
     color: firebrick;
+}
+.verifybutton
+{
+    background-image: url('../Images/Verify.png');
+    position: relative;
+    left: 18px;
+    top: 28px;
+    background-size: 100% 100%;
+    width: 120px;
+    height: 32px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
 }
 .yesbutton
 {

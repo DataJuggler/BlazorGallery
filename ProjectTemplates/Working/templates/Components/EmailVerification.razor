@@ -1,0 +1,70 @@
+﻿@using DataJuggler.Blazor.Components
+@using BlazorStyled
+
+<Styled @bind-Classname=@CheckMarkContainerStyle>
+    position: fixed;
+    top: @CheckMarkTopStyle;
+    float: left;
+    height: 32px;
+    min-height: 32px;
+    width: 32px;
+    left: 36%;
+</Styled>
+<Styled @bind-Classname=@CheckMarkStyle>
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-size: 100% 100%;
+    background-image: url(@CheckMarkImage);
+    z-index: 120;
+</Styled>
+
+<div class="emailcomponent">
+    Your email must be verified before you can upload images.<br />
+    You will be emailed a 6 digit code. This code is only valid for 10 minutes.<br />
+    <div class="height10"></div>
+    <ValidationComponent Enabled="false" Caption="Email:" HeightUnit="px" Height=24 Name="EmailComponent"
+        LabelClassName="down8 right4" Unit="%" Width="20" Position="relative" Top="2" Parent="this"
+        Column1Width="8" Column2Width="40" Text="@Email">
+    </ValidationComponent>
+    <button class="sendbutton right18" title="Send A 6 Digit Code To Verify" @onclick="SendConfirmation"></button><br />
+    <div class="height10"></div>
+    <ValidationComponent Caption="Code:" HeightUnit="px" Height=24 Name="CodeComponent" Parent="this"
+        LabelClassName="down8 right4" Unit="%" Width="20" Position="relative" Top="12"
+        Column1Width="8" Column2Width="8">
+    </ValidationComponent>
+    <button class="verifybutton" title="Verify The 6 Digit Code That Was Emailed" @onclick="Verify"></button><br />    
+    <div class="@CheckMarkContainerStyle">
+        <div class="@CheckMarkStyle"></div>
+    </div>
+    @if (MessageColor == "red")
+    {
+        <div class="down32 colorred">
+            @StatusMessage
+        </div>
+    }
+    else
+    {
+        <div class="down32 colorblack">
+            @StatusMessage
+        </div>
+    }
+    @if (ShowProgress)
+    {
+        <div class="progresscontainer3">
+            <div class=@ProgressStyle>
+                <span class="text-white">@PercentString</span>
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<Sprite Subscriber=this Visible="true" Interval="250" Position="fixed"
+        XPosition="-500" YPosition="100" Width="120" Height="120" ZIndex="-1">
+</Sprite>

@@ -44,18 +44,6 @@
     height: 32px;
     cursor: pointer;
 </Styled>
-<Styled @bind-Classname=@ResetButton>
-    background-image: url('../Images/ResetButtonBlue.png');
-    position: absolute;
-    left: 2%;
-    top: @TopStyle;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-</Styled>
 <Styled @bind-Classname="@CheckMarkContainerStyle">
     position: fixed;
     top: @CheckMarkTopStyle;
@@ -156,7 +144,7 @@
                     </div>
                     <div class="height16 displayblock"></div>
                 }
-                <div class="sidebarfooter">version 1.2.6</div>
+                <div class="sidebarfooter">version 1.2.7</div>
             }
             </div>
             @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
@@ -173,10 +161,10 @@
                     </ValidationComponent>
                 </div>
             }
-            @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode))
+            @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode) && (LoggedInUser.AcceptedTermsOfServiceDate.Year > 2000) && (LoggedInUser.EmailVerified))
             {
                 <FileUpload CustomSuccessMessage="Your file uploaded successfully." Parent="this"
-                    OnReset="OnReset" ResetButtonClassName="@ResetButton" ShowStatus="false"
+                    OnReset="OnReset" ShowStatus="false"
                     PartialGuidLength="12" MaxFileSize=@UploadLimit FilterByExtension="true"
                     ShowCustomButton="true" OnChange="OnFileUploaded" Visible="false"
                     CustomButtonClassName="@BlueButton" AllowedExtensions=".jpg,.png"
@@ -217,6 +205,10 @@
             else if (screenType == ScreenTypeEnum.ViewImage)
             {
                 <FullScreenImageViewer Parent="this" Image=@SelectedImage></FullScreenImageViewer>
+            }
+            else if (screenType == ScreenTypeEnum.EmailVerification)
+            {
+                <EmailVerification Parent="this" Name="EmailComponent" Email="@LoggedInUser.EmailAddress"></EmailVerification>
             }
         </article>
     </main>

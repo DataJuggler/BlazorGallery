@@ -20,8 +20,10 @@ namespace ObjectLibrary.BusinessObjects
         #region Private Variables
         private DateTime acceptedTermsOfServiceDate;
         private bool active;
+        private int codeEmailed;
         private DateTime createdDate;
         private string emailAddress;
+        private DateTime emailedCodeDate;
         private bool emailVerified;
         private int id;
         private bool isAdmin;
@@ -103,6 +105,31 @@ namespace ObjectLibrary.BusinessObjects
             }
             #endregion
 
+            #region int CodeEmailed
+            public int CodeEmailed
+            {
+                get
+                {
+                    return codeEmailed;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (CodeEmailed != value);
+
+                    // Set the value
+                    codeEmailed = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
             #region DateTime CreatedDate
             public DateTime CreatedDate
             {
@@ -142,6 +169,31 @@ namespace ObjectLibrary.BusinessObjects
 
                     // Set the value
                     emailAddress = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region DateTime EmailedCodeDate
+            public DateTime EmailedCodeDate
+            {
+                get
+                {
+                    return emailedCodeDate;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (EmailedCodeDate != value);
+
+                    // Set the value
+                    emailedCodeDate = value;
 
                     // if the Callback exists and changes occurred
                     if ((HasCallback) && (hasChanges))

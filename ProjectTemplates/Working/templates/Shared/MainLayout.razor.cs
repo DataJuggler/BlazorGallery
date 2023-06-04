@@ -2,31 +2,19 @@
 
 #region using statements
 
+using DataGateway.Services;
 using DataJuggler.Blazor.Components;
 using DataJuggler.Blazor.Components.Interfaces;
 using DataJuggler.Blazor.Components.Util;
-using ObjectLibrary.BusinessObjects;
-using DataGateway.Services;
-using DataGateway;
-using ApplicationLogicComponent.Connection;
 using DataJuggler.Blazor.FileUpload;
-using DataJuggler.UltimateHelper;
-using OfficeOpenXml.Style;
-using System.Runtime.Versioning;
-using System.Linq;
 using DataJuggler.BlazorGallery.Components;
-using DataJuggler.PixelDatabase;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using DataJuggler.Cryptography;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using ObjectLibrary.Enumerations;
-using DataJuggler.BlazorGallery.Pages;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.WebUtilities;
+using DataJuggler.PixelDatabase;
+using DataJuggler.UltimateHelper;
 using DataJuggler.UltimateHelper.Objects;
-using System.Reflection;
-using Microsoft.JSInterop;
+using ObjectLibrary.BusinessObjects;
+using ObjectLibrary.Enumerations;
+using System.Runtime.Versioning;
 using Timer = System.Timers;
 
 #endregion
@@ -56,8 +44,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private ValidationComponent newFolderNameComponent;
         private ValidationComponent renameFolderComponent;
         private int top;
-        private bool forceReload;
-        private string resetButton;
+        private bool forceReload;        
         private Admin admin;
         private ConfirmationComponent confirmationComponent;
         private bool showConfirmation;
@@ -479,6 +466,14 @@ namespace DataJuggler.BlazorGallery.Shared
                                                 ScreenType = ScreenTypeEnum.SetProfileVisibility;
 
                                                 // Setup the screen
+                                                Refresh();
+                                            }
+                                            else if ((!LoggedInUser.EmailVerified) && TextHelper.Exists(EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryEmail", EnvironmentVariableTarget.Machine)))                                            
+                                            {
+                                                // Send a confirmation email code
+                                                ScreenType = ScreenTypeEnum.EmailVerification;
+
+                                                // setup the screen
                                                 Refresh();
                                             }
                                             else
@@ -1189,6 +1184,11 @@ namespace DataJuggler.BlazorGallery.Shared
                     // Refresh
                     Refresh();
                 }
+                else if (screenType == ScreenTypeEnum.EmailVerification)
+                {
+                    // Refresh
+                    Refresh();
+                }
 
                 // Update the UI
                 Refresh();
@@ -1846,17 +1846,6 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return renameFolderMode; }
                 set { renameFolderMode = value; }
-            }
-            #endregion
-            
-            #region ResetButton
-            /// <summary>
-            /// This property gets or sets the value for 'ResetButton'.
-            /// </summary>
-            public string ResetButton
-            {
-                get { return resetButton; }
-                set { resetButton = value; }
             }
             #endregion
             

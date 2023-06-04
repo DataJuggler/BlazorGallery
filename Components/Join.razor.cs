@@ -75,10 +75,6 @@ namespace DataJuggler.BlazorGallery.Components
         }
         #endregion
 
-        #region Events
-
-        #endregion
-
         #region Methods
 
             #region Cancel()

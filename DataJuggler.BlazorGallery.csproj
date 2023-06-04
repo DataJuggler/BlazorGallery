@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.2.6</Version>
+	<Version>1.2.7</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -18,6 +18,12 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
+		v1.2.7
+		6.3.2023: I have finished adding Email verification using Azure Email Service.
+		The way I wrote this, if you want to implement Email Verification Required, set an Environment
+		Variable named BlazorGalleryEmail to the connection string of your Azure Email Service sender email.
+		If you don't set this, you can test in Visual Studio without email verification required.
+		
 		v1.2.5
 		5.31.2023: I have added numerous features including, but not limited to:
 		1. View Large Image button on every image. Click to see an almost full screen image
@@ -72,7 +78,8 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.7.4" />
+    <PackageReference Include="Azure.Communication.Email" Version="1.0.0" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.7.8" />
     <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.0.5" />
     <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.8" />
   </ItemGroup>
