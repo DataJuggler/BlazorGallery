@@ -117,7 +117,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateInsertParameters(Admin admin)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[3];
+                SqlParameter[] parameters = new SqlParameter[4];
                 SqlParameter param = null;
 
                 // verify adminexists
@@ -140,6 +140,12 @@ namespace DataAccessComponent.DataManager.Writers
 
                     // set parameters[2]
                     parameters[2] = param;
+
+                    // Create [RequireEmailVerification] parameter
+                    param = new SqlParameter("@RequireEmailVerification", admin.RequireEmailVerification);
+
+                    // set parameters[3]
+                    parameters[3] = param;
                 }
 
                 // return value
@@ -186,7 +192,7 @@ namespace DataAccessComponent.DataManager.Writers
             internal static SqlParameter[] CreateUpdateParameters(Admin admin)
             {
                 // Initial Values
-                SqlParameter[] parameters = new SqlParameter[4];
+                SqlParameter[] parameters = new SqlParameter[5];
                 SqlParameter param = null;
 
                 // verify adminexists
@@ -210,9 +216,15 @@ namespace DataAccessComponent.DataManager.Writers
                     // set parameters[2]
                     parameters[2] = param;
 
+                    // Create parameter for [RequireEmailVerification]
+                    param = new SqlParameter("@RequireEmailVerification", admin.RequireEmailVerification);
+
+                    // set parameters[3]
+                    parameters[3] = param;
+
                     // Create parameter for [Id]
                     param = new SqlParameter("@Id", admin.Id);
-                    parameters[3] = param;
+                    parameters[4] = param;
                 }
 
                 // return value

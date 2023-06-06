@@ -51,6 +51,12 @@ Everything should work if you followed the above steps.
 
 # News
 
+v1.2.9
+6.6.2023: I realized when I added Email Verification, I made the app stop working for people
+who did not have Azure Email Service setup and configured. To fix this, I added a new property
+to the Admin table 'EmailVerificationRequired'. This value is set to 0 in Insert Admin.sql unless you
+change it. This allows people to test in Visual Studio without wiring up Email Verification.
+
 v1.2.7
 6.3.2023: I have finished adding Email verification using Azure Email Service.
 The way I wrote this, if you want to implement Email Verification Required, set an Environment

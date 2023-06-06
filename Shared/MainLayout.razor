@@ -144,7 +144,7 @@
                     </div>
                     <div class="height16 displayblock"></div>
                 }
-                <div class="sidebarfooter">version 1.2.8</div>
+                <div class="sidebarfooter">version 1.2.9</div>
             }
             </div>
             @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
@@ -161,7 +161,7 @@
                     </ValidationComponent>
                 </div>
             }
-            @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode) && (LoggedInUser.AcceptedTermsOfServiceDate.Year > 2000) && (LoggedInUser.EmailVerified))
+            @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode) && (LoggedInUser.AcceptedTermsOfServiceDate.Year > 2000) && ((LoggedInUser.EmailVerified) || (!Admin.RequireEmailVerification)))
             {
                 <FileUpload CustomSuccessMessage="Your file uploaded successfully." Parent="this"
                     OnReset="OnReset" ShowStatus="false"

@@ -63,7 +63,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private Image selectedImage;
         private string addButtonStyle;
         private double addButtonTop;
-        private string newFolderStyle;
+        private string newFolderStyle;        
         private const int AdminId = 1;
         public const int FolderHeight = 51;
         public const int UploadLimit = 20480000;
@@ -451,6 +451,13 @@ namespace DataJuggler.BlazorGallery.Shared
                                             // Set the LoggedInuser
                                             LoggedInUser = user;
 
+                                             // if the value for HasAdmin is false
+                                            if (!HasAdmin)
+                                            {
+                                                // Load the Admin  
+                                                Admin = await AdminService.FindAdmin(AdminId);
+                                            }
+
                                             // If the user has not accepted yet
                                             if (LoggedInUser.AcceptedTermsOfServiceDate.Year < 2000)
                                             {
@@ -468,7 +475,7 @@ namespace DataJuggler.BlazorGallery.Shared
                                                 // Setup the screen
                                                 Refresh();
                                             }
-                                            else if ((!LoggedInUser.EmailVerified) && TextHelper.Exists(EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryEmail", EnvironmentVariableTarget.Machine)))                                            
+                                            else if ((!LoggedInUser.EmailVerified) && (HasAdmin) && (Admin.RequireEmailVerification))
                                             {
                                                 // Send a confirmation email code
                                                 ScreenType = ScreenTypeEnum.EmailVerification;
@@ -497,13 +504,6 @@ namespace DataJuggler.BlazorGallery.Shared
                 // if firstRender
                 if ((firstRender) || (ForceReload))
                 {
-                    // if the value for HasAdmin is false
-                    if (!HasAdmin)
-                    {
-                        // Load the Admin  
-                        Admin = await AdminService.FindAdmin(AdminId);
-                    }
-
                     // if the value for HasLoggedInUser is true
                     if (HasLoggedInUser)
                     {
@@ -1312,7 +1312,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 set { addFolderMode = value; }
             }
             #endregion
-            
+          
             #region Admin
             /// <summary>
             /// This property gets or sets the value for 'Admin'.
@@ -1497,7 +1497,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 set { forceReload = value; }
             }
             #endregion
-            
+         
             #region HasAdmin
             /// <summary>
             /// This property returns true if this object has an 'Admin'.

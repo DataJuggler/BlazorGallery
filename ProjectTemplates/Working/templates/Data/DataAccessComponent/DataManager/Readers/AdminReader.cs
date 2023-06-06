@@ -40,6 +40,7 @@ namespace DataAccessComponent.DataManager.Readers
                 int maxFolderCountfield = 1;
                 int maxImagesPerFolderfield = 2;
                 int maxStoragePlanFreefield = 3;
+                int requireEmailVerificationfield = 4;
 
                 try
                 {
@@ -48,6 +49,7 @@ namespace DataAccessComponent.DataManager.Readers
                     admin.MaxFolderCount = DataHelper.ParseInteger(dataRow.ItemArray[maxFolderCountfield], 0);
                     admin.MaxImagesPerFolder = DataHelper.ParseInteger(dataRow.ItemArray[maxImagesPerFolderfield], 0);
                     admin.MaxStoragePlanFree = DataHelper.ParseInteger(dataRow.ItemArray[maxStoragePlanFreefield], 0);
+                    admin.RequireEmailVerification = DataHelper.ParseBoolean(dataRow.ItemArray[requireEmailVerificationfield], false);
                 }
                 catch
                 {

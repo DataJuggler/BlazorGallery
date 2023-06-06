@@ -332,7 +332,7 @@ namespace DataJuggler.BlazorGallery.Components
                                     // Setup the Index page
                                     ParentMainLayout.SetupScreen(ScreenTypeEnum.SetProfileVisibility);
                                 }
-                                else if ((!LoggedInUser.EmailVerified) && TextHelper.Exists(EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryEmail", EnvironmentVariableTarget.Machine)))
+                                else if ((!LoggedInUser.EmailVerified) && (HasAdmin) && (Admin.RequireEmailVerification))
                                 {
                                     // Setup the Index page
                                     ParentMainLayout.SetupScreen(ScreenTypeEnum.EmailVerification);
@@ -574,6 +574,31 @@ namespace DataJuggler.BlazorGallery.Components
 
         #region Properties
 
+            #region Admin
+            /// <summary>
+            /// This read only property returns the value of Admin from the object ParentMainLayout.
+            /// </summary>
+            public Admin Admin
+            {
+                
+                get
+                {
+                    // initial value
+                    Admin admin = null;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        admin = ParentMainLayout.Admin;
+                    }
+                    
+                    // return value
+                    return admin;
+                }
+            }
+            #endregion
+            
             #region Children
             /// <summary>
             /// This property gets or sets the value for 'Children'.
@@ -615,6 +640,23 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return extraPercent; }
                 set { extraPercent = value; }
+            }
+            #endregion
+            
+            #region HasAdmin
+            /// <summary>
+            /// This property returns true if this object has an 'Admin'.
+            /// </summary>
+            public bool HasAdmin
+            {
+                get
+                {
+                    // initial value
+                    bool hasAdmin = (this.Admin != null);
+                    
+                    // return value
+                    return hasAdmin;
+                }
             }
             #endregion
             

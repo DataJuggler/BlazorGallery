@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.2.8</Version>
+	<Version>1.2.9</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -17,7 +17,13 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
-	<PackageReleaseNotes>
+	<PackageReleaseNotes>                     v1.2.9
+6.6.2023: I realized when I added Email Verification, I made the app stop working for people
+who did not have Azure Email Service setup and configured. To fix this, I added a new property
+to the Admin table 'EmailVerificationRequired'. This value is set to 0 in Insert Admin.sql unless you
+change it. This allows people to test in Visual Studio without wiring up Email Verification.
+
+
 		v1.2.7
 		6.3.2023: I have finished adding Email verification using Azure Email Service.
 		The way I wrote this, if you want to implement Email Verification Required, set an Environment

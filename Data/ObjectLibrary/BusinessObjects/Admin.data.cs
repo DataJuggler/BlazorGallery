@@ -22,6 +22,7 @@ namespace ObjectLibrary.BusinessObjects
         private int maxFolderCount;
         private int maxImagesPerFolder;
         private int maxStoragePlanFree;
+        private bool requireEmailVerification;
         private ItemChangedCallback callback;
         #endregion
 
@@ -117,6 +118,31 @@ namespace ObjectLibrary.BusinessObjects
 
                     // Set the value
                     maxStoragePlanFree = value;
+
+                    // if the Callback exists and changes occurred
+                    if ((HasCallback) && (hasChanges))
+                    {
+                        // Notify the Callback changes have occurred
+                        Callback(this, ChangeTypeEnum.ItemChanged);
+                    }
+                }
+            }
+            #endregion
+
+            #region bool RequireEmailVerification
+            public bool RequireEmailVerification
+            {
+                get
+                {
+                    return requireEmailVerification;
+                }
+                set
+                {
+                    // local
+                    bool hasChanges = (RequireEmailVerification != value);
+
+                    // Set the value
+                    requireEmailVerification = value;
 
                     // if the Callback exists and changes occurred
                     if ((HasCallback) && (hasChanges))

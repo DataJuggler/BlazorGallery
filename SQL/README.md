@@ -5,7 +5,10 @@ BlazorGallery is a working SQL Server C# Blazor image gallery project and Nuget 
 Blazor Gallery is now live https://blazorgallery.com
 
 # Screenshot
-<img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot.png height=480 width=886 />
+<img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot2.png height=480 width=886 />
+
+# New Video
+[![Blazor Gallery Deserves A Star Video](https://img.youtube.com/vi/HAMgeaCuvHY/0.jpg)](https://www.youtube.com/watch?v=HAMgeaCuvHY)
 
 # Instructions to run this project:
 
@@ -47,6 +50,12 @@ Server image galleries.
 Everything should work if you followed the above steps.
 
 # News
+
+v1.2.9
+6.6.2023: I realized when I added Email Verification, I made the app stop working for people
+who did not have Azure Email Service setup and configured. To fix this, I added a new property
+to the Admin table 'EmailVerificationRequired'. This value is set to 0 in Insert Admin.sql unless you
+change it. This allows people to test in Visual Studio without wiring up Email Verification.
 
 v1.2.7
 6.3.2023: I have finished adding Email verification using Azure Email Service.
