@@ -588,9 +588,18 @@ namespace DataJuggler.BlazorGallery.Shared
 
             protected async override void OnInitialized()
             {
+                // if the value for HasAdmin is false
+                if (!HasAdmin)
+                {
+                    // Load the admin object
+                    Admin = await AdminService.FindAdmin(AdminId);
+                }
+
+                // test if there is a uri
                 var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
                 string queryString = uri.ToString();
                 
+                // If the queryString string exists
                 if (TextHelper.Exists(queryString))
                 {
                     // get the index of the quesiton mark
