@@ -51,6 +51,11 @@ Everything should work if you followed the above steps.
 
 # News
 
+v1.3.0
+6.7.2023: My first attempt for fixing BlazorGallery to run without EmailVerification didn't work.
+Now this is fixed, and after the user accepts the terms of service, ParentMainLayout.LoggedInUser
+is replaced. This fixes the upload button not showing up.
+
 v1.2.9
 6.6.2023: I realized when I added Email Verification, I made the app stop working for people
 who did not have Azure Email Service setup and configured. To fix this, I added a new property
