@@ -56,6 +56,19 @@
     background-color: transparent;
     border: none;
 }
+.copybutton2
+{
+    background-image: url('../Images/CopyButton.png');
+    background-size: 100% 100%;    
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    left: 21.4%;
+    top: 5.4vh;
+}
 .customfileupload
 {  
     display: inline-block;

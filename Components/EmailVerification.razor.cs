@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Components;
 using ObjectLibrary.BusinessObjects;
 using ObjectLibrary.Enumerations;
 using System.Runtime.Versioning;
-using Timer = System.Timers;
+using Timer = System.Timers.Timer;
 
 #endregion
 
@@ -38,7 +38,7 @@ namespace DataJuggler.BlazorGallery.Components
         private string checkMarkStyle;      
         private double checkMarkTop;
         private string checkMarkImage;
-        private Timer.Timer timer;
+        private Timer timer;
         private bool verified;
         private string statusMessage;
         private string messageColor;
@@ -259,7 +259,7 @@ namespace DataJuggler.BlazorGallery.Components
                             Refresh();
                     
                             // Start the timer
-                            Timer = new Timer.Timer(3000);
+                            Timer = new Timer(3000);
                             Timer.Elapsed += TimerElapsed;
                             Timer.Start();
                         }
@@ -464,7 +464,7 @@ namespace DataJuggler.BlazorGallery.Components
                             Refresh();
 
                             // Start the timer
-                            Timer = new Timer.Timer(3000);
+                            Timer = new Timer(3000);
                             Timer.Elapsed += TimerElapsed;
                             Timer.Start();
                         }
@@ -906,7 +906,7 @@ namespace DataJuggler.BlazorGallery.Components
             /// <summary>
             /// This property gets or sets the value for 'Timer'.
             /// </summary>
-            public Timer.Timer Timer
+            public Timer Timer
             {
                 get { return timer; }
                 set { timer = value; }

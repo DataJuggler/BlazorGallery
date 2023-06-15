@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.3.1</Version>
+	<Version>1.3.2</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -17,7 +17,10 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
-	<PackageReleaseNotes>
+	<PackageReleaseNotes>                      
+		v1.3.2
+		6.15.2023: I added a copy direct link button to the FullScreenImageViewer component.
+
 		v1.3.0
 		6.7.2023: My first attempt for fixing BlazorGallery to run without EmailVerification didn't work.
 		Now this is fixed, and after the user accepts the terms of service, ParentMainLayout.LoggedInUser

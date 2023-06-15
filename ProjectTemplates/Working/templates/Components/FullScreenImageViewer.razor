@@ -13,9 +13,33 @@
     left: 24%;
     top: 2vh;
 </Styled>
+<Styled @bind-Classname="@CheckMarkContainerStyle">
+    position: fixed;
+    top: 8vh;
+    float: left;
+    height: 32px;
+    min-height: 32px;
+    width: 32px;
+    left: 21.2%;
+</Styled>
+<Styled @bind-Classname="@CheckMarkStyle">
+    width: 32px;
+    height: 32px;
+    min-height: 32px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background-size: 100% 100%;
+    background-image: url(@CheckMarkImage);
+    z-index: 120;
+</Styled>
 
 <div class="col">   
-    <button title="Go Back" class="backbutton" @onclick="GoBack"></button>
+    <button title="Go Back" class="backbutton" @onclick="GoBack"></button>    
+    <button title="Copy direct link to this image" class="copybutton2" @onclick="CopyDirectLink"></button>    
     <img class="@ImageStyle" src="@ImageRelativePath">
+    <div class="@CheckMarkContainerStyle">
+        <div class="@CheckMarkStyle"></div>
+    </div>
 </div>
 

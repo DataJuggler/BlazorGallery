@@ -51,6 +51,9 @@ Everything should work if you followed the above steps.
 
 # News
 
+v1.3.2
+6.15.2023: I added a copy direct link button to the FullScreenImageViewer component.
+
 v1.3.0
 6.7.2023: My first attempt for fixing BlazorGallery to run without EmailVerification didn't work.
 Now this is fixed, and after the user accepts the terms of service, ParentMainLayout.LoggedInUser

@@ -15,7 +15,7 @@ using DataJuggler.UltimateHelper.Objects;
 using ObjectLibrary.BusinessObjects;
 using ObjectLibrary.Enumerations;
 using System.Runtime.Versioning;
-using Timer = System.Timers;
+using Timer = System.Timers.Timer;
 
 #endregion
 
@@ -59,7 +59,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private double checkMarkTop;
         private string checkMarkImage;
         private string checkMarkContainerStyle;
-        private Timer.Timer timer;
+        private Timer timer;
         private Image selectedImage;
         private string addButtonStyle;
         private double addButtonTop;
@@ -125,6 +125,16 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region CopyDirectLink(string imageUrl)
+            /// <summary>
+            /// Copy Direct Link
+            /// </summary>
+            public async void CopyDirectLink(string imageUrl)
+            {
+                await BlazorJSBridge.CopyToClipboard(JSRuntime, imageUrl);
+            }
+            #endregion
+            
             #region CopyFolder(int folderId, int buttonNumber)
             /// <summary>
             /// Copy Folder
@@ -162,7 +172,7 @@ namespace DataJuggler.BlazorGallery.Shared
                     Refresh();
                     
                     // Start the timer
-                    Timer = new Timer.Timer(3000);
+                    Timer = new Timer(3000);
                     Timer.Elapsed += TimerElapsed;
                     Timer.Start();
                 }
@@ -1917,7 +1927,7 @@ namespace DataJuggler.BlazorGallery.Shared
             /// <summary>
             /// This property gets or sets the value for 'Timer'.
             /// </summary>
-            public Timer.Timer Timer
+            public Timer Timer
             {
                 get { return timer; }
                 set { timer = value; }

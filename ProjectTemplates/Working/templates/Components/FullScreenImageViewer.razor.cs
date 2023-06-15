@@ -12,6 +12,8 @@ using System.Runtime.Versioning;
 using DataGateway.Services;
 using DataJuggler.BlazorGallery.Shared;
 using ObjectLibrary.Enumerations;
+using Timer = System.Timers.Timer;
+using DataJuggler.UltimateHelper;
 
 #endregion
 
@@ -29,9 +31,13 @@ namespace DataJuggler.BlazorGallery.Components
         
         #region Private Variables
         private string imageStyle;
+        private string checkMarkImage;
         private Image image;
         private string name;        
         private double imageHeight;
+        private Timer timer;
+        private string checkMarkContainerStyle;
+        private string checkMarkStyle;
         private const int MaxWidth = 900;
         private IBlazorComponentParent parent;
         #endregion
@@ -45,10 +51,48 @@ namespace DataJuggler.BlazorGallery.Components
         {
             // Set the ImageHeight default
             ImageHeight = 600;
+
+             // default
+            CheckMarkImage = "../Images/Transparent.png";
         }
         #endregion
 
         #region Methods
+            
+            #region CopyDirectLink()
+            /// <summary>
+            /// Copy Direct Link
+            /// </summary>
+            public  void CopyDirectLink()
+            {
+                // if the value for HasImage is true
+                if ((HasImage) && (HasParentMainLayout))
+                {
+                    // gget the relative path
+                    string imageUrl = Image.RelativePath;
+
+                    // get the root
+                    string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.Machine);
+
+                    // get the fullPath
+                    string fullPath = root + "/" + imageUrl.Replace("../", "");
+
+                    // Copy the direct link
+                    ParentMainLayout.CopyDirectLink(fullPath);
+
+                    // set to visible
+                    CheckMarkImage = "../Images/Check.png"; 
+
+                    // update the UI
+                    Refresh();
+
+                    // Start the timer
+                    Timer = new Timer(3000);
+                    Timer.Elapsed += TimerElapsed;
+                    Timer.Start();
+                }
+            }
+            #endregion
             
             #region GoBack()
             /// <summary>
@@ -92,10 +136,60 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+           #region TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+            /// <summary>
+            /// event is fired when Timer Elapsed
+            /// </summary>
+            private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                // destroy
+                Timer.Dispose();
+                
+                // hide
+                CheckMarkImage = "../Images/Transparent.png";
+                
+                // update the UI
+                Refresh();
+            }
+            #endregion
+            
         #endregion
 
         #region Properties
 
+            #region CheckMarkContainerStyle
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkContainerStyle'.
+            /// </summary>
+            public string CheckMarkContainerStyle
+            {
+                get { return checkMarkContainerStyle; }
+                set { checkMarkContainerStyle = value; }
+            }
+            #endregion
+            
+            #region CheckMarkImage
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkImage'.
+            /// </summary>
+            public string CheckMarkImage
+            {
+                get { return checkMarkImage; }
+                set { checkMarkImage = value; }
+            }
+            #endregion
+            
+            #region CheckMarkStyle
+            /// <summary>
+            /// This property gets or sets the value for 'CheckMarkStyle'.
+            /// </summary>
+            public string CheckMarkStyle
+            {
+                get { return checkMarkStyle; }
+                set { checkMarkStyle = value; }
+            }
+            #endregion
+            
             #region HasImage
             /// <summary>
             /// This property returns true if this object has an 'Image'.
@@ -177,6 +271,23 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return hasSelectedFolder;
+                }
+            }
+            #endregion
+            
+            #region HasTimer
+            /// <summary>
+            /// This property returns true if this object has a 'Timer'.
+            /// </summary>
+            public bool HasTimer
+            {
+                get
+                {
+                    // initial value
+                    bool hasTimer = (this.Timer != null);
+                    
+                    // return value
+                    return hasTimer;
                 }
             }
             #endregion
@@ -419,6 +530,17 @@ namespace DataJuggler.BlazorGallery.Components
                     // return value
                     return selectedFolder;
                 }
+            }
+            #endregion
+            
+            #region Timer
+            /// <summary>
+            /// This property gets or sets the value for 'Timer'.
+            /// </summary>
+            public Timer Timer
+            {
+                get { return timer; }
+                set { timer = value; }
             }
             #endregion
             
