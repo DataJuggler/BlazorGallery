@@ -51,6 +51,9 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.3.5
+6.17.2023: Previous publish had the incorrect version number.
+
 1.3.4
 6.17.2023: Terms of Service Component was not replacing the ParentMainLayout object
 which had the accepted terms of service date.

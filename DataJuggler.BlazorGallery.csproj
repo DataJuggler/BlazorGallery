@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.3.4</Version>
+	<Version>1.3.5</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -18,8 +18,15 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
+		1.3.5
+		6.17.2023: Previous publish had the incorrect version number.
+
+		1.3.4
+		6.17.2023: Terms of Service Component was not replacing the ParentMainLayout object
+		which had the accepted terms of service date.
+
 		1.3.3
-        6.17.2023: I added a slide show feature to the FullScreenImageViewer and MainLayout.                      
+		6.17.2023: I added a slide show feature to the FullScreenImageViewer and MainLayout.
 
 		v1.3.2
 		6.15.2023: I added a copy direct link button to the FullScreenImageViewer component.
@@ -28,7 +35,7 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 		6.7.2023: My first attempt for fixing BlazorGallery to run without EmailVerification didn't work.
 		Now this is fixed, and after the user accepts the terms of service, ParentMainLayout.LoggedInUser
 		is replaced. This fixes the upload button not showing up.
-		
+
 		v1.2.9
 		6.6.2023: I realized when I added Email Verification, I made the app stop working for people
 		who did not have Azure Email Service setup and configured. To fix this, I added a new property
