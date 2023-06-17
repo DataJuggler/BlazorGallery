@@ -51,6 +51,10 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.3.7
+6.17.2023: A new user needs to be shown the Email Verification component during the signup
+process for the live site (if Admin.RequireEmailVerification is true).
+
 1.3.6
 6.17.2023: Fixed the Terms of Service component where a new user could not upload.
 

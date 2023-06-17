@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
 	<PackageType>Template</PackageType>
@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.3.5</Version>
+	<Version>1.3.7</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -18,6 +18,13 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
+		1.3.7
+		6.17.2023: A new user needs to be shown the Email Verification component during the signup
+		process for the live site (if Admin.RequireEmailVerification is true).
+
+		1.3.6
+		6.17.2023: Fixed the Terms of Service component where a new user could not upload.
+
 		1.3.5
 		6.17.2023: Previous publish had the incorrect version number.
 

@@ -92,8 +92,17 @@ namespace DataJuggler.BlazorGallery.Components
                     // if the value for saved is true
                     if (saved)
                     {
-                        // This forces a reload
-                        ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                        // if the value for RequireEmailVerification is true
+                        if (RequireEmailVerification)
+                        {
+                            // Display the email
+                            ParentMainLayout.SetupScreen(ScreenTypeEnum.EmailVerification, LoggedInUser.EmailAddress);  
+                        }
+                        else
+                        {
+                            // This forces a reload
+                            ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                        }
                     }
                 }
             }
@@ -103,6 +112,31 @@ namespace DataJuggler.BlazorGallery.Components
         
         #region Properties
             
+            #region Admin
+            /// <summary>
+            /// This read only property returns the value of Admin from the object ParentMainLayout.
+            /// </summary>
+            public Admin Admin
+            {
+                
+                get
+                {
+                    // initial value
+                    Admin admin = null;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        admin = ParentMainLayout.Admin;
+                    }
+                    
+                    // return value
+                    return admin;
+                }
+            }
+            #endregion
+            
             #region ComponentStyle
             /// <summary>
             /// This property gets or sets the value for 'ComponentStyle'.
@@ -111,6 +145,31 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return componentStyle; }
                 set { componentStyle = value; }
+            }
+            #endregion
+            
+            #region HasAdmin
+            /// <summary>
+            /// This read only property returns the value of HasAdmin from the object ParentMainLayout.
+            /// </summary>
+            public bool HasAdmin
+            {
+                
+                get
+                {
+                    // initial value
+                    bool hasAdmin = false;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        hasAdmin = ParentMainLayout.HasAdmin;
+                    }
+                    
+                    // return value
+                    return hasAdmin;
+                }
             }
             #endregion
             
@@ -258,6 +317,31 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return prompt; }
                 set { prompt = value; }
+            }
+            #endregion
+            
+            #region RequireEmailVerification
+            /// <summary>
+            /// This read only property returns the value of RequireEmailVerification from the object Admin.
+            /// </summary>
+            public bool RequireEmailVerification
+            {
+                
+                get
+                {
+                    // initial value
+                    bool requireEmailVerification = false;
+                    
+                    // if Admin exists
+                    if (HasAdmin)
+                    {
+                        // set the return value
+                        requireEmailVerification = Admin.RequireEmailVerification;
+                    }
+                    
+                    // return value
+                    return requireEmailVerification;
+                }
             }
             #endregion
             
