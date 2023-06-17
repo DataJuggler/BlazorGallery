@@ -12,6 +12,19 @@
     position: fixed;
     left: 20.8%;
 }
+.backbutton2
+{
+    background-image: url('../Images/BackButton.png');
+    background-size: 100% 100%;    
+    width: 32px;
+    height: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    bottom: 2vh;
+    left: 48%;
+}
 .bigline
 {  
     height: 1vh;
@@ -142,6 +155,19 @@
 .fontsize24
 {
     font-size: 24px;    
+}
+.forwardbutton
+{
+    background-image: url('../Images/ForwardButton.png');
+    background-size: 100% 100%;    
+    width: 32px;
+    height: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    bottom: 2vh;
+    left: 52%;
 }
 .imagefolder
 {

@@ -51,6 +51,9 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.3.3
+6.17.2023: I added a slide show feature to the FullScreenImageViewer and MainLayout.                      
+
 v1.3.2
 6.15.2023: I added a copy direct link button to the FullScreenImageViewer component.
 

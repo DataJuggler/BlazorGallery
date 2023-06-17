@@ -1153,6 +1153,78 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region SelectNextImage()
+            /// <summary>
+            /// Select Next Image
+            /// </summary>
+            public void SelectNextImage()
+            {
+                // local
+                bool nextImage = false;
+
+                // if the SelectedFolder.Images and the SelectedImage exists
+                if ((HasSelectedFolder) && (SelectedFolder.HasImages) && (HasSelectedImage))
+                {
+                    // Iterate the collection of Image objects
+                    foreach (Image image in SelectedFolder.Images)
+                    {
+                        // if this is our image
+                        if (image.Id == SelectedImage.Id)
+                        {
+                            // set to true
+                            nextImage = true;
+                        }
+                        else if (nextImage)
+                        {
+                            // Set the selected image
+                            SelectedImage = image;
+
+                            // required
+                            break;                            
+                        }
+                    }
+
+                    // Update the UI
+                    Refresh();
+                }
+            }
+            #endregion
+            
+            #region SelectPreviousImage()
+            /// <summary>
+            /// Select Previous Image
+            /// </summary>
+            public void SelectPreviousImage()
+            {
+                // local
+               Image previousImage = null;
+
+                // if the SelectedFolder.Images and the SelectedImage exists
+                if ((HasSelectedFolder) && (SelectedFolder.HasImages) && (HasSelectedImage))
+                {
+                    // Iterate the collection of Image objects
+                    foreach (Image image in SelectedFolder.Images)
+                    {
+                        // if this is our image
+                        if (image.Id == SelectedImage.Id)
+                        {
+                            // Set the selected image
+                            SelectedImage = previousImage;
+
+                            // exit
+                            break;
+                        }
+
+                        // Set the previous
+                        previousImage = image;
+                    }
+
+                    // Update the UI
+                    Refresh();
+                }
+            }
+            #endregion
+            
             #region SetupScreen(ScreenTypeEnum screenType, string emailAddress = "")
             /// <summary>
             /// This method Setup Screen
@@ -1351,6 +1423,56 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return blueButton; }
                 set { blueButton = value; }
+            }
+            #endregion
+            
+            #region CanMoveNext
+            /// <summary>
+            /// This read only property returns the value of CanMoveNext from the object ParentMainLayout.
+            /// </summary>
+            public bool CanMoveNext
+            {
+                
+                get
+                {
+                    // initial value
+                    bool canMoveNext = false;
+                    
+                    // if has selected folder
+                   if ((HasSelectedFolder) && (HasSelectedImage) && (SelectedFolder.HasImages))
+                   {
+                        // Set the return value to true if the SelectedImage.Id is less than the Id of the last image in the folder
+                        canMoveNext = (SelectedImage.Id <  SelectedFolder.Images.Last().Id);
+                   }
+                    
+                    // return value
+                    return canMoveNext;
+                }
+            }
+            #endregion
+            
+            #region CanMovePrevious
+            /// <summary>
+            /// This read only property returns the value of CanMovePrevious from the object ParentMainLayout.
+            /// </summary>
+            public bool CanMovePrevious
+            {
+                
+                get
+                {
+                    // initial value
+                    bool canMovePrevious = false;
+                    
+                     // if has selected folder
+                   if ((HasSelectedFolder) && (HasSelectedImage) && (SelectedFolder.HasImages))
+                   {
+                        // Set the return value to true if the SelectedImage.Id is less than the Id of the last image in the folder
+                        canMovePrevious = (SelectedImage.Id > SelectedFolder.Images.First().Id);
+                   }
+                    
+                    // return value
+                    return canMovePrevious;
+                }
             }
             #endregion
             

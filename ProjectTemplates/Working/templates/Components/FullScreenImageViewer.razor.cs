@@ -22,8 +22,9 @@ namespace DataJuggler.BlazorGallery.Components
 
     #region class ImageViewer
     /// <summary>
-    /// This class is used to display a button as an image so it can be toggled by the owner of the gallery to click it to show the
-    /// remove button.
+    /// This class is used to display an almost full screen view image.
+    /// There is also a button to return to the Selected Folder.
+    /// This class also has back and next buttons to allow a slide show feature.
     /// </summary>
     [SupportedOSPlatform("windows")]    
     public partial class FullScreenImageViewer : IBlazorComponent
@@ -41,7 +42,6 @@ namespace DataJuggler.BlazorGallery.Components
         private const int MaxWidth = 900;
         private IBlazorComponentParent parent;
         #endregion
-
 
         #region Constructor
         /// <summary>
@@ -112,6 +112,36 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region GoToNext()
+            /// <summary>
+            /// Go To Next
+            /// </summary>
+            public void GoToNext()
+            {
+                // if the value for HasParentMainLayout is true
+                if (HasParentMainLayout)
+                {
+                    // Select the next image in this folder
+                    ParentMainLayout.SelectNextImage();
+                }
+            }
+            #endregion
+            
+            #region GoToPrevious()
+            /// <summary>
+            /// Go To Previous
+            /// </summary>
+            public void GoToPrevious()
+            {
+                // if the value for HasParentMainLayout is true
+                if (HasParentMainLayout)
+                {
+                    // Select the next image in this folder
+                    ParentMainLayout.SelectPreviousImage();
+                }
+            }
+            #endregion
+            
             #region ReceiveData(Message message)
             /// <summary>
             /// method returns the Data
@@ -157,6 +187,56 @@ namespace DataJuggler.BlazorGallery.Components
 
         #region Properties
 
+            #region CanMoveNext
+            /// <summary>
+            /// This read only property returns the value of CanMoveNext from the object ParentMainLayout.
+            /// </summary>
+            public bool CanMoveNext
+            {
+                
+                get
+                {
+                    // initial value
+                    bool canMoveNext = false;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        canMoveNext = ParentMainLayout.CanMoveNext;
+                    }
+                    
+                    // return value
+                    return canMoveNext;
+                }
+            }
+            #endregion
+            
+            #region CanMovePrevious
+            /// <summary>
+            /// This read only property returns the value of CanMovePrevious from the object ParentMainLayout.
+            /// </summary>
+            public bool CanMovePrevious
+            {
+                
+                get
+                {
+                    // initial value
+                    bool canMovePrevious = false;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        canMovePrevious = ParentMainLayout.CanMovePrevious;
+                    }
+                    
+                    // return value
+                    return canMovePrevious;
+                }
+            }
+            #endregion
+            
             #region CheckMarkContainerStyle
             /// <summary>
             /// This property gets or sets the value for 'CheckMarkContainerStyle'.
