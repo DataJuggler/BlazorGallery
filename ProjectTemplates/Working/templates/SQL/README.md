@@ -51,6 +51,9 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.3.6
+6.17.2023: Fixed the Terms of Service component where a new user could not upload.
+
 1.3.5
 6.17.2023: Previous publish had the incorrect version number.
 

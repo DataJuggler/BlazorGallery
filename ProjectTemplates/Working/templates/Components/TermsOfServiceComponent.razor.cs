@@ -75,6 +75,9 @@ namespace DataJuggler.BlazorGallery.Components
                     // if the value for saved is true
                     if (saved)
                     {
+                        // Update the user
+                        ParentMainLayout.LoggedInUser = user;
+
                         if (LoggedInUser.ProfileVisibility == ProfileVisibilityEnum.NotSelected)
                         {
                             // This forces a reload
