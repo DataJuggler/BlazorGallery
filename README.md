@@ -95,7 +95,6 @@ v1.2.5
     2. I changed the logo and images to a dark theme. 
     3. Redid the layout to be fixed, so things do not jump around when the Copy URL button is clicked.
 
-
 v1.2.0:
 5.27.2023: I added a View Full Screen button to each image and created a FullScreenImageViewer component.
 It is not actually full screen, but in ViewImage mode, only the selected image is shown.
@@ -130,10 +129,9 @@ What features would you like to see in a portfolio site?
 
 Here are a few ideas I have thought of. Feel free to reach out here or in a video comment and describe your idea.
 
-# In Progress
+# In Progress 6.18.2023
 
-This week I am working on renaming folders (mostly done), and deleting of images from the database and file system when a folder is deleted.
-I also plan on implementing Forgot Password and CHange Password if I have time.
+I plan on implementing Forgot Password and CHange Password this week, unless I find a job.
 
 # Possible Feature Requests Coming
 
@@ -142,10 +140,20 @@ I also plan on implementing Forgot Password and CHange Password if I have time.
 3. Add ability to block users.
 4. For now the Gallery routing is kind of limited, because I impersonate the owner of the gallery in ViewOnlyMode. From here I need to add the
    ability for logged in users to be able to view other galleries, and retain they are logged in, so a user can like, comment, etc.
-5. Contests - I recently bought a domain antcontest.com, which is a play on contestant. People could create contests for best AI Image Gallery
+5. Contests - I recently bought a domain antcontest.com, which is a play on contestant. I may create a contest for best AI Image Gallery to kick it off.
 6. Access To Premium Galleries (maybe) - If people wanted to sell access to a gallery for a certain number of credits.
+7. Water Mark Images - If users want to share images, but prevent people from making copies
 
-Those are just a few ideas.
+Those are just a few ideas, please let me know yours.
+
+# Completed Features
+
+6.17.2023: Slide Show Feature for a folder, the previous and next buttons show dynamically and allow scrolling through a gallery (folder).
+6.15.2023: Copy Direct Link To Image
+6.3.2023: Added Email Verification using Azure Email Communication Services
+5.31.2023: Renaming folders
+5.27.2023: Created a Full Screen Image Viewer component
+Early June: Deleting of images from the database and file system when a folder is deleted.
    
 # How I Built The Nuget Package
 
