@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.4.0</PackageVersion>
+    <PackageVersion>1.4.1</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
@@ -14,7 +14,7 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.4.0</Version>
+    <Version>1.4.1</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -22,13 +22,18 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <RepositoryUrl>https://github.com/DataJuggler/BlazorGallery.git</RepositoryUrl>
     <RepositoryType>Git/GitHub</RepositoryType>
     <PackageReleaseNotes>
+
+		1.4.1
+		6.24.2023: Sign Out now clears the GalleryOwner and SelectedFolder from MainLayout, which prevents
+		the folders from showing after you sign out.
+
 		1.4.0
 		6.24.2023: I created a MainGalleryComponent, MainGalleryImageViewer, Gallery page and the database
-	    has a new view MainGalleryView and two new stored procedures MainGalleryView_FetchAll and 
+		has a new view MainGalleryView and two new stored procedures MainGalleryView_FetchAll and
 		MainGalleryView_FetchMostRecent. I also refactored how the Index and Gallery pages work, so that the
 		LoggedInUser stays logged in, even when viewing another user's galleries. Also, there is now a button to
 		go back to the User's Galleries while viewing the MainGallery if there is a logged in user.
-		
+
 		1.3.7
 		6.17.2023: A new user needs to be shown the Email Verification component during the signup
 		process for the live site (if Admin.RequireEmailVerification is true).
@@ -97,7 +102,8 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackAsTool>False</PackAsTool>
     <PackageReadmeFile>templates\README.md</PackageReadmeFile>
-    <PackageIcon>templates\wwwroot\Images\FolderIcon.png</PackageIcon>	  
+    <PackageIcon>templates\wwwroot\Images\FolderIcon.png</PackageIcon>
+    <OutputType>Library</OutputType>	  
   </PropertyGroup>
   <ItemGroup>
 	<Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
@@ -111,6 +117,7 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
 	<None Remove="templates\bin\**" />
 	<None Remove="templates\obj\**" />
 	<None Remove="templates\wwwroot\Upload\ReadMe.txt" />
+	<Compile Include="Program.cs" />
     <Content Include="templates\.template.config\template.json" />
   </ItemGroup>
   <ItemGroup>	

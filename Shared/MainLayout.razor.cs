@@ -1485,8 +1485,10 @@ namespace DataJuggler.BlazorGallery.Shared
             /// </summary>
             public async void SignOut()
             {  
-                // Erase
+                // Erase all objects
                 LoggedInUser = null;
+                GalleryOwner = null;
+                SelectedFolder = null;
 
                 // Remove the items the user has stored in the local browser storage
                 await RemovedLocalStoreItems();

@@ -51,6 +51,10 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.4.1
+6.24.2023: Sign Out now clears the GalleryOwner and SelectedFolder from MainLayout, which prevents
+the folders from showing after you sign out. 
+
 1.4.0
 6.24.2023: I created a MainGalleryComponent, MainGalleryImageViewer, Gallery page and the database
 has a new view MainGalleryView and two new stored procedures MainGalleryView_FetchAll and 
