@@ -1,11 +1,12 @@
 ﻿@inherits LayoutComponentBase
 @using ObjectLibrary.BusinessObjects
 @using ObjectLibrary.Enumerations
+@using DataJuggler.BlazorGallery.Pages
 @using DataJuggler.Blazor.Components
 @using DataJuggler.Blazor.Components.Interfaces
 @using DataJuggler.Blazor.FileUpload
-@using BlazorStyled
-@using DataJuggler.BlazorGallery.Components
+@using BlazorStyled@using DataJuggler.BlazorGallery.Components
+
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
@@ -66,7 +67,7 @@
 </Styled>
 
 <div class="page">
-    @if ((!HasLoggedInUser) || (LoggedInUser.ViewOnlyMode))
+    @if (!HasLoggedInUser)
     {
         @if (ScreenType == ScreenTypeEnum.Login)
         {
@@ -75,28 +76,47 @@
         else if (ScreenType == ScreenTypeEnum.SignUp)
         {
             <Join Parent=this></Join>
-        }        
-        else
+        }
+        @if (ScreenType != ScreenTypeEnum.ViewImage)
         {
-            @if ((HasLoggedInUser) && (LoggedInUser.ViewOnlyMode))
+            <div class="topright">
+                <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
+                <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
+            </div>
+        }
+    }
+    @if ((HasGalleryOwner) && (ScreenType == ScreenTypeEnum.ViewingGallery))
+    {
+        @if (HasSelectedFolder)
+        {
+            if ((!HasLoggedInUser) || (!LoggedInUser.IsGalleryOwner))
             {
-                @if (HasSelectedFolder)
-                {
-                    <h5 class="topleft">Viewing Gallery @LoggedInUser.Name/@SelectedFolder.Name</h5>
-                }
-            }
-            @if (ScreenType != ScreenTypeEnum.ViewImage)
-            {
-                <div class="topright">
-                    <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
-                    <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
-                </div>
+                <h5 class="topleft">Viewing Gallery @GalleryOwner.UserName/@SelectedFolder.Name</h5>
             }
         }
     }
+    @if ((HasLoggedInUser) && (!LoggedInUser.ViewOnlyMode))
+    {
+        <div class="topright">
+            Welcome @LoggedInUser.Name
+            <button class="signout" @onclick=SignOut></button>
+        </div>        
+    }
     <div class="fixedsidebar">
-        <div class="logo"></div>           
-        @if (HasLoggedInUser)
+        <div class="logo"></div>
+        @if (ScreenType == ScreenTypeEnum.MainScreen)
+        {
+            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="fontsize14 colortomato text-nowrap colorgray204 right56 fontbold fontsite">Main Gallery</span></button>
+            @if ((HasLoggedInUser) && (!LoggedInUser.ViewOnlyMode))
+            {
+                <button class="backtousershome" @onclick="NavigateToUsersGalleries"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">@LoggedInUser.UserName Galleries</span></button>
+            }
+        }
+        else
+        {
+            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">Main Gallery</span></button>
+        }        
+        @if ((HasGalleryOwner) && (ScreenType != ScreenTypeEnum.MainScreen))
         {
             <div class="folders">
                 <div class="colorgray204 fontbold fontsize24 right64 fontsite">
@@ -113,7 +133,7 @@
 
                         <div class="nav-item px-3">
                         <button class="copybutton down16 right16" title="Copy This Folder's URL'" @onclick="() => CopyFolder(folder.Id)"></button>                            
-                        @if ((folder.Name != "Home") && (folder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
+                        @if ((HasLoggedInUser) && (folder.Name != "Home") && (LoggedInUser.IsGalleryOwner))
                         {
                             <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
                         }
@@ -132,22 +152,29 @@
                         }
                         else
                         {
-                            @if (folder.Selected)
+                            @if ((folder.Selected) && (ScreenType != ScreenTypeEnum.MainScreen))
                             {
+                                if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner))
+                                {
                                     <button class="imagefolder right16"><span class="fontsize14 colortomato fontbold right56 text-nowrap fontsite" @ondblclick="() => RenameFolder(folder)">@folder.Name</span></button>
+                                }
+                                else
+                                {
+                                    <button class="imagefolder right16"><span class="fontsize14 colortomato fontbold right56 text-nowrap fontsite">@folder.Name</span></button>
+                                }
                             }
                             else
                             {
-                                    <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">@folder.Name</span></button>
+                                <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">@folder.Name</span></button>
                             }
                         }
                     </div>
                     <div class="height16 displayblock"></div>
                 }
-                <div class="sidebarfooter">version 1.3.7</div>
+                <div class="sidebarfooter">version 1.4.0</div>
             }
             </div>
-            @if ((HasFolders) && (Folders.Count < Admin.MaxFolderCount) && (!LoggedInUser.ViewOnlyMode))
+            @if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner) && (HasFolders) && (Folders.Count < Admin.MaxFolderCount))
             {
                 <button class="@AddButtonStyle" title="Add A New Folder" @onclick=AddFolder></button>
             }
@@ -157,11 +184,11 @@
                     <ValidationComponent Name="NewFolderNameComponent" Parent="this" LabelTop="8" Unit="px"
                         LabelClassName="displayinlineblock colorgray204 left2" SetFocusOnFirstRender="true" Width="260"                         
                         Column1Width="40" Column2Width="200" HeightUnit="px" Height=24 Caption="Name:"
-                        Left="-80" Top="36">                        
+                        Left="-80" Top="32">                        
                     </ValidationComponent>
                 </div>
             }
-            @if ((HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode) && (LoggedInUser.AcceptedTermsOfServiceDate.Year > 2000) && ((LoggedInUser.EmailVerified) || (!Admin.RequireEmailVerification)))
+            @if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner) && (HasSelectedFolder) && (HasAdmin) && (SelectedFolder.ImagesCount < Admin.MaxImagesPerFolder) && (!LoggedInUser.ViewOnlyMode) && (LoggedInUser.AcceptedTermsOfServiceDate.Year > 2000) && ((LoggedInUser.EmailVerified) || (!Admin.RequireEmailVerification)))
             {
                 <FileUpload CustomSuccessMessage="Your file uploaded successfully." Parent="this"
                     OnReset="OnReset" ShowStatus="false"
@@ -184,7 +211,7 @@
     </div>
     <main>
         <article class="content px-4">
-            @if ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.MainScreen))
+            @if (ScreenType == ScreenTypeEnum.Index)
             {
                 <div class="topleft">
                     @if (HasValidationMessage)
@@ -192,7 +219,21 @@
                         @ValidationMessage
                     }                    
                 </div>
-                <DataJuggler.BlazorGallery.Pages.Index Parent="this"></DataJuggler.BlazorGallery.Pages.Index>
+                <Index Parent="this"></Index>
+            }
+            else if (ScreenType == ScreenTypeEnum.ViewingGallery)
+            {
+                <div class="topleft">
+                    @if (HasValidationMessage)
+                    {
+                        @ValidationMessage
+                    }
+                </div>
+                <Gallery Parent="this"></Gallery>
+            }
+            else if (ScreenType == ScreenTypeEnum.MainScreen)
+            {
+                <MainGalleryComponent Parent="this"></MainGalleryComponent>                
             }
             else if (ScreenType == ScreenTypeEnum.TermsOfservice)
             {
@@ -202,7 +243,7 @@
             {
                 <ProfileVisibility Parent="this" Prompt="Make your profile public?"></ProfileVisibility>
             }
-            else if (screenType == ScreenTypeEnum.ViewImage)
+            else if ((screenType == ScreenTypeEnum.ViewImage) || (screenType == ScreenTypeEnum.ViewImageInMainGallery))
             {
                 <FullScreenImageViewer Parent="this" Image=@SelectedImage></FullScreenImageViewer>
             }
@@ -210,6 +251,6 @@
             {
                 <EmailVerification Parent="this" Name="EmailComponent" Email="@LoggedInUser.EmailAddress"></EmailVerification>
             }
-        </article>
-    </main>
+        </article>        
+    </main>    
 </div>

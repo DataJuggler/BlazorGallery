@@ -274,7 +274,7 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
 
-            #region ProcessNewUserSignUp(object userObject)
+            #region ProcessVerifyPassword(object userObject)
             /// <summary>
             /// This method Process New User Sign Up
             /// </summary>
@@ -339,18 +339,18 @@ namespace DataJuggler.BlazorGallery.Components
                                 }
                                 else
                                 {
+                                    // Update the login information for this user
+                                    user.LastLoginDate = DateTime.Now;
+
+                                    // add to their total logins
+                                    user.TotalLogins++;
+
+                                    // Save the user
+                                    bool saved = await UserService.SaveUser(ref user);
+
                                     // Setup the Index page
-                                    ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
-                                }
-
-                                // Update the login information for this user
-                                user.LastLoginDate = DateTime.Now;
-
-                                // add to their total logins
-                                user.TotalLogins++;
-
-                                // Save the user
-                                bool saved = await UserService.SaveUser(ref user);
+                                    ParentMainLayout.NavigateToUsersGalleries();
+                                }                                
                             }
                         }
                     }
@@ -458,12 +458,25 @@ namespace DataJuggler.BlazorGallery.Components
                     if (component.Name == "UserNameComponent")
                     {
                         // Set the component
-                        UserNameComponent = component as ValidationComponent;
+                        UserNameComponent = component as ValidationComponent;        
+                        
+                        if (HasUserNameComponent)
+                        {
+                            // Focus on this control
+                            UserNameComponent.SetFocus();                            
+                        }
                     }
                     else if (component.Name == "EmailAddressComponent")
                     {
                         // Set the component
                         EmailAddressComponent = component as ValidationComponent;
+
+                        // if the value for HasEmailAddressComponent is true
+                        if (HasEmailAddressComponent)
+                        {
+                            // Setup the EmailAddress
+                            EmailAddressComponent.SetTextValue(EmailAddress);
+                        }
                     }
                     else if (component.Name == "PasswordComponent")
                     {

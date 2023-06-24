@@ -2,6 +2,7 @@
 
 #region using statements
 
+using DataGateway;
 using DataGateway.Services;
 using DataJuggler.Blazor.Components;
 using DataJuggler.Blazor.Components.Interfaces;
@@ -15,6 +16,7 @@ using DataJuggler.UltimateHelper.Objects;
 using ObjectLibrary.BusinessObjects;
 using ObjectLibrary.Enumerations;
 using System.Runtime.Versioning;
+using ApplicationLogicComponent.Connection;
 using Timer = System.Timers.Timer;
 
 #endregion
@@ -37,6 +39,7 @@ namespace DataJuggler.BlazorGallery.Shared
         private List<Folder> folders;
         private Folder selectedFolder;
         private User loggedInUser;
+        private User galleryOwner;
         private bool addFolderMode;
         private bool renameFolderMode;
         private Folder folderBeingRenamed;
@@ -61,11 +64,15 @@ namespace DataJuggler.BlazorGallery.Shared
         private string checkMarkContainerStyle;
         private Timer timer;
         private Image selectedImage;
+        private MainGalleryComponent mainGalleryComponent;
+        private List<MainGalleryView> mainGalleryImages;
         private string addButtonStyle;
         private double addButtonTop;
-        private string newFolderStyle;        
+        private string newFolderStyle;
+        private string newUserEmailAddress;
         private const int AdminId = 1;
         public const int FolderHeight = 51;
+        private const int UploadTopBase = 148;
         public const int UploadLimit = 20480000;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
         public const int FolderTop = 140;         
@@ -114,9 +121,6 @@ namespace DataJuggler.BlazorGallery.Shared
                 // set to true
                 AddFolderMode = true;
 
-                // Set the Top
-                Top = 132 + (Folders.Count * FolderHeight);
-
                 // This is needed to set focus to the component when it rerenders
                 ForceReload = true;
 
@@ -158,7 +162,7 @@ namespace DataJuggler.BlazorGallery.Shared
                     CheckMarkTop = buttonNumber * FolderHeight + 60 - (Folders.Count + buttonNumber);
 
                     // set the top, which sets the Upload button top
-                    Top = 132 + (Folders.Count * FolderHeight);
+                    Top = UploadTopBase + (Folders.Count * FolderHeight);
 
                     string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.Machine);
                     string gallery = root + "/Gallery/" + LoggedInUser.UserName + "/" + folder.Name.Replace(" ", "%20");
@@ -331,6 +335,9 @@ namespace DataJuggler.BlazorGallery.Shared
                         // if saved
                         bool saved = await FolderService.SaveFolder(ref selectedFolder);
 
+                        // The GalleryOwner is also the LoggedInUser
+                        LoggedInUser.ViewingGalleryOwner = LoggedInUser;
+
                         // Get the url                        
                         url = "/User/" + LoggedInUser.UserName + "/" + SelectedFolder.Name;
                     }
@@ -399,6 +406,100 @@ namespace DataJuggler.BlazorGallery.Shared
 
                 // Update the UI
                 Refresh();
+            }
+            #endregion
+            
+            #region NavigateToGallery(string galleryUserName, string folderName)
+            /// <summary>
+            /// Navigate To Gallery
+            /// </summary>
+            public async void NavigateToGallery(string galleryUserName, string folderName)
+            {
+                // If the strings galleryUserName and folderName both exist
+                if (TextHelper.Exists(galleryUserName, folderName))
+                {
+                    // Find the user
+                    GalleryOwner = await UserService.FindUserByUserName(galleryUserName);
+
+                    // If the value for the property .HasGalleryOwner is true
+                    if ((HasGalleryOwner) && (HasLoggedInUser))
+                    {
+                        // Assign the ViewingGalleryOwner
+                        LoggedInUser.ViewingGalleryOwner = GalleryOwner;
+
+                        // If both User's exist, we are in ViewOnlyMode unless the LoggedInUser is the GalleryOwner
+                        GalleryOwner.ViewOnlyMode = !LoggedInUser.IsGalleryOwner;
+
+                        // Find the SelectedFolde
+                        SelectedFolder = await FolderService.FindFolderByUserIdAndFolderName(GalleryOwnerId, folderName);
+                    }
+                    else if (HasGalleryOwner)
+                    {
+                        // Always read only mode if not a logged in user
+                        GalleryOwner.ViewOnlyMode = true;
+
+                        // Find the SelectedFolde
+                        SelectedFolder = await FolderService.FindFolderByUserIdAndFolderName(GalleryOwnerId, folderName);
+                    }
+                    else
+                    {
+                        // Show a not found message
+                        ValidationMessage = "Gallery Not Found.";
+                    }
+
+                    // if has selected folder
+                    if (HasSelectedFolder)
+                    {  
+                        // Here you are viewing someone else's gallery in ViewOnlyMode.
+                        SetupScreen(ScreenTypeEnum.ViewingGallery);                    
+                        
+                        // Load the images for this folder
+                        SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
+
+                        // Get the root
+                        string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.Machine);
+
+                        // Set the GalleryName and the Folder
+                        string galleryURL = root + "/Gallery/" + galleryUserName + "/" + folderName.Replace(" ", "%20");
+
+                        // Set the GalleryURL
+                        Navigation.NavigateTo(galleryURL);
+                    }
+                    else
+                    {
+                        // Show a not found message
+                        ValidationMessage = "Gallery Not Found.";
+                    }
+                }
+            }
+            #endregion
+            
+            #region NavigateToMain()
+            /// <summary>
+            /// Navigate To Main
+            /// </summary>
+            public void NavigateToMain()
+            {
+                // View the MainGallery
+                SetupScreen(ScreenTypeEnum.MainScreen);
+            }
+            #endregion
+            
+            #region NavigateToUsersGalleries()
+            /// <summary>
+            /// Navigate To The User's Folders (Home Folder or a SelectedFolder if there is one.
+            /// </summary>
+            public void NavigateToUsersGalleries()
+            {
+                // if the value for HasLoggedInUser is true
+                if (HasLoggedInUser)
+                {
+                    // Set the GalleryOwner to himself
+                    GalleryOwner = LoggedInUser;
+                }
+
+                // Go to the users home
+                SetupScreen(ScreenTypeEnum.Index);
             }
             #endregion
             
@@ -495,8 +596,8 @@ namespace DataJuggler.BlazorGallery.Shared
                                             }
                                             else
                                             {
-                                                // Setup the screen
-                                                ScreenType = ScreenTypeEnum.Index;
+                                                // Show the user's galleries
+                                                NavigateToUsersGalleries();
                                             }
                                         }
                                     }
@@ -514,11 +615,23 @@ namespace DataJuggler.BlazorGallery.Shared
                 // if firstRender
                 if ((firstRender) || (ForceReload))
                 {
-                    // if the value for HasLoggedInUser is true
-                    if (HasLoggedInUser)
+                    if (ScreenType == ScreenTypeEnum.ViewingGallery)
                     {
-                       // get the folders
-                       Folders = await FolderService.GetFolderListForUserId(LoggedInUser.Id);
+                        // if the value for HasLoggedInUser is true
+                        if (HasGalleryOwner)
+                        {
+                           // get the folders
+                           Folders = await FolderService.GetFolderListForUserId(GalleryOwnerId);
+                        }
+                    }
+                    else
+                    {
+                        // if the value for HasLoggedInUser is true
+                        if (HasLoggedInUser)
+                        {
+                           // get the folders
+                           Folders = await FolderService.GetFolderListForUserId(LoggedInUser.Id);
+                        }
                     }
 
                    // If the Folders collection exists and has one or more items
@@ -568,11 +681,22 @@ namespace DataJuggler.BlazorGallery.Shared
                             }
                         }
 
-                        // Set the Top                        
-                        Top = 132 + (Folders.Count * FolderHeight);   
+                        // This is not needed for ScreenType.ViewingGallery
+                        if (ScreenType == ScreenTypeEnum.Index)
+                        {
+                            // Set the Top                        
+                            Top = UploadTopBase + (Folders.Count * FolderHeight);
 
-                        // Set the Add Button Top
-                        AddButtonTop = 60 + (Folders.Count * FolderHeight);   
+                            // Set the Add Button Top
+                            AddButtonTop = Top - 16;
+
+                            // if the value for AddFolderMode is true
+                            if (AddFolderMode)
+                            {
+                                // Need to add 1 more folder height to not be in the way of the textbox
+                                Top = Top + FolderHeight;
+                            }
+                        }
                    }
                 }
 
@@ -661,9 +785,7 @@ namespace DataJuggler.BlazorGallery.Shared
                                     // If the user object exists
                                     if (NullHelper.Exists(user))
                                     {
-                                        // Set the LoggedInUser
-                                        LoggedInUser = user;
-                                        LoggedInUser.ViewOnlyMode = true;
+                                        
 
                                         // Set the ScreenType
                                         ScreenType = ScreenTypeEnum.Index;
@@ -1048,6 +1170,23 @@ namespace DataJuggler.BlazorGallery.Shared
                     // Set the IndexPage
                     IndexPage = component as Pages.Index;
                 }
+                else if (component is MainGalleryComponent)
+                {
+                    // Store
+                    MainGalleryComponent = component as MainGalleryComponent;
+
+                    // Create a new instance of a 'Gateway' object.
+                    Gateway gateway = new Gateway(Connection.Name);
+
+                    // Load the MainGalleryImages
+                    MainGalleryImages = gateway.MainGalleryViews_LoadMostRecent();
+
+                    // Set the images
+                    MainGalleryComponent.Images = MainGalleryImages;
+
+                    // Update the UI
+                    MainGalleryComponent.Refresh();
+                }
                 else if (component is ValidationComponent)
                 {
                     if (component.Name == "NewFolderNameComponent")
@@ -1084,6 +1223,13 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // Store the Login
                     LoginComponent = component as Login;
+
+                    // if the EmailAddress component exists
+                    if (HasLoginComponent)
+                    {
+                        // Prepopulate the EmailAddress for the user
+                        LoginComponent.EmailAddress = NewUserEmailAddress;
+                    }
                 }
                 else if (component is Join)
                 {
@@ -1234,15 +1380,30 @@ namespace DataJuggler.BlazorGallery.Shared
                 // set the ScreenType
                 ScreenType = screenType;
 
-                if ((ScreenType == ScreenTypeEnum.Login) && (TextHelper.Exists(emailAddress)) && (HasLoginComponent))
+                if (ScreenType == ScreenTypeEnum.Login)
                 {
-                    // Set the email address
-                    LoginComponent.EmailAddress = emailAddress;
+                    // If the emailAddress string exists
+                    if (TextHelper.Exists(emailAddress))
+                    {
+                        // Store this so when the Login component is registered, the Email Address can be set
+                        NewUserEmailAddress = emailAddress;
+                    }
                 }
                 else if (ScreenType == ScreenTypeEnum.Index)
                 {
                     // if the parent exists
                     if (HasLoggedInUser)
+                    {
+                        // Force a reload
+                        ForceReload = true;
+
+                        // Refresh
+                        Refresh();
+                    }
+                }
+                else if (ScreenType == ScreenTypeEnum.ViewingGallery)
+                {
+                    if (HasGalleryOwner)
                     {
                         // Force a reload
                         ForceReload = true;
@@ -1275,11 +1436,63 @@ namespace DataJuggler.BlazorGallery.Shared
                     // Refresh
                     Refresh();
                 }
+                else if (screenType == ScreenTypeEnum.ViewImageInMainGallery)
+                {
+                    // Force a reload
+                    // ForceReload = true;
+
+                    // Refresh
+                    Refresh();
+                }
                 else if (screenType == ScreenTypeEnum.EmailVerification)
                 {
                     // Refresh
                     Refresh();
                 }
+                else if (screenType == ScreenTypeEnum.MainScreen)
+                {
+                    // if the value for HasMainGalleryComponent is true
+                    if (HasMainGalleryComponent)
+                    {
+                        // Create a new instance of a 'Gateway' object.
+                        Gateway gateway = new Gateway(Connection.Name);
+
+                        // Load the MainGalleryImages
+                        MainGalleryImages = gateway.MainGalleryViews_LoadMostRecent();
+
+                        // Set the images
+                        MainGalleryComponent.Images = MainGalleryImages;
+
+                        // Update the UI
+                        MainGalleryComponent.Refresh();
+
+                        // Force a reload
+                        ForceReload = true;
+
+                        // Refresh
+                        Refresh();
+                    }
+                }
+
+                // Update the UI
+                Refresh();
+            }
+            #endregion
+
+            #region SignOut()
+            /// <summary>
+            /// Sign Out
+            /// </summary>
+            public async void SignOut()
+            {  
+                // Erase
+                LoggedInUser = null;
+
+                // Remove the items the user has stored in the local browser storage
+                await RemovedLocalStoreItems();
+
+                // Setup the Screen for the main screen
+                SetupScreen(ScreenTypeEnum.MainScreen);
 
                 // Update the UI
                 Refresh();
@@ -1638,7 +1851,43 @@ namespace DataJuggler.BlazorGallery.Shared
                 set { forceReload = value; }
             }
             #endregion
-         
+            
+            #region GalleryOwner
+            /// <summary>
+            /// This property gets or sets the value for 'GalleryOwner'.
+            /// </summary>
+            public User GalleryOwner
+            {
+                get { return galleryOwner; }
+                set { galleryOwner = value; }
+            }
+            #endregion
+            
+            #region GalleryOwnerId
+            /// <summary>
+            /// This read only property returns the value of GalleryOwnerId from the object GalleryOwner.
+            /// </summary>
+            public int GalleryOwnerId
+            {
+                
+                get
+                {
+                    // initial value
+                    int galleryOwnerId = 0;
+                    
+                    // if GalleryOwner exists
+                    if (GalleryOwner != null)
+                    {
+                        // set the return value
+                        galleryOwnerId = GalleryOwner.Id;
+                    }
+                    
+                    // return value
+                    return galleryOwnerId;
+                }
+            }
+            #endregion
+            
             #region HasAdmin
             /// <summary>
             /// This property returns true if this object has an 'Admin'.
@@ -1724,6 +1973,23 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region HasGalleryOwner
+            /// <summary>
+            /// This property returns true if this object has a 'GalleryOwner'.
+            /// </summary>
+            public bool HasGalleryOwner
+            {
+                get
+                {
+                    // initial value
+                    bool hasGalleryOwner = (this.GalleryOwner != null);
+                    
+                    // return value
+                    return hasGalleryOwner;
+                }
+            }
+            #endregion
+            
             #region HasIndexPage
             /// <summary>
             /// This property returns true if this object has an 'IndexPage'.
@@ -1771,6 +2037,23 @@ namespace DataJuggler.BlazorGallery.Shared
                     
                     // return value
                     return hasLoginComponent;
+                }
+            }
+            #endregion
+            
+            #region HasMainGalleryComponent
+            /// <summary>
+            /// This property returns true if this object has a 'MainGalleryComponent'.
+            /// </summary>
+            public bool HasMainGalleryComponent
+            {
+                get
+                {
+                    // initial value
+                    bool hasMainGalleryComponent = (this.MainGalleryComponent != null);
+                    
+                    // return value
+                    return hasMainGalleryComponent;
                 }
             }
             #endregion
@@ -1946,6 +2229,28 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region MainGalleryComponent
+            /// <summary>
+            /// This property gets or sets the value for 'MainGalleryComponent'.
+            /// </summary>
+            public MainGalleryComponent MainGalleryComponent
+            {
+                get { return mainGalleryComponent; }
+                set { mainGalleryComponent = value; }
+            }
+            #endregion
+            
+            #region MainGalleryImages
+            /// <summary>
+            /// This property gets or sets the value for 'MainGalleryImages'.
+            /// </summary>
+            public List<MainGalleryView> MainGalleryImages
+            {
+                get { return mainGalleryImages; }
+                set { mainGalleryImages = value; }
+            }
+            #endregion
+            
             #region NewFolderNameComponent
             /// <summary>
             /// This property gets or sets the value for 'NewFolderNameComponent'.
@@ -1965,6 +2270,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return newFolderStyle; }
                 set { newFolderStyle = value; }
+            }
+            #endregion
+            
+            #region NewUserEmailAddress
+            /// <summary>
+            /// This property gets or sets the value for 'NewUserEmailAddress'.
+            /// </summary>
+            public string NewUserEmailAddress
+            {
+                get { return newUserEmailAddress; }
+                set { newUserEmailAddress = value; }
             }
             #endregion
             

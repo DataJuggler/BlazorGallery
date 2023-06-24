@@ -101,7 +101,7 @@ namespace DataJuggler.BlazorGallery.Components
                         else
                         {
                             // This forces a reload
-                            ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                            ParentMainLayout.NavigateToUsersGalleries();
                         }
                     }
                 }

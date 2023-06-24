@@ -30,6 +30,7 @@ namespace ApplicationLogicComponent.Controllers
         private ErrorLogController errorlogController;
         private FolderController folderController;
         private ImageController imageController;
+        private MainGalleryViewController maingalleryviewController;
         private UserController userController;
         #endregion
 
@@ -62,6 +63,7 @@ namespace ApplicationLogicComponent.Controllers
                 this.ErrorLogController = new ErrorLogController(this.ErrorProcessor, this.AppController);
                 this.FolderController = new FolderController(this.ErrorProcessor, this.AppController);
                 this.ImageController = new ImageController(this.ErrorProcessor, this.AppController);
+                this.MainGalleryViewController = new MainGalleryViewController(this.ErrorProcessor, this.AppController);
                 this.UserController = new UserController(this.ErrorProcessor, this.AppController);
             }
             #endregion
@@ -123,6 +125,14 @@ namespace ApplicationLogicComponent.Controllers
             {
                 get { return imageController; }
                 set { imageController = value; }
+            }
+            #endregion
+
+            #region MainGalleryViewController
+            public MainGalleryViewController MainGalleryViewController
+            {
+                get { return maingalleryviewController; }
+                set { maingalleryviewController = value; }
             }
             #endregion
 

@@ -726,34 +726,34 @@ namespace DataGateway
             }
             #endregion
 
-                #region LoadActivityLogsForActivityAndUserId(string activity, int userId)
-                /// <summary>
-                /// This method is used to load 'ActivityLog' objects by ActivityAndUserId
-                /// </summary>
-                public List<ActivityLog> LoadActivityLogsForActivityAndUserId(string activity, int userId)
-                {
-                    // initial value
-                    List<ActivityLog> activityLogs = null;
+            #region LoadActivityLogsForActivityAndUserId(string activity, int userId)
+            /// <summary>
+            /// This method is used to load 'ActivityLog' objects by ActivityAndUserId
+            /// </summary>
+            public List<ActivityLog> LoadActivityLogsForActivityAndUserId(string activity, int userId)
+            {
+                // initial value
+                List<ActivityLog> activityLogs = null;
                     
-                    // Create a temp ActivityLog object
-                    ActivityLog tempActivityLog = new ActivityLog();
+                // Create a temp ActivityLog object
+                ActivityLog tempActivityLog = new ActivityLog();
                     
-                    // Set the value for LoadByActivityAndUserId to true
-                    tempActivityLog.LoadByActivityAndUserId = true;
+                // Set the value for LoadByActivityAndUserId to true
+                tempActivityLog.LoadByActivityAndUserId = true;
                     
-                    // Set the value for Activity
-                    tempActivityLog.Activity = activity;
+                // Set the value for Activity
+                tempActivityLog.Activity = activity;
                     
-                    // Set the value for UserId
-                    tempActivityLog.UserId = userId;
+                // Set the value for UserId
+                tempActivityLog.UserId = userId;
                     
-                    // Perform the load
-                    activityLogs = LoadActivityLogs(tempActivityLog);
+                // Perform the load
+                activityLogs = LoadActivityLogs(tempActivityLog);
                     
-                    // return value
-                    return activityLogs;
-                }
-                #endregion
+                // return value
+                return activityLogs;
+            }
+            #endregion
                 
             #region LoadAdmins(Admin tempAdmin = null)
             /// <summary>
@@ -818,31 +818,31 @@ namespace DataGateway
             }
             #endregion
 
-                #region LoadFoldersForUserId(int userId)
-                /// <summary>
-                /// This method is used to load 'Folder' objects for the UserId given.
-                /// </summary>
-                public List<Folder> LoadFoldersForUserId(int userId)
-                {
-                    // initial value
-                    List<Folder> folders = null;
+            #region LoadFoldersForUserId(int userId)
+            /// <summary>
+            /// This method is used to load 'Folder' objects for the UserId given.
+            /// </summary>
+            public List<Folder> LoadFoldersForUserId(int userId)
+            {
+                // initial value
+                List<Folder> folders = null;
                     
-                    // Create a temp Folder object
-                    Folder tempFolder = new Folder();
+                // Create a temp Folder object
+                Folder tempFolder = new Folder();
                     
-                    // Set the value for LoadByUserId to true
-                    tempFolder.LoadByUserId = true;
+                // Set the value for LoadByUserId to true
+                tempFolder.LoadByUserId = true;
                     
-                    // Set the value for UserId
-                    tempFolder.UserId = userId;
+                // Set the value for UserId
+                tempFolder.UserId = userId;
                     
-                    // Perform the load
-                    folders = LoadFolders(tempFolder);
+                // Perform the load
+                folders = LoadFolders(tempFolder);
                     
-                    // return value
-                    return folders;
-                }
-                #endregion
+                // return value
+                return folders;
+            }
+            #endregion
                 
             #region LoadImages(Image tempImage = null)
             /// <summary>
@@ -865,32 +865,53 @@ namespace DataGateway
             }
             #endregion
 
-                #region LoadImagesForFolderId(int folderId)
-                /// <summary>
-                /// This method is used to load 'Image' objects for the FolderId given.
-                /// </summary>
-                public List<Image> LoadImagesForFolderId(int folderId)
-                {
-                    // initial value
-                    List<Image> images = null;
+            #region LoadImagesForFolderId(int folderId)
+            /// <summary>
+            /// This method is used to load 'Image' objects for the FolderId given.
+            /// </summary>
+            public List<Image> LoadImagesForFolderId(int folderId)
+            {
+                // initial value
+                List<Image> images = null;
                     
-                    // Create a temp Image object
-                    Image tempImage = new Image();
+                // Create a temp Image object
+                Image tempImage = new Image();
                     
-                    // Set the value for LoadByFolderId to true
-                    tempImage.LoadByFolderId = true;
+                // Set the value for LoadByFolderId to true
+                tempImage.LoadByFolderId = true;
                     
-                    // Set the value for FolderId
-                    tempImage.FolderId = folderId;
+                // Set the value for FolderId
+                tempImage.FolderId = folderId;
                     
-                    // Perform the load
-                    images = LoadImages(tempImage);
+                // Perform the load
+                images = LoadImages(tempImage);
                     
-                    // return value
-                    return images;
-                }
-                #endregion
+                // return value
+                return images;
+            }
+            #endregion
 
+            #region LoadMainGalleryViews(MainGalleryView tempMainGalleryView = null)
+            /// <summary>
+            /// This method loads a collection of 'MainGalleryView' objects.
+            /// </summary>
+            public List<MainGalleryView> LoadMainGalleryViews(MainGalleryView tempMainGalleryView = null)
+            {
+                // initial value
+                List<MainGalleryView> mainGalleryViews = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    mainGalleryViews = this.AppController.ControllerManager.MainGalleryViewController.FetchAll(tempMainGalleryView);
+                }
+
+                // return value
+                return mainGalleryViews;
+            }
+            #endregion
+    
             #region LoadUsers(User tempUser = null)
             /// <summary>
             /// This method loads a collection of 'User' objects.
@@ -912,6 +933,29 @@ namespace DataGateway
             }
             #endregion
 
+            #region MainGalleryViews_LoadMostRecent()
+            /// <summary>
+            /// Enter Method Description Here
+            /// </summary>
+            public List<MainGalleryView> MainGalleryViews_LoadMostRecent()
+            {
+                // initial value
+                List<MainGalleryView> mainGalleryViews = null;
+                    
+                // Create a temp MainGalleryView object
+                MainGalleryView tempMainGalleryView = new MainGalleryView();
+                    
+                // Set the value for LoadMostRecent to true
+                tempMainGalleryView.LoadMostRecent = true;
+                    
+                // Perform the main
+                mainGalleryViews = LoadMainGalleryViews(tempMainGalleryView);
+                    
+                // return value
+                return mainGalleryViews;
+            }
+            #endregion
+                
             #region SaveActivityLog(ref ActivityLog activityLog)
             /// <summary>
             /// This method is used to save 'ActivityLog' objects.
@@ -1110,4 +1154,3 @@ namespace DataGateway
     #endregion
 
 }
-

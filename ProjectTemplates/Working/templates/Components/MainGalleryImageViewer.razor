@@ -1,0 +1,43 @@
+﻿@using BlazorStyled
+
+<Styled @bind-Classname=@ImageContainerStyle>
+    max-height: 200px;
+    height: 200px;
+    width: @ScaledDownWidthStyle;    
+    border: none;
+    background-color: transparent;
+    position: relative;
+</Styled>
+<Styled @bind-Classname=@ImageStyle>
+    height: 100%;    
+    width: 100%;
+    object-fit: cover;
+    border: none;
+    background-color: transparent;
+    background-image: url(@ImageRelativePath);
+    background-size: 100% 100%;
+</Styled>
+<Styled @bind-Classname=@FullScreenButtonStyle>
+    background-image: url('../Images/ViewFullScreen.png');
+    background-size: 100% 100%;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;    
+    z-index: 100;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+</Styled>
+
+@if (HasImage)
+{
+    <div class="col">
+        <button class="buttonlink fontbold margintop8" @onclick="() => ViewGallery(Image)">@Image.UserName</button>
+        <div class="@ImageContainerStyle ">
+            <button class="@FullScreenButtonStyle imagecontentbutton" title="View Larger Image" @onclick="() => ViewImage(Image)"></button>
+            <img class="@ImageStyle" src="@ImageRelativePath">
+        </div>
+    </div>
+}

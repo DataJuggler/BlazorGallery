@@ -25,10 +25,30 @@
     bottom: 2vh;
     left: 48%;
 }
+.backtousershome
+{
+    position: fixed;
+    top: 16vh;
+    left: 4%;    width: 48px;
+    height: 36px;
+    background-image: url('../Images/Folder.png');
+    background-size: 100% 100%;
+    background-color: transparent;
+    border: none;
+}
 .bigline
 {  
     height: 1vh;
     margin-bottom: 1vh;
+}
+.buttonlink
+{
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 .cancelbutton
 {
@@ -133,7 +153,7 @@
 .folders
 {
     position: fixed;
-    top: 8vh;
+    top: 15vh;
     left: 1%;
 }
 .fontbold
@@ -226,6 +246,17 @@
     top: 1vh;
     left: 0%;
     background-size: 100% 100%;
+}
+.mainimagefolder
+{
+    position: fixed;
+    top: 9.4vh;
+    left: 4%;    width: 48px;
+    height: 36px;
+    background-image: url('../Images/Folder.png');
+    background-size: 100% 100%;
+    background-color: transparent;
+    border: none;
 }
 .nobutton
 {

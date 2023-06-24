@@ -1,25 +1,12 @@
 ﻿@page "/"
 @page "/User/{UserName}/{FolderName}"
-@page "/Gallery/{UserName}/{FolderName}"
-@using DataJuggler.Blazor.FileUpload
-@using BlazorStyled;
-@using DataGateway.Services
 @using ObjectLibrary.BusinessObjects
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
-@using ObjectLibrary.Enumerations
 @using DataJuggler.BlazorGallery.Components
 
 <PageTitle>Index</PageTitle>
 
 @if (HasLoggedInUser)
-{
-    @if ((!LoggedInUser.ViewOnlyMode) && (ScreenType != ScreenTypeEnum.ViewImage))
-    {
-        <div class="topright">
-            Welcome @LoggedInUser.Name
-            <button class="signout" @onclick=SignOut></button>
-        </div>
-    }
+{    
     @if ((HasSelectedFolder) && (SelectedFolder.HasImages))
     {
         <div class="flex-grid">

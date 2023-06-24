@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.3.7</Version>
+	<Version>1.4.0</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -18,6 +18,13 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
+		1.4.0
+		6.24.2023: I created a MainGalleryComponent, MainGalleryImageViewer, Gallery page and the database
+		has a new view MainGalleryView and two new stored procedures MainGalleryView_FetchAll and
+		MainGalleryView_FetchMostRecent. I also refactored how the Index and Gallery pages work, so that the
+		LoggedInUser stays logged in, even when viewing another user's galleries. Also, there is now a button to
+		go back to the User's Galleries while viewing the MainGallery if there is a logged in user.
+
 		1.3.7
 		6.17.2023: A new user needs to be shown the Email Verification component during the signup
 		process for the live site (if Admin.RequireEmailVerification is true).
@@ -98,12 +105,16 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
   <ItemGroup>
     <Compile Remove="Data\**" />
     <Compile Remove="ProjectTemplates\**" />
+    <Compile Remove="Tools\**" />
     <Content Remove="Data\**" />
-    <Content Remove="ProjectTemplates\**" />   
+    <Content Remove="ProjectTemplates\**" />
+    <Content Remove="Tools\**" />   
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="ProjectTemplates\**" />
+    <EmbeddedResource Remove="Tools\**" />
     <None Remove="Data\**" />
     <None Remove="ProjectTemplates\**" />
+    <None Remove="Tools\**" />
   </ItemGroup>
 
   <ItemGroup>

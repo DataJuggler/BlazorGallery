@@ -1,0 +1,11 @@
+﻿@using ObjectLibrary.BusinessObjects
+
+@if (HasImages)
+{ 
+    <div class="flex-grid">
+        @foreach (MainGalleryView image in Images)
+        {
+            <MainGalleryImageViewer Parent="this" Image=@image.Image></MainGalleryImageViewer>
+        }
+    </div>
+}

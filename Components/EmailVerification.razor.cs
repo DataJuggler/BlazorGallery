@@ -82,7 +82,7 @@ namespace DataJuggler.BlazorGallery.Components
                 if ((HasLoggedInUser) && (LoggedInUser.EmailVerified))
                 {
                     // Send the user to the main screen
-                    ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                    ParentMainLayout.NavigateToUsersGalleries();
                 }
                 
                 // update the UI

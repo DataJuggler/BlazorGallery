@@ -1,0 +1,17 @@
+﻿@page "/Gallery/{UserName}/{FolderName}"
+@using ObjectLibrary.BusinessObjects
+@using DataJuggler.BlazorGallery.Components
+
+<PageTitle>Gallery</PageTitle>
+    
+@if ((HasSelectedFolder) && (SelectedFolder.HasImages))
+{
+    <div class="flex-grid">
+        @foreach (Image image in SelectedFolder.Images)
+        {
+            <ImageViewer Parent="this" Image=@image></ImageViewer>
+        }
+    </div>
+}
+
+

@@ -32,7 +32,9 @@ namespace ObjectLibrary.Enumerations
         TermsOfservice = 4,
         SetProfileVisibility = 5,
         ViewImage = 6,
-        EmailVerification = 7
+        EmailVerification = 7,
+        ViewImageInMainGallery = 8,
+        ViewingGallery = 9        
     }
     #endregion
 

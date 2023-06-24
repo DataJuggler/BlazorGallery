@@ -105,32 +105,7 @@ namespace DataJuggler.BlazorGallery.Pages
             }
             #endregion
             
-            #region SignOut()
-            /// <summary>
-            /// Sign Out
-            /// </summary>
-            public async void SignOut()
-            {
-                // if the value for HasParentMainLayout is true
-                if (HasParentMainLayout)
-                {
-                    // Erase
-                    ParentMainLayout.LoggedInUser = null;
-
-                    // Remove the items the user has stored in the local browser storage
-                    await ParentMainLayout.RemovedLocalStoreItems();
-
-                    // Force screen to update
-                    ParentMainLayout.ForceReload = true;
-
-                    // Update parent
-                    ParentMainLayout.Refresh();
-                }
-
-                // Update the UI
-                Refresh();
-            }
-            #endregion
+            
 
         #endregion
 

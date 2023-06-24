@@ -39,8 +39,19 @@ namespace ObjectLibrary.BusinessObjects
                 // Return Cloned Object
                 return newFolder;
             }
-            #endregion
+        #endregion
 
+            #region ToString()
+            /// <summary>
+            /// method returns the String
+            /// </summary>
+            public override string ToString()
+            {
+                // return the Folder Name when ToString is called (useful for debugging)
+                return Name;
+            }
+            #endregion
+            
         #endregion
 
         #region Properties

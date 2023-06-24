@@ -51,6 +51,13 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.4.0
+6.24.2023: I created a MainGalleryComponent, MainGalleryImageViewer, Gallery page and the database
+has a new view MainGalleryView and two new stored procedures MainGalleryView_FetchAll and 
+MainGalleryView_FetchMostRecent. I also refactored how the Index and Gallery pages work, so that the
+LoggedInUser stays logged in, even when viewing another user's galleries. Also, there is now a button to
+go back to the User's Galleries while viewing the MainGallery if there is a logged in user.
+
 1.3.7
 6.17.2023: A new user needs to be shown the Email Verification component during the signup
 process for the live site (if Admin.RequireEmailVerification is true).

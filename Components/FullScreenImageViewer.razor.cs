@@ -101,13 +101,21 @@ namespace DataJuggler.BlazorGallery.Components
             public void GoBack()
             {
                 // if the value for HasParentMainLayout is true
-                if (HasParentMainLayout)
-                {
+                if (ScreenType == ScreenTypeEnum.ViewImage)
+                {  
                     // remove the selected image
                     ParentMainLayout.SelectedImage = null;
 
                     // Setup the main screen again
                     ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                }
+                else if (ScreenType == ScreenTypeEnum.ViewImageInMainGallery)
+                {
+                    // remove the selected image
+                    ParentMainLayout.SelectedImage = null;
+
+                    // Setup the main screen again
+                    ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
                 }
             }
             #endregion
@@ -166,7 +174,7 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
-           #region TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+            #region TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
             /// <summary>
             /// event is fired when Timer Elapsed
             /// </summary>
@@ -585,6 +593,31 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return scaledDownWidthStyle;
+                }
+            }
+            #endregion
+            
+            #region ScreenType
+            /// <summary>
+            /// This read only property returns the value of ScreenType from the object ParentMainLayout.
+            /// </summary>
+            public ScreenTypeEnum ScreenType
+            {
+                
+                get
+                {
+                    // initial value
+                    ScreenTypeEnum screenType = ScreenTypeEnum.MainScreen;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        screenType = ParentMainLayout.ScreenType;
+                    }
+                    
+                    // return value
+                    return screenType;
                 }
             }
             #endregion
