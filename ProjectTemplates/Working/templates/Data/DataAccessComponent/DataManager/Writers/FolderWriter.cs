@@ -87,6 +87,15 @@ namespace DataAccessComponent.DataManager.Writers
                             // Create the UserIdAndName field set parameters
                             findFolderStoredProcedure.Parameters = SqlParameterHelper.CreateSqlParameters("@Name", folder.Name, "@UserId", folder.UserId);
                     }
+                    // if folder.FindSelectedFolderByUserId is true
+                    else if (folder.FindSelectedFolderByUserId)
+                    {
+                        // Change the procedure name
+                        findFolderStoredProcedure.ProcedureName = "Folder_FindSelectedFolder";
+                        
+                        // Create the @UserId parameter
+                        findFolderStoredProcedure.Parameters = SqlParameterHelper.CreateSqlParameters("@UserId", folder.UserId);
+                    }
                     else
                     {
                         // Now create parameters for this procedure

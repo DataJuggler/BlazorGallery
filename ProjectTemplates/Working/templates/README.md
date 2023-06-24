@@ -51,6 +51,10 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.4.2
+6.24.2023: Fixed a bug where after a user signs in, the Upload Button and Add Folder button were not visible.
+The fix was calling FolderSelected in MainLayout.cs after the user logged in.
+
 1.4.1
 6.24.2023: Sign Out now clears the GalleryOwner and SelectedFolder from MainLayout, which prevents
 the folders from showing after you sign out.

@@ -19,6 +19,7 @@ namespace ObjectLibrary.BusinessObjects
         private bool loadByUserId;
         private List<Image> images;
         private bool findByUserIdAndName;
+        private bool findSelectedFolderByUserId;
         #endregion
 
         #region Constructor
@@ -64,6 +65,17 @@ namespace ObjectLibrary.BusinessObjects
             {
                 get { return findByUserIdAndName; }
                 set { findByUserIdAndName = value; }
+            }
+            #endregion
+
+            #region FindSelectedFolderByUserId
+            /// <summary>
+            /// This property gets or sets the value for 'FindSelectedFolderByUserId'.
+            /// </summary>
+            public bool FindSelectedFolderByUserId
+            {
+                get { return findSelectedFolderByUserId; }
+                set { findSelectedFolderByUserId = value; }
             }
             #endregion
 

@@ -556,6 +556,32 @@ namespace DataGateway
             }
             #endregion
                 
+                #region FindSelectedFolderForUserId(int userId)
+                /// <summary>
+                /// This method is used to find 'Folder' objects for the UserId given.
+                /// </summary>
+                public Folder FindSelectedFolderForUserId(int userId)
+                {
+                    // initial value
+                    Folder folder = null;
+                    
+                    // Create a temp Folder object
+                    Folder tempFolder = new Folder();
+                    
+                    // Set the value for FindSelectedFolderByUserId to true
+                    tempFolder.FindSelectedFolderByUserId = true;
+                    
+                    // Set the value for UserId
+                    tempFolder.UserId = userId;
+                    
+                    // Perform the find
+                    folder = FindFolder(0, tempFolder);
+                    
+                    // return value
+                    return folder;
+                }
+                #endregion
+                
             #region FindUser(int id, User tempUser = null)
             /// <summary>
             /// This method is used to find 'User' objects.

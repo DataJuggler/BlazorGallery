@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.4.1</Version>
+	<Version>1.4.2</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -18,7 +18,11 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
-		
+
+		1.4.2
+		6.24.2023: Fixed a bug where after a user signs in, the Upload Button and Add Folder button were not visible.
+		The fix was calling FolderSelected in MainLayout.cs after the user logged in.
+
 		1.4.1
 		6.24.2023: Sign Out now clears the GalleryOwner and SelectedFolder from MainLayout, which prevents
 		the folders from showing after you sign out.

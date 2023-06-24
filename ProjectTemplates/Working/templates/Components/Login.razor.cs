@@ -2,32 +2,19 @@
 
 #region using statements
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Versioning;
-using System.IO;
-using DataJuggler.Blazor.FileUpload;
-using Microsoft.AspNetCore.Components.Web;
-using System.Web;
-using DataJuggler.PixelDatabase;
-using System.Drawing;
-using System.Drawing.Imaging;
+using ApplicationLogicComponent.Connection;
+using DataGateway;
+using DataGateway.Services;
+using DataJuggler.Blazor.Components;
+using DataJuggler.Blazor.Components.Interfaces;
+using DataJuggler.BlazorGallery.Shared;
 using DataJuggler.Cryptography;
 using DataJuggler.UltimateHelper;
 using DataJuggler.UltimateHelper.Objects;
-using DataJuggler.Blazor.Components.Interfaces;
-using DataJuggler.Blazor.Components;
-using ObjectLibrary.BusinessObjects;
-using DataGateway.Services;
-using ObjectLibrary.Enumerations;
-using DataJuggler.Net7;
 using Microsoft.AspNetCore.Components;
-using System.Threading;
-using System.Threading.Tasks;
-using DataJuggler.BlazorGallery;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using DataJuggler.BlazorGallery.Shared;
+using ObjectLibrary.BusinessObjects;
+using ObjectLibrary.Enumerations;
+using System.Runtime.Versioning;
 
 #endregion
 
@@ -38,7 +25,7 @@ namespace DataJuggler.BlazorGallery.Components
     /// <summary>
     /// This class is the code behind for the Index page.
     /// </summary>
-    
+
     [SupportedOSPlatform("windows")]
     public partial class Login : IBlazorComponentParent, IBlazorComponent, ISpriteSubscriber, IDisposable
     {
@@ -348,8 +335,28 @@ namespace DataJuggler.BlazorGallery.Components
                                     // Save the user
                                     bool saved = await UserService.SaveUser(ref user);
 
-                                    // Setup the Index page
-                                    ParentMainLayout.NavigateToUsersGalleries();
+                                    // Create a new instance of a 'Gateway' object.
+                                    Gateway gateway = new Gateway(Connection.Name);
+
+                                    // Find the SelectedFolder
+                                    Folder selectedFolder = gateway.FindSelectedFolderForUserId(LoggedInUserId);
+
+                                    // If the selectedFolder object exists
+                                    if (NullHelper.IsNull(selectedFolder))
+                                    {
+                                        // if there is not a selected folder, use Home
+                                        selectedFolder = gateway.FindFolderByUserIdAndName("Home", LoggedInUserId);                                       
+                                    }
+
+                                     // If the selectedFolder object exists
+                                     if (NullHelper.Exists(selectedFolder))
+                                    {
+                                        // Set the selected folder
+                                        ParentMainLayout.FolderSelected(selectedFolder.Id);
+
+                                        // Navigate to the users folders
+                                        ParentMainLayout.NavigateToUsersGalleries();
+                                    }
                                 }                                
                             }
                         }
