@@ -6,7 +6,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Insert a new ActivityLog
 -- =========================================================
 
@@ -68,7 +68,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Update an existing ActivityLog
 -- =========================================================
 
@@ -134,7 +134,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing ActivityLog
 -- =========================================================
 
@@ -191,7 +191,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Delete an existing ActivityLog
 -- =========================================================
 
@@ -245,7 +245,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all ActivityLog objects
 -- =========================================================
 
@@ -296,7 +296,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Insert a new Admin
 -- =========================================================
 
@@ -357,7 +357,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Update an existing Admin
 -- =========================================================
 
@@ -421,7 +421,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing Admin
 -- =========================================================
 
@@ -478,7 +478,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Delete an existing Admin
 -- =========================================================
 
@@ -532,7 +532,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all Admin objects
 -- =========================================================
 
@@ -583,7 +583,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Insert a new ErrorLog
 -- =========================================================
 
@@ -645,7 +645,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Update an existing ErrorLog
 -- =========================================================
 
@@ -711,7 +711,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing ErrorLog
 -- =========================================================
 
@@ -768,7 +768,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Delete an existing ErrorLog
 -- =========================================================
 
@@ -822,7 +822,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all ErrorLog objects
 -- =========================================================
 
@@ -873,7 +873,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Insert a new Folder
 -- =========================================================
 
@@ -934,7 +934,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Update an existing Folder
 -- =========================================================
 
@@ -998,7 +998,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing Folder
 -- =========================================================
 
@@ -1055,7 +1055,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Delete an existing Folder
 -- =========================================================
 
@@ -1109,7 +1109,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all Folder objects
 -- =========================================================
 
@@ -1160,7 +1160,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Insert a new Image
 -- =========================================================
 
@@ -1227,7 +1227,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Update an existing Image
 -- =========================================================
 
@@ -1303,7 +1303,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing Image
 -- =========================================================
 
@@ -1360,7 +1360,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Delete an existing Image
 -- =========================================================
 
@@ -1414,7 +1414,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all Image objects
 -- =========================================================
 
@@ -1463,9 +1463,293 @@ set ANSI_NULLS ON
 set QUOTED_IDENTIFIER ON
 Go
 -- =========================================================
+-- Procure Name: ImageLike_Insert
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Insert a new ImageLike
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_Insert'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_Insert
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_Insert') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_Insert >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_Insert >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_Insert
+
+    -- Add the parameters for the stored procedure here
+    @GalleryOwnerId int,
+    @ImageId int,
+    @UserId int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Insert Statement
+    Insert Into [ImageLike]
+    ([GalleryOwnerId],[ImageId],[UserId])
+
+    -- Begin Values List
+    Values(@GalleryOwnerId, @ImageId, @UserId)
+
+    -- Return ID of new record
+    SELECT SCOPE_IDENTITY()
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: ImageLike_Update
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Update an existing ImageLike
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_Update'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_Update
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_Update') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_Update >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_Update >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_Update
+
+    -- Add the parameters for the stored procedure here
+    @GalleryOwnerId int,
+    @Id int,
+    @ImageId int,
+    @UserId int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Update Statement
+    Update [ImageLike]
+
+    -- Update Each field
+    Set [GalleryOwnerId] = @GalleryOwnerId,
+    [ImageId] = @ImageId,
+    [UserId] = @UserId
+
+    -- Update Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: ImageLike_Find
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Find an existing ImageLike
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_Find'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_Find
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_Find') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_Find >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_Find >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_Find
+
+    -- Primary Key Paramater
+    @Id int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [GalleryOwnerId],[Id],[ImageId],[UserId]
+
+    -- From tableName
+    From [ImageLike]
+
+    -- Find Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: ImageLike_Delete
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Delete an existing ImageLike
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_Delete'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_Delete
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_Delete') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_Delete >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_Delete >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_Delete
+
+    -- Primary Key Paramater
+    @Id int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Delete Statement
+    Delete From [ImageLike]
+
+    -- Delete Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: ImageLike_FetchAll
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Returns all ImageLike objects
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_FetchAll'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_FetchAll
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_FetchAll') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_FetchAll >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_FetchAll >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_FetchAll
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [GalleryOwnerId],[Id],[ImageId],[UserId]
+
+    -- From tableName
+    From [ImageLike]
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
 -- Procure Name: MainGalleryView_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all MainGalleryView objects
 -- =========================================================
 
@@ -1503,7 +1787,7 @@ BEGIN
     SET NOCOUNT ON
 
     -- Begin Select Statement
-    Select [CreatedDate],[FolderId],[FolderName],[Height],[Id],[ImageName],[Likes],[MinutesOld],[RelativePath],[UserId],[UserName],[Width]
+    Select [CreatedDate],[FolderId],[FolderName],[FullPath],[Height],[ImageId],[ImageName],[Likes],[MinutesOld],[RelativePath],[UserId],[UserName],[Width]
 
     -- From tableName
     From [MainGalleryView]
@@ -1516,7 +1800,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Insert a new User
 -- =========================================================
 
@@ -1588,7 +1872,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Update an existing User
 -- =========================================================
 
@@ -1674,7 +1958,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing User
 -- =========================================================
 
@@ -1731,7 +2015,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Delete an existing User
 -- =========================================================
 
@@ -1785,7 +2069,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all User objects
 -- =========================================================
 
@@ -1839,7 +2123,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FindByUserIdAndName
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing Folder by
 -- =========================================================
 
@@ -1899,9 +2183,66 @@ set ANSI_NULLS ON
 set QUOTED_IDENTIFIER ON
 Go
 -- =========================================================
+-- Procure Name: Folder_FindSelectedFolder
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Find an existing Folder for the UserId given.
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Folder_FindSelectedFolder'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Folder_FindSelectedFolder
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Folder_FindSelectedFolder') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Folder_FindSelectedFolder >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Folder_FindSelectedFolder >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Folder_FindSelectedFolder
+
+    -- Create @UserId Paramater
+    @UserId int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [CreatedDate],[Id],[Name],[Selected],[UserId]
+
+    -- From tableName
+    From [Folder]
+
+    -- Find Matching Record
+    Where [UserId] = @UserId And Selected = 1
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
 -- Procure Name: User_FindByEmailAddress
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing User for the EmailAddress given.
 -- =========================================================
 
@@ -1958,7 +2299,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FindByUserName
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Find an existing User for the UserName given.
 -- =========================================================
 
@@ -2015,7 +2356,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_FetchAllForActivityAndUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all ActivityLog objects by
 -- =========================================================
 
@@ -2077,7 +2418,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAllForUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all Folder objects for the UserId given.
 -- =========================================================
 
@@ -2133,9 +2474,129 @@ set ANSI_NULLS ON
 set QUOTED_IDENTIFIER ON
 Go
 -- =========================================================
+-- Procure Name: ImageLike_FetchAllForGalleryOwnerIdAndUserId
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Returns all ImageLike objects by
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_FetchAllForGalleryOwnerIdAndUserId'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_FetchAllForGalleryOwnerIdAndUserId
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_FetchAllForGalleryOwnerIdAndUserId') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_FetchAllForGalleryOwnerIdAndUserId >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_FetchAllForGalleryOwnerIdAndUserId >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_FetchAllForGalleryOwnerIdAndUserId
+
+    -- Create @GalleryOwnerId Paramater
+    @GalleryOwnerId int,
+
+
+    -- Create @UserId Paramater
+    @UserId int
+
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [GalleryOwnerId],[Id],[ImageId],[UserId]
+
+    -- From tableName
+    From [ImageLike]
+
+    -- Load Matching Records
+    Where [GalleryOwnerId] = @GalleryOwnerId And [UserId] = @UserId
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: ImageLike_FetchAllInMainGalleryForUserId
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   6/25/2023
+-- Description:    Returns all ImageLike objects for the UserId given.
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('ImageLike_FetchAllInMainGalleryForUserId'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure ImageLike_FetchAllInMainGalleryForUserId
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.ImageLike_FetchAllInMainGalleryForUserId') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure ImageLike_FetchAllInMainGalleryForUserId >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure ImageLike_FetchAllInMainGalleryForUserId >>>'
+
+    End
+
+GO
+
+Create PROCEDURE ImageLike_FetchAllInMainGalleryForUserId
+
+    -- Create @UserId Paramater
+    @UserId int
+
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [GalleryOwnerId],[Id],[ImageId],[UserId]
+
+    -- From tableName
+    From [ImageLike]
+
+    -- Load Matching Records
+    Where [UserId] = @UserId
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
 -- Procure Name: Image_FetchAllForFolderId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/20/2023
+-- Create Date:   6/25/2023
 -- Description:    Returns all Image objects for the FolderId given.
 -- =========================================================
 

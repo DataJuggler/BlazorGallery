@@ -9,7 +9,7 @@
     position: relative;
 </Styled>
 <Styled @bind-Classname=@ImageStyle>
-    height: 100%;    
+    height: 200px;
     width: 100%;
     object-fit: cover;
     border: none;
@@ -30,9 +30,15 @@
     right: 8px;
     bottom: 8px;
 </Styled>
+<Styled @bind-Classname=@ImageFooterContainerStyle>
+    width: @ScaledDownWidthStyle;
+    height: 24px;    
+    position: relative;    
+    top: -5px;    
+</Styled>
 
 @if ((HasLoggedInUser) && (HasSelectedFolder) && (SelectedFolder.UserId == LoggedInUser.Id) && (!LoggedInUser.ViewOnlyMode))
-{
+{  
     <div class="col">
         @if (ShowRemoveButton)
         {
@@ -50,6 +56,17 @@ else
         <div class="@ImageContainerStyle ">
             <button class="@FullScreenButtonStyle imagecontentbutton" title="View Larger Image" @onclick="() => ViewImage(Image)"></button>
             <img class="@ImageStyle" src="@ImageRelativePath">
+            <div class="@ImageFooterContainerStyle">
+                @if (LikeButtonEnabled)
+                {
+                    <button class="likebutton" @onclick=LikeImage></button>
+                }
+                else
+                {
+                    <button class="likebuttondisabled"></button>
+                }
+                <span class="likescount">@LikesCount</span>                
+            </div>
         </div>
     </div>
 }

@@ -1464,7 +1464,7 @@ namespace DataJuggler.BlazorGallery.Shared
                         MainGalleryComponent.Images = MainGalleryImages;
 
                         // Update the UI
-                        MainGalleryComponent.Refresh();
+                        // MainGalleryComponent.Refresh();
 
                         // Force a reload
                         ForceReload = true;

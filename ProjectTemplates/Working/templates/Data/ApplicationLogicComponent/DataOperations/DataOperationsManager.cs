@@ -34,6 +34,7 @@ namespace ApplicationLogicComponent.DataOperations
         private ErrorLogMethods errorlogMethods;
         private FolderMethods folderMethods;
         private ImageMethods imageMethods;
+        private ImageLikeMethods imagelikeMethods;
         private MainGalleryViewMethods maingalleryviewMethods;
         private UserMethods userMethods;
         #endregion
@@ -67,6 +68,7 @@ namespace ApplicationLogicComponent.DataOperations
                 this.ErrorLogMethods = new ErrorLogMethods(this.DataManager);
                 this.FolderMethods = new FolderMethods(this.DataManager);
                 this.ImageMethods = new ImageMethods(this.DataManager);
+                this.ImageLikeMethods = new ImageLikeMethods(this.DataManager);
                 this.MainGalleryViewMethods = new MainGalleryViewMethods(this.DataManager);
                 this.UserMethods = new UserMethods(this.DataManager);
             }
@@ -129,6 +131,14 @@ namespace ApplicationLogicComponent.DataOperations
             {
                 get { return imageMethods; }
                 set { imageMethods = value; }
+            }
+            #endregion
+
+            #region ImageLikeMethods
+            public ImageLikeMethods ImageLikeMethods
+            {
+                get { return imagelikeMethods; }
+                set { imagelikeMethods = value; }
             }
             #endregion
 

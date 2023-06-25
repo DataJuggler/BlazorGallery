@@ -33,6 +33,7 @@ namespace DataAccessComponent.DataManager
         private ErrorLogManager errorlogManager;
         private FolderManager folderManager;
         private ImageManager imageManager;
+        private ImageLikeManager imagelikeManager;
         private MainGalleryViewManager maingalleryviewManager;
         private UserManager userManager;
         #endregion
@@ -69,6 +70,7 @@ namespace DataAccessComponent.DataManager
                 this.ErrorLogManager = new ErrorLogManager(this);
                 this.FolderManager = new FolderManager(this);
                 this.ImageManager = new ImageManager(this);
+                this.ImageLikeManager = new ImageLikeManager(this);
                 this.MainGalleryViewManager = new MainGalleryViewManager(this);
                 this.UserManager = new UserManager(this);
             }
@@ -131,6 +133,14 @@ namespace DataAccessComponent.DataManager
             {
                 get { return imageManager; }
                 set { imageManager = value; }
+            }
+            #endregion
+
+            #region ImageLikeManager
+            public ImageLikeManager ImageLikeManager
+            {
+                get { return imagelikeManager; }
+                set { imagelikeManager = value; }
             }
             #endregion
 

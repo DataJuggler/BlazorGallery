@@ -104,8 +104,6 @@ namespace DataJuggler.BlazorGallery.Pages
                 
             }
             #endregion
-            
-            
 
         #endregion
 

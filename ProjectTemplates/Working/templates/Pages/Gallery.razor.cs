@@ -15,7 +15,9 @@ using DataJuggler.Blazor.Components.Util;
 using ObjectLibrary.Enumerations;
 using DataJuggler.BlazorGallery.Components;
 using System.Runtime.Versioning;
+using ApplicationLogicComponent.Connection;
 using DataJuggler.BlazorGallery.Shared;
+using DataGateway;
 
 #endregion
 
@@ -36,6 +38,7 @@ namespace DataJuggler.BlazorGallery.Pages
         private IBlazorComponentParent parent;
         private string userName;
         private string folderName;
+        private List<ImageLike> galleryLikes;
         #endregion
 
         #region Methods
@@ -61,6 +64,16 @@ namespace DataJuggler.BlazorGallery.Pages
             {
                 // call the base
                 await base.OnAfterRenderAsync(firstRender);
+
+                // if the value for HasLoggedInUser is true
+                if (HasLoggedInUser)
+                {
+                    // Create a new instance of a 'Gateway' object.
+                    Gateway gateway = new Gateway(Connection.Name);
+
+                    // Load the GalleryLikes for this gallery
+                    GalleryLikes = gateway.LoadImageLikesForGalleryOwnerIdAndUserId(GalleryOwnerId, LoggedInUserId);
+                }
 
                 // if the value for HasLoggedInUser is true
                 if ((HasLoggedInUser) && (firstRender))
@@ -104,8 +117,6 @@ namespace DataJuggler.BlazorGallery.Pages
                 
             }
             #endregion
-            
-            
 
         #endregion
 
@@ -131,6 +142,101 @@ namespace DataJuggler.BlazorGallery.Pages
             {
                 get { return folderName; }
                 set { folderName = value; }
+            }
+            #endregion
+            
+            #region GalleryLikes
+            /// <summary>
+            /// This property gets or sets the value for 'GalleryLikes'.
+            /// </summary>
+            public List<ImageLike> GalleryLikes
+            {
+                get { return galleryLikes; }
+                set { galleryLikes = value; }
+            }
+            #endregion
+            
+            #region GalleryOwner
+            /// <summary>
+            /// This read only property returns the value of GalleryOwner from the object ParentMainLayout.
+            /// </summary>
+            public User GalleryOwner
+            {
+                
+                get
+                {
+                    // initial value
+                    User galleryOwner = null;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        galleryOwner = ParentMainLayout.GalleryOwner;
+                    }
+                    
+                    // return value
+                    return galleryOwner;
+                }
+            }
+            #endregion
+            
+            #region GalleryOwnerId
+            /// <summary>
+            /// This read only property returns the value of GalleryOwnerId from the object GalleryOwner.
+            /// </summary>
+            public int GalleryOwnerId
+            {
+                
+                get
+                {
+                    // initial value
+                    int galleryOwnerId = 0;
+                    
+                    // if GalleryOwner exists
+                    if (GalleryOwner != null)
+                    {
+                        // set the return value
+                        galleryOwnerId = GalleryOwner.Id;
+                    }
+                    
+                    // return value
+                    return galleryOwnerId;
+                }
+            }
+            #endregion
+            
+            #region HasGalleryLikes
+            /// <summary>
+            /// This property returns true if this object has a 'GalleryLikes'.
+            /// </summary>
+            public bool HasGalleryLikes
+            {
+                get
+                {
+                    // initial value
+                    bool hasGalleryLikes = (this.GalleryLikes != null);
+                    
+                    // return value
+                    return hasGalleryLikes;
+                }
+            }
+            #endregion
+            
+            #region HasGalleryOwner
+            /// <summary>
+            /// This property returns true if this object has a 'GalleryOwner'.
+            /// </summary>
+            public bool HasGalleryOwner
+            {
+                get
+                {
+                    // initial value
+                    bool hasGalleryOwner = (this.GalleryOwner != null);
+                    
+                    // return value
+                    return hasGalleryOwner;
+                }
             }
             #endregion
             
@@ -240,6 +346,31 @@ namespace DataJuggler.BlazorGallery.Pages
                     
                     // return value
                     return loggedInUser;
+                }
+            }
+            #endregion
+            
+            #region LoggedInUserId
+            /// <summary>
+            /// This read only property returns the value of LoggedInUserId from the object LoggedInUser.
+            /// </summary>
+            public int LoggedInUserId
+            {
+                
+                get
+                {
+                    // initial value
+                    int loggedInUserId = 0;
+                    
+                    // if LoggedInUser exists
+                    if (LoggedInUser != null)
+                    {
+                        // set the return value
+                        loggedInUserId = LoggedInUser.Id;
+                    }
+                    
+                    // return value
+                    return loggedInUserId;
                 }
             }
             #endregion

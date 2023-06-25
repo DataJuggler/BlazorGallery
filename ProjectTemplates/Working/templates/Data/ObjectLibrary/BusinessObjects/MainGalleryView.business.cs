@@ -56,14 +56,18 @@ namespace ObjectLibrary.BusinessObjects
                     // initial value
                     Image image = new Image();
                     
-                    // Set the relative path
-                    image.RelativePath = this.RelativePath;
-                    image.Width = this.Width;
-                    image.Height = this.Height;
-                    image.CreatedDate = this.CreatedDate;
-                    image.Name = this.ImageName;
-                    image.UserName = this.UserName;
-                    image.FolderName = this.FolderName;
+                    // Set the properties from the view to create an Image
+                    image.CreatedDate = CreatedDate;
+                    image.FolderName = FolderName;
+                    image.FullPath = FullPath;
+                    image.Height = Height;
+                    image.Name = ImageName;
+                    image.RelativePath = RelativePath;
+                    image.UserName = UserName;
+                    image.Likes = Likes;
+                    image.UpdateIdentity(ImageId);
+                    image.UserId = UserId;
+                    image.Width = Width;
                     
                     // return value
                     return image;

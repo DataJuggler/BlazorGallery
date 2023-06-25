@@ -1,11 +1,45 @@
 ﻿@using ObjectLibrary.BusinessObjects
+@using DataJuggler.UltimateHelper
 
 @if (HasImages)
 { 
     <div class="flex-grid">
         @foreach (MainGalleryView image in Images)
         {
-            <MainGalleryImageViewer Parent="this" Image=@image.Image></MainGalleryImageViewer>
+            // if the like exists
+            if (HasLoggedInUser)
+            {
+                // if the current logged in user is NOT the owner of this image
+                if (LoggedInUserId != image.UserId)
+                {
+                    @if (ListHelper.HasOneOrMoreItems(GalleryLikes))
+                    {
+                        // has this user already like this image ?
+                        ImageLike like = GalleryLikes.FirstOrDefault(x => x.ImageId == image.ImageId);
+                
+                        if (NullHelper.Exists(like))
+                        {
+                            <MainGalleryImageViewer LikeButtonEnabled=false Parent="this" Image=@image.Image></MainGalleryImageViewer>
+                        }
+                        else
+                        {
+                            <MainGalleryImageViewer LikeButtonEnabled=true Parent="this" Image=@image.Image></MainGalleryImageViewer>
+                        }                    
+                    }
+                    else
+                    {
+                        <MainGalleryImageViewer LikeButtonEnabled=true Parent="this" Image=@image.Image></MainGalleryImageViewer>
+                    }
+                }
+                else
+                {
+                    <MainGalleryImageViewer LikeButtonEnabled=false Parent="this" Image=@image.Image></MainGalleryImageViewer>
+                }
+            }
+            else
+            {
+                <MainGalleryImageViewer LikeButtonEnabled=false Parent="this" Image=@image.Image></MainGalleryImageViewer>
+            }
         }
     </div>
 }

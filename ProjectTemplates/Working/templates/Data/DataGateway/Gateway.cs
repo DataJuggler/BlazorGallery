@@ -233,6 +233,43 @@ namespace DataGateway
             }
             #endregion
         
+            #region DeleteImageLike(int id, ImageLike tempImageLike = null)
+            /// <summary>
+            /// This method is used to delete ImageLike objects.
+            /// </summary>
+            /// <param name="id">Delete the ImageLike with this id</param>
+            /// <param name="tempImageLike">Pass in a tempImageLike to perform a custom delete.</param>
+            public bool DeleteImageLike(int id, ImageLike tempImageLike = null)
+            {
+                // initial value
+                bool deleted = false;
+        
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempImageLike does not exist
+                    if (tempImageLike == null)
+                    {
+                        // create a temp ImageLike
+                        tempImageLike = new ImageLike();
+                    }
+        
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempImageLike.UpdateIdentity(id);
+                    }
+        
+                    // perform the delete
+                    deleted = this.AppController.ControllerManager.ImageLikeController.Delete(tempImageLike);
+                }
+        
+                // return value
+                return deleted;
+            }
+            #endregion
+        
                 #region DeleteImagesByFolderId(int folderId)
                 /// <summary>
                 /// This method is used to delete 'Image' objects for the FolderId given.
@@ -556,6 +593,43 @@ namespace DataGateway
             }
             #endregion
                 
+            #region FindImageLike(int id, ImageLike tempImageLike = null)
+            /// <summary>
+            /// This method is used to find 'ImageLike' objects.
+            /// </summary>
+            /// <param name="id">Find the ImageLike with this id</param>
+            /// <param name="tempImageLike">Pass in a tempImageLike to perform a custom find.</param>
+            public ImageLike FindImageLike(int id, ImageLike tempImageLike = null)
+            {
+                // initial value
+                ImageLike imageLike = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempImageLike does not exist
+                    if (tempImageLike == null)
+                    {
+                        // create a temp ImageLike
+                        tempImageLike = new ImageLike();
+                    }
+
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempImageLike.UpdateIdentity(id);
+                    }
+
+                    // perform the find
+                    imageLike = this.AppController.ControllerManager.ImageLikeController.Find(tempImageLike);
+                }
+
+                // return value
+                return imageLike;
+            }
+            #endregion
+
                 #region FindSelectedFolderForUserId(int userId)
                 /// <summary>
                 /// This method is used to find 'Folder' objects for the UserId given.
@@ -870,6 +944,82 @@ namespace DataGateway
             }
             #endregion
                 
+            #region LoadImageLikes(ImageLike tempImageLike = null)
+            /// <summary>
+            /// This method loads a collection of 'ImageLike' objects.
+            /// </summary>
+            public List<ImageLike> LoadImageLikes(ImageLike tempImageLike = null)
+            {
+                // initial value
+                List<ImageLike> imageLikes = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    imageLikes = this.AppController.ControllerManager.ImageLikeController.FetchAll(tempImageLike);
+                }
+
+                // return value
+                return imageLikes;
+            }
+            #endregion
+
+            #region LoadImageLikesForGalleryOwnerIdAndUserId(int galleryOwnerId, int userId)
+            /// <summary>
+            /// This method is used to load 'ImageLike' objects by GalleryOwnerIdAndUserId
+            /// </summary>
+            public List<ImageLike> LoadImageLikesForGalleryOwnerIdAndUserId(int galleryOwnerId, int userId)
+            {
+                // initial value
+                List<ImageLike> imageLikes = null;
+                    
+                // Create a temp ImageLike object
+                ImageLike tempImageLike = new ImageLike();
+                    
+                // Set the value for LoadByGalleryOwnerIdAndUserId to true
+                tempImageLike.LoadByGalleryOwnerIdAndUserId = true;
+                    
+                // Set the value for GalleryOwnerId
+                tempImageLike.GalleryOwnerId = galleryOwnerId;
+                    
+                // Set the value for UserId
+                tempImageLike.UserId = userId;
+                    
+                // Perform the load
+                imageLikes = LoadImageLikes(tempImageLike);
+                    
+                // return value
+                return imageLikes;
+            }
+            #endregion
+                            
+                #region LoadImageLikesInMainGalleryForUserId(int userId)
+                /// <summary>
+                /// This method is used to load 'ImageLike' objects for the UserId given.
+                /// </summary>
+                public List<ImageLike> LoadImageLikesInMainGalleryForUserId(int userId)
+                {
+                    // initial value
+                    List<ImageLike> imageLikes = null;
+                    
+                    // Create a temp ImageLike object
+                    ImageLike tempImageLike = new ImageLike();
+                    
+                    // Set the value for LoadByUserId to true
+                    tempImageLike.LoadByUserId = true;
+                    
+                    // Set the value for UserId
+                    tempImageLike.UserId = userId;
+                    
+                    // Perform the load
+                    imageLikes = LoadImageLikes(tempImageLike);
+                    
+                    // return value
+                    return imageLikes;
+                }
+                #endregion
+                
             #region LoadImages(Image tempImage = null)
             /// <summary>
             /// This method loads a collection of 'Image' objects.
@@ -1092,6 +1242,28 @@ namespace DataGateway
             }
             #endregion
 
+            #region SaveImageLike(ref ImageLike imageLike)
+            /// <summary>
+            /// This method is used to save 'ImageLike' objects.
+            /// </summary>
+            /// <param name="imageLike">The ImageLike to save.</param>
+            public bool SaveImageLike(ref ImageLike imageLike)
+            {
+                // initial value
+                bool saved = false;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the save
+                    saved = this.AppController.ControllerManager.ImageLikeController.Save(ref imageLike);
+                }
+
+                // return value
+                return saved;
+            }
+            #endregion
+
             #region SaveUser(ref User user)
             /// <summary>
             /// This method is used to save 'User' objects.
@@ -1180,3 +1352,4 @@ namespace DataGateway
     #endregion
 
 }
+

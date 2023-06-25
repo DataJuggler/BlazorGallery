@@ -39,15 +39,16 @@ namespace DataAccessComponent.DataManager.Readers
                 int createdDatefield = 0;
                 int folderIdfield = 1;
                 int folderNamefield = 2;
-                int heightfield = 3;
-                int idfield = 4;
-                int imageNamefield = 5;
-                int likesfield = 6;
-                int minutesOldfield = 7;
-                int relativePathfield = 8;
-                int userIdfield = 9;
-                int userNamefield = 10;
-                int widthfield = 11;
+                int fullPathfield = 3;
+                int heightfield = 4;
+                int imageIdfield = 5;
+                int imageNamefield = 6;
+                int likesfield = 7;
+                int minutesOldfield = 8;
+                int relativePathfield = 9;
+                int userIdfield = 10;
+                int userNamefield = 11;
+                int widthfield = 12;
 
                 try
                 {
@@ -55,8 +56,9 @@ namespace DataAccessComponent.DataManager.Readers
                     mainGalleryView.CreatedDate = DataHelper.ParseDate(dataRow.ItemArray[createdDatefield]);
                     mainGalleryView.FolderId = DataHelper.ParseInteger(dataRow.ItemArray[folderIdfield], 0);
                     mainGalleryView.FolderName = DataHelper.ParseString(dataRow.ItemArray[folderNamefield]);
+                    mainGalleryView.FullPath = DataHelper.ParseString(dataRow.ItemArray[fullPathfield]);
                     mainGalleryView.Height = DataHelper.ParseInteger(dataRow.ItemArray[heightfield], 0);
-                    mainGalleryView.Id = DataHelper.ParseInteger(dataRow.ItemArray[idfield], 0);
+                    mainGalleryView.ImageId = DataHelper.ParseInteger(dataRow.ItemArray[imageIdfield], 0);
                     mainGalleryView.ImageName = DataHelper.ParseString(dataRow.ItemArray[imageNamefield]);
                     mainGalleryView.Likes = DataHelper.ParseInteger(dataRow.ItemArray[likesfield], 0);
                     mainGalleryView.MinutesOld = DataHelper.ParseInteger(dataRow.ItemArray[minutesOldfield], 0);

@@ -2,17 +2,18 @@
 
 #region using statements
 
-using ObjectLibrary.BusinessObjects;
-using DataJuggler.Blazor.Components.Interfaces;
-using DataJuggler.Blazor.Components;
-using DataJuggler.BlazorGallery.Pages;
-using Index = DataJuggler.BlazorGallery.Pages.Index;
-using Microsoft.AspNetCore.Components;
-using System.Runtime.Versioning;
+using ApplicationLogicComponent.Connection;
+using DataGateway;
 using DataGateway.Services;
+using DataJuggler.Blazor.Components;
+using DataJuggler.Blazor.Components.Interfaces;
 using DataJuggler.BlazorGallery.Shared;
-using ObjectLibrary.Enumerations;
 using DataJuggler.UltimateHelper;
+using Microsoft.AspNetCore.Components;
+using ObjectLibrary.BusinessObjects;
+using ObjectLibrary.Enumerations;
+using System.Runtime.Versioning;
+using Index = DataJuggler.BlazorGallery.Pages.Index;
 
 #endregion
 
@@ -34,11 +35,69 @@ namespace DataJuggler.BlazorGallery.Components
         private Image image;
         private string name;        
         private string imageContainerStyle;
+        private bool likeButtonEnabled;
         private const int MaxWidth = 400;
+        private string imageFooterContainerStyle;
         private IBlazorComponentParent parent;
         #endregion
 
         #region Methods
+
+            #region LikeImage()
+            /// <summary>
+            /// Like Image
+            /// </summary>
+            public void LikeImage()
+            {
+                // if the value for HasLoggedInUser is true
+                if ((HasLoggedInUser) && (HasImage))
+                {
+                    // Create a new instance of an 'ImageLike' object.
+                    ImageLike imageLike = new ImageLike(); 
+
+                    // Set the properties
+                    imageLike.GalleryOwnerId = Image.UserId;
+                    imageLike.UserId = LoggedInUser.Id;
+                    imageLike.ImageId = Image.Id;
+
+                    // Create a new instance of a 'Gateway' object.
+                    Gateway gateway = new Gateway(Connection.Name);
+
+                    // perform the save
+                    bool saved = gateway.SaveImageLike(ref imageLike);
+
+                    // if the value for saved is true
+                    if (saved)
+                    {
+                        // Increment the value Lilkes for Image
+                        Image.Likes++;
+
+                        // perform the save again
+                        saved = gateway.SaveImage(ref image);
+
+                       // if the value for saved is true
+                       if (saved)
+                       {
+                            // You can only like an image once
+                            LikeButtonEnabled = false;
+
+                            // update the UI
+                            Refresh();
+                       }
+                       else
+                       {
+                            // test only
+                            string temp = gateway.GetLastException().ToString();
+                       }
+                    }
+                    else
+                    {
+                        // test only
+                        string temp = gateway.GetLastException().ToString();
+                    }
+                }
+            }
+            #endregion
             
             #region ReceiveData(Message message)
             /// <summary>
@@ -109,6 +168,56 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return fullScreenButtonStyle; }
                 set { fullScreenButtonStyle = value; }
+            }
+            #endregion
+
+            #region GalleryOwner
+            /// <summary>
+            /// This read only property returns the value of GalleryOwner from the object ParentGalleryPage.
+            /// </summary>
+            public User GalleryOwner
+            {
+                
+                get
+                {
+                    // initial value
+                    User galleryOwner = null;
+                    
+                    // if ParentMainGallery exists
+                    if (HasParentMainGallery)
+                    {
+                        // set the return value
+                        galleryOwner = ParentMainGallery.GalleryOwner;
+                    }
+                    
+                    // return value
+                    return galleryOwner;
+                }
+            }
+            #endregion
+
+            #region GalleryOwnerId
+            /// <summary>
+            /// This read only property returns the value of GalleryOwnerId from the object GalleryOwner.
+            /// </summary>
+            public int GalleryOwnerId
+            {
+                
+                get
+                {
+                    // initial value
+                    int galleryOwnerId = 0;
+                    
+                    // if GalleryOwner exists
+                    if (GalleryOwner != null)
+                    {
+                        // set the return value
+                        galleryOwnerId = GalleryOwner.Id;
+                    }
+                    
+                    // return value
+                    return galleryOwnerId;
+                }
             }
             #endregion
             
@@ -254,6 +363,17 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region ImageFooterContainerStyle
+            /// <summary>
+            /// This property gets or sets the value for 'ImageFooterContainerStyle'.
+            /// </summary>
+            public string ImageFooterContainerStyle
+            {
+                get { return imageFooterContainerStyle; }
+                set { imageFooterContainerStyle = value; }
+            }
+            #endregion
+            
             #region ImageRelativePath
             /// <summary>
             /// This read only property returns the value of RelativePath from the object Image.
@@ -294,6 +414,43 @@ namespace DataJuggler.BlazorGallery.Components
 
         #endregion
 
+            #region LikeButtonEnabled
+            /// <summary>
+            /// This property gets or sets the value for 'LikeButtonEnabled'.
+            /// </summary>
+            [Parameter]
+            public bool LikeButtonEnabled
+            {
+                get { return likeButtonEnabled; }
+                set { likeButtonEnabled = value; }
+            }
+            #endregion
+
+            #region LikesCount
+            /// <summary>
+            /// This read only property returns the value of LikesCount from the object Image.
+            /// </summary>
+            public int LikesCount
+            {
+                
+                get
+                {
+                    // initial value
+                    int likesCount = 0;
+                    
+                    // if Image exists
+                    if (Image != null)
+                    {
+                        // set the return value
+                        likesCount = Image.Likes;
+                    }
+                    
+                    // return value
+                    return likesCount;
+                }
+            }
+            #endregion
+            
             #region LoggedInUser
             /// <summary>
             /// This read only property returns the value of LoggedInUser from the object ParentIndexPage.
@@ -306,10 +463,10 @@ namespace DataJuggler.BlazorGallery.Components
                     User loggedInUser = null;
                     
                     // if ParentIndexPage exists
-                    if (ParentIndexPage != null)
+                    if (HasParentMainGallery)
                     {
                         // set the return value
-                        loggedInUser = ParentIndexPage.LoggedInUser;
+                        loggedInUser = ParentMainGallery.LoggedInUser;
                     }
                     
                     // return value

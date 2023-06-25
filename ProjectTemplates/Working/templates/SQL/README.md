@@ -51,6 +51,12 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.4.4
+6.24.2023: I finished liking an image in the Main Gallery.
+
+1.4.3
+6.24.2023: I added the first phase of liking an image, although there are more places that need this.
+
 1.4.2
 6.24.2023: Fixed a bug where after a user signs in, the Upload Button and Add Folder button were not visible.
 The fix was calling FolderSelected in MainLayout.cs after the user logged in.

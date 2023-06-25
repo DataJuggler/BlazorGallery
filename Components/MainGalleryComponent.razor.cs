@@ -2,13 +2,17 @@
 
 #region using statements
 
-using ObjectLibrary.BusinessObjects;
+using ApplicationLogicComponent.Connection;
+using DataGateway;
 using DataJuggler.Blazor.Components;
 using DataJuggler.Blazor.Components.Interfaces;
-using System.Collections;
 using DataJuggler.Blazor.Components.Util;
-using Microsoft.AspNetCore.Components;
 using DataJuggler.BlazorGallery.Shared;
+using DataJuggler.UltimateHelper;
+using Microsoft.AspNetCore.Components;
+using ObjectLibrary.BusinessObjects;
+using System.Runtime.Versioning;
+using System.Text;
 
 #endregion
 
@@ -19,6 +23,7 @@ namespace DataJuggler.BlazorGallery.Components
     /// <summary>
     /// This class is used to display the top 20 images on the MainGallery
     /// </summary>
+    [SupportedOSPlatform("windows")]    
     public partial class MainGalleryComponent : IBlazorComponent, IBlazorComponentParent
     {
         
@@ -26,6 +31,7 @@ namespace DataJuggler.BlazorGallery.Components
         private string name;
         private IBlazorComponentParent parent;
         private List<MainGalleryView> images;
+        private List<ImageLike> galleryLikes;
         #endregion
         
         #region Methods
@@ -38,6 +44,35 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 // return the child (not used here)
                 return ComponentHelper.FindChildByName(Children, name);
+            }
+            #endregion
+
+            #region OnAfterRenderAsync(bool firstRender)
+            /// <summary>
+            /// This method is used to verify a user
+            /// </summary>
+            /// <param name="firstRender"></param>
+            /// <returns></returns>
+            protected async override Task OnAfterRenderAsync(bool firstRender)
+            {
+                // call the base
+                await base.OnAfterRenderAsync(firstRender);
+
+                // if the value for HasLoggedInUser is true
+                if ((HasLoggedInUser) && (firstRender))
+                {
+                    // Create a new instance of a 'Gateway' object.
+                    Gateway gateway = new Gateway(Connection.Name);
+
+                    // Load the GalleryLikes for this gallery
+                    GalleryLikes = gateway.LoadImageLikesInMainGalleryForUserId(LoggedInUserId);
+
+                    // get the last exception if any
+                    // Exception temp = gateway.GetLastException();
+
+                    // Refresh the UI
+                    Refresh();
+                }
             }
             #endregion
             
@@ -79,6 +114,101 @@ namespace DataJuggler.BlazorGallery.Components
 
         #region Properties
 
+            #region GalleryLikes
+            /// <summary>
+            /// This property gets or sets the value for 'GalleryLikes'.
+            /// </summary>
+            public List<ImageLike> GalleryLikes
+            {
+                get { return galleryLikes; }
+                set { galleryLikes = value; }
+            }
+            #endregion
+            
+            #region GalleryOwner
+            /// <summary>
+            /// This read only property returns the value of GalleryOwner from the object ParentMainLayout.
+            /// </summary>
+            public User GalleryOwner
+            {
+                
+                get
+                {
+                    // initial value
+                    User galleryOwner = null;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        galleryOwner = ParentMainLayout.GalleryOwner;
+                    }
+                    
+                    // return value
+                    return galleryOwner;
+                }
+            }
+            #endregion
+
+            #region GalleryOwnerId
+            /// <summary>
+            /// This read only property returns the value of GalleryOwnerId from the object GalleryOwner.
+            /// </summary>
+            public int GalleryOwnerId
+            {
+                
+                get
+                {
+                    // initial value
+                    int galleryOwnerId = 0;
+                    
+                    // if GalleryOwner exists
+                    if (GalleryOwner != null)
+                    {
+                        // set the return value
+                        galleryOwnerId = GalleryOwner.Id;
+                    }
+                    
+                    // return value
+                    return galleryOwnerId;
+                }
+            }
+            #endregion
+            
+            #region HasGalleryLikes
+            /// <summary>
+            /// This property returns true if this object has a 'GalleryLikes'.
+            /// </summary>
+            public bool HasGalleryLikes
+            {
+                get
+                {
+                    // initial value
+                    bool hasGalleryLikes = (this.GalleryLikes != null);
+                    
+                    // return value
+                    return hasGalleryLikes;
+                }
+            }
+            #endregion
+            
+            #region HasGalleryOwner
+            /// <summary>
+            /// This property returns true if this object has a 'GalleryOwner'.
+            /// </summary>
+            public bool HasGalleryOwner
+            {
+                get
+                {
+                    // initial value
+                    bool hasGalleryOwner = (this.GalleryOwner != null);
+                    
+                    // return value
+                    return hasGalleryOwner;
+                }
+            }
+            #endregion
+            
             #region HasImages
             /// <summary>
             /// This property returns true if this object has an 'Images'.
@@ -92,6 +222,23 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return hasImages;
+                }
+            }
+            #endregion
+            
+            #region HasLoggedInUser
+            /// <summary>
+            /// This property returns true if this object has a 'LoggedInUser'.
+            /// </summary>
+            public bool HasLoggedInUser
+            {
+                get
+                {
+                    // initial value
+                    bool hasLoggedInUser = (this.LoggedInUser != null);
+                    
+                    // return value
+                    return hasLoggedInUser;
                 }
             }
             #endregion
@@ -141,6 +288,56 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region LoggedInUser
+            /// <summary>
+            /// This read only property returns the value of LoggedInUser from the object ParentMainLayout.
+            /// </summary>
+            public User LoggedInUser
+            {
+                
+                get
+                {
+                    // initial value
+                    User loggedInUser = null;
+                    
+                    // if ParentMainLayout exists
+                    if (HasParentMainLayout)
+                    {
+                        // set the return value
+                        loggedInUser = ParentMainLayout.LoggedInUser;
+                    }
+                    
+                    // return value
+                    return loggedInUser;
+                }
+            }
+            #endregion
+            
+            #region LoggedInUserId
+            /// <summary>
+            /// This read only property returns the value of LoggedInUserId from the object LoggedInUser.
+            /// </summary>
+            public int LoggedInUserId
+            {
+                
+                get
+                {
+                    // initial value
+                    int loggedInUserId = 0;
+                    
+                    // if LoggedInUser exists
+                    if (LoggedInUser != null)
+                    {
+                        // set the return value
+                        loggedInUserId = LoggedInUser.Id;
+                    }
+                    
+                    // return value
+                    return loggedInUserId;
+                }
+            }
+            #endregion
+
             #region Name
             /// <summary>
             /// This property gets or sets the value for 'Name'.

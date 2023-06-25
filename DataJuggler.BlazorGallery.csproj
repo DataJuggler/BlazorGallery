@@ -5,9 +5,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.4.2</Version>
+	<Version>1.4.4</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -18,6 +18,12 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<RepositoryType>Git/GitHub</RepositoryType>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
+
+		1.4.4
+		6.24.2023: I finished liking an image in the Main Gallery.
+
+		1.4.3
+		6.24.2023: I added the first phase of liking an image, although there are more places that need this.
 
 		1.4.2
 		6.24.2023: Fixed a bug where after a user signs in, the Upload Button and Add Folder button were not visible.

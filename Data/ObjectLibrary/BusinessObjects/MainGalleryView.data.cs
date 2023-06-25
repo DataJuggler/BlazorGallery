@@ -19,8 +19,9 @@ namespace ObjectLibrary.BusinessObjects
         private DateTime createdDate;
         private int folderId;
         private string folderName;
+        private string fullPath;
         private int height;
-        private int id;
+        private int imageId;
         private string imageName;
         private int likes;
         private int minutesOld;
@@ -79,6 +80,20 @@ namespace ObjectLibrary.BusinessObjects
             }
             #endregion
 
+            #region string FullPath
+            public string FullPath
+            {
+                get
+                {
+                    return fullPath;
+                }
+                set
+                {
+                    fullPath = value;
+                }
+            }
+            #endregion
+
             #region int Height
             public int Height
             {
@@ -93,16 +108,16 @@ namespace ObjectLibrary.BusinessObjects
             }
             #endregion
 
-            #region int Id
-            public int Id
+            #region int ImageId
+            public int ImageId
             {
                 get
                 {
-                    return id;
+                    return imageId;
                 }
                 set
                 {
-                    id = value;
+                    imageId = value;
                 }
             }
             #endregion

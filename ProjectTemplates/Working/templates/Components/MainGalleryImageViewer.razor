@@ -30,6 +30,12 @@
     right: 8px;
     bottom: 8px;
 </Styled>
+<Styled @bind-Classname=@ImageFooterContainerStyle>
+    width: @ScaledDownWidthStyle;
+    height: 24px;
+    position: relative;
+    top: -5px;
+</Styled>
 
 @if (HasImage)
 {
@@ -38,6 +44,17 @@
         <div class="@ImageContainerStyle ">
             <button class="@FullScreenButtonStyle imagecontentbutton" title="View Larger Image" @onclick="() => ViewImage(Image)"></button>
             <img class="@ImageStyle" src="@ImageRelativePath">
+        </div>
+        <div class="@ImageFooterContainerStyle">
+            @if (LikeButtonEnabled)
+            {
+                <button class="likebutton" @onclick=LikeImage></button>
+            }
+            else
+            {
+                <button class="likebuttondisabled"></button>
+            }
+            <span class="likescount">@LikesCount</span>
         </div>
     </div>
 }

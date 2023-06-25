@@ -1,6 +1,7 @@
 ﻿@page "/Gallery/{UserName}/{FolderName}"
 @using ObjectLibrary.BusinessObjects
 @using DataJuggler.BlazorGallery.Components
+@using DataJuggler.UltimateHelper
 
 <PageTitle>Gallery</PageTitle>
     
@@ -9,7 +10,25 @@
     <div class="flex-grid">
         @foreach (Image image in SelectedFolder.Images)
         {
-            <ImageViewer Parent="this" Image=@image></ImageViewer>
+            @if (ListHelper.HasOneOrMoreItems(GalleryLikes))
+            {
+                // has this user already like this image ?
+                ImageLike like = GalleryLikes.FirstOrDefault(x => x.ImageId == image.Id);
+
+                // if the like exists
+                if (NullHelper.Exists(like))
+                {
+                    <ImageViewer LikeButtonEnabled=false Parent="this" Image=@image></ImageViewer>
+                }
+                else
+                {
+                    <ImageViewer Parent="this" Image=@image></ImageViewer>
+                }
+            }
+            else
+            {
+                <ImageViewer Parent="this" Image=@image></ImageViewer>
+            }
         }
     </div>
 }

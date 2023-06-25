@@ -211,6 +211,42 @@
     background-color: transparent;
     border: none;    
 }
+.likebutton
+{
+    background-image: url('../Images/Heart.png');    
+    float: right;
+    background-size: 100% 100%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    top: 5px;
+    left: 0px;
+}
+.likebuttondisabled
+{
+    background-image: url('../Images/HeartDisabled.png');    
+    float: right;
+    background-size: 100% 100%;
+    width: 20px;
+    height: 20px;    
+    background-color: transparent;
+    border: none;
+    cursor: none !important;
+    position: relative;
+    top: 5px;
+    left: 0px;
+}
+.likescount 
+{
+    position: relative;
+    left: -2px;
+    top: 5px;
+    float: right;
+    z-index: 10;
+}
 .loginbutton
 {
     background-image: url('../Images/LoginButton.png');
