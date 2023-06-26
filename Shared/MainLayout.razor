@@ -116,7 +116,7 @@
         {
             <button class="mainimagefolder" @onclick="NavigateToMain"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">Main Gallery</span></button>
         }        
-        @if ((HasGalleryOwner) && (ScreenType != ScreenTypeEnum.MainScreen))
+        @if ((HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.ViewingGallery)))
         {
             <div class="folders">
                 <div class="colorgray204 fontbold fontsize24 right64 fontsite">
@@ -171,7 +171,7 @@
                     </div>
                     <div class="height16 displayblock"></div>
                 }
-                <div class="sidebarfooter">version 1.4.4</div>
+                <div class="sidebarfooter">version 1.4.5</div>
             }
             </div>
             @if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner) && (HasFolders) && (Folders.Count < Admin.MaxFolderCount))

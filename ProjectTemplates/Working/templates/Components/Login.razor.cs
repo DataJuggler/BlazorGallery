@@ -267,8 +267,14 @@ namespace DataJuggler.BlazorGallery.Components
             /// </summary>
             public async void ProcessVerifyPassword(object userObject)
             {
+                // local
+                bool success = false;
+
                 try
                 {
+                    // Set the message
+                    ValidationMessage = "";
+
                     // verify all objects exist
                     if (HasParentMainLayout)
                     {
@@ -354,12 +360,23 @@ namespace DataJuggler.BlazorGallery.Components
                                         // Set the selected folder
                                         ParentMainLayout.FolderSelected(selectedFolder.Id);
 
+                                        // The user was able to login
+                                        success = true;
+
                                         // Navigate to the users folders
                                         ParentMainLayout.NavigateToUsersGalleries();
                                     }
                                 }                                
                             }
-                        }
+                        }                        
+                    }
+                    else
+                    {
+                        // Set the message
+                        ValidationMessage = "Internal Error: ParentMainLayout not set.";
+
+                        // hide the progress
+                        ShowProgress = false;
                     }
                 }
                 catch (Exception error)
@@ -391,6 +408,18 @@ namespace DataJuggler.BlazorGallery.Components
 
                     // for debugging only for now
                     DebugHelper.WriteDebugError("ProcessVerifyPassword", "Login.razor.cs", error);
+                }
+                finally
+                {
+                    // if the value for success is false
+                    if (!success)
+                    {
+                         // Set the message
+                        ValidationMessage = "The credentials entered were either not found or invalid.";
+
+                        // hide the progress
+                        ShowProgress = false;
+                    }
                 }
             }
             #endregion
@@ -570,13 +599,13 @@ namespace DataJuggler.BlazorGallery.Components
                 // if the user exists
                 if (NullHelper.Exists(user))
                 {
-                    // Start Background Thread
+                    // Start Thread
 
                     // Create a Thread to Process the Signup
                     Thread thread = new Thread(ProcessVerifyPassword);
 
-                    // Set the value for the property 'IsBackground' to true                        
-                    thread.IsBackground = true;
+                    // Set the value for the property 'IsBackground' to false (fixes a bug where the validation errors were not showing up)                        
+                    thread.IsBackground = false;
 
                     // Startup the thread and pass in the SignUp model
                     thread.Start(user);

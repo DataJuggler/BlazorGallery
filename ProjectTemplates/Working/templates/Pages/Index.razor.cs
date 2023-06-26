@@ -34,7 +34,6 @@ namespace DataJuggler.BlazorGallery.Pages
         private string name;
         private List<IBlazorComponent> children;
         private IBlazorComponentParent parent;
-        private string userName;
         private string folderName;
         #endregion
 

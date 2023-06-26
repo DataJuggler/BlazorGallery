@@ -1,4 +1,5 @@
 ﻿@using BlazorStyled
+@using ObjectLibrary.Enumerations
 
 <Styled @bind-Classname=@ImageStyle>
     max-height: @ImageHeightStyle;
@@ -41,13 +42,16 @@
     <div class="@CheckMarkContainerStyle">
         <div class="@CheckMarkStyle"></div>
     </div>
-    @if (CanMovePrevious)
+    @if (ScreenType != ScreenTypeEnum.ViewImageInMainGallery)
     {
-        <button title="View Previous Image In This Folder" class="backbutton2" @onclick="GoToPrevious"></button>
-    }
-    @if (CanMoveNext)
-    {
-        <button title="View Next Image In This Folder" class="forwardbutton" @onclick="GoToNext"></button>
+        @if (CanMovePrevious)
+        {
+            <button title="View Previous Image In This Folder" class="backbutton2" @onclick="GoToPrevious"></button>
+        }
+        @if (CanMoveNext)
+        {
+            <button title="View Next Image In This Folder" class="forwardbutton" @onclick="GoToNext"></button>
+        }
     }
 </div>
 

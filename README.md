@@ -51,8 +51,15 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.4.5
+6.26.2023: Bug fixed where clicking the back button on the FullScreenImageViewer was taking the Logged In User
+back to their own gallery, instead of the MainGallery. Also on the FullScreenImageViewer the previous and next
+buttons were showing when the user was in the MainGallery, which isn't supported (yet). And finally if a user
+tries to log in with an invalid user name, a validation message now shows up. I had to change the thread to 
+run in the current thread, as when set to BackgroundThread = true it wasn't working.
+
 1.4.4
-6.24.2023: I finished liking an image in the Main Gallery.
+6.24.2023: Finished liking an image in the Main Gallery.
 
 1.4.3
 6.24.2023: I added the first phase of liking an image, although there are more places that need this.

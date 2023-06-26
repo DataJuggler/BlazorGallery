@@ -106,8 +106,30 @@ namespace DataJuggler.BlazorGallery.Components
                     // remove the selected image
                     ParentMainLayout.SelectedImage = null;
 
-                    // Setup the main screen again
-                    ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);
+                    // if the value for HasLoggedInUser is true
+                    if (HasLoggedInUser)
+                    {
+                        // If the value for the property LoggedInUser.ViewOnlyMode is true
+                        if (LoggedInUser.ViewOnlyMode)
+                        {
+                            // we need to go back to the MainGallery
+
+                            // Setup the main screen again
+                            ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
+                        }
+                        else
+                        {
+                            // Setup the main screen again
+                            ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);        
+                        }
+                    }
+                    else
+                    {
+                        // we need to go back to the MainGallery
+
+                        // Setup the main screen again
+                        ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
+                    }
                 }
                 else if (ScreenType == ScreenTypeEnum.ViewImageInMainGallery)
                 {
