@@ -51,6 +51,12 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.4.6
+6.26.2023: I fixed a bug where the ImageViewer component was defaulting to LikeButtonEnabled in the
+constructor. This didn't work when a logged in user was viewing their own gallery if they enter by clicking
+on their own name from the MainGalleryComponent. I also moved the version number to where it should
+be visible before a user logs in now.
+
 1.4.5
 6.26.2023: Bug fixed where clicking the back button on the FullScreenImageViewer was taking the Logged In User
 back to their own gallery, instead of the MainGallery. Also on the FullScreenImageViewer the previous and next

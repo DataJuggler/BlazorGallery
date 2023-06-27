@@ -47,7 +47,7 @@ namespace DataJuggler.BlazorGallery.Components
         public ImageViewer()
         {
             // Set to true
-            LikeButtonEnabled = true;
+            // LikeButtonEnabled = true;
         }
         #endregion
 
@@ -470,7 +470,16 @@ namespace DataJuggler.BlazorGallery.Components
             public bool LikeButtonEnabled
             {
                 get { return likeButtonEnabled; }
-                set { likeButtonEnabled = value; }
+                set
+                {
+                    likeButtonEnabled = value;
+
+                    if (LikeButtonEnabled)
+                    {
+                        // breakpoint only
+                        int x = 0;
+                    }
+                }
             }
             #endregion
             

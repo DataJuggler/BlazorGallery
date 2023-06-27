@@ -12,7 +12,7 @@
         <div class="flex-grid">
             @foreach (Image image in SelectedFolder.Images)
             {
-                <ImageViewer Parent="this" Image=@image></ImageViewer>
+                <ImageViewer LikeButtonEnabled=false Parent="this" Image=@image></ImageViewer>
             }
         </div>
     }

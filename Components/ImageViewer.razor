@@ -57,6 +57,7 @@ else
             <button class="@FullScreenButtonStyle imagecontentbutton" title="View Larger Image" @onclick="() => ViewImage(Image)"></button>
             <img class="@ImageStyle" src="@ImageRelativePath">
             <div class="@ImageFooterContainerStyle">
+                @if (HasLoggedInUser)
                 @if (LikeButtonEnabled)
                 {
                     <button class="likebutton" @onclick=LikeImage></button>

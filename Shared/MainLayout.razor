@@ -170,8 +170,7 @@
                         }
                     </div>
                     <div class="height16 displayblock"></div>
-                }
-                <div class="sidebarfooter">version 1.4.5</div>
+                }                
             }
             </div>
             @if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner) && (HasFolders) && (Folders.Count < Admin.MaxFolderCount))
@@ -207,7 +206,8 @@
             <div>
                 <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>
             </div>
-        }        
+        }
+        <div class="sidebarfooter">Version 1.4.6</div>
     </div>
     <main>
         <article class="content px-4">
