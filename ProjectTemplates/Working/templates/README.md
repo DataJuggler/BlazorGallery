@@ -49,12 +49,7 @@ Server image galleries.
 
 Everything should work if you followed the above steps.
 
-# Newss
-
-1.5.6
-7.12.2023: Blazor Gallery now supports multiple file uploads. There are also many fixes in this version, mainly fixing
-the way the app appears at 100% zoom in a browser. Prior to 1.4.6, I tested only at 150% zoom, which is what I use
-and I realzied this didn't look right for 100% zoom (normal vision) people. Sorry.
+# News
 
 1.4.6
 6.26.2023: I fixed a bug where the ImageViewer component was defaulting to LikeButtonEnabled in the
