@@ -1,0 +1,27 @@
+﻿
+@using DataJuggler.Blazor.Components
+@using DataJuggler.Blazor.Components.Enumerations
+
+<div class="feedbackcomponent">
+    <ComboBox Parent="this" Name="FeedbackType" Theme="ThemeEnum.Black" LabelText="Feedback Type:" 
+        Unit="vw" HeightUnit="vh"
+        LabelClassName="labeltopleft marginright8 fontsite fontsize14"  ComboBoxWidth="12" 
+        ZIndex="125" LabelWidth="14" ButtonLeft="13.48" Left="1.1" ListItemLeft="15.2" ListItemTop="-2"
+        Width="14" ComboBoxLeft="13.48" ButtonTop="-1.2" ListItemWidth="14">
+    </ComboBox>
+    <ValidationComponent Name="FeedbackText" Parent="this" Unit="vw" HeightUnit="vh" 
+        Column1Width="14" ZIndex="40" LabelWidth="14" Caption="Details:" Width="54"  Height="32"
+        LabelClassName="labeltopleft marginright8 fontsite fontsize14" Position="absolute" Top="6.4" Left="0"
+        Column2Width="38" TextBoxWidth=36 Multiline="true" FontSize="14">
+    </ValidationComponent>
+    <ValidationComponent Name="PermissionToEmail" Parent="this" CheckBoxMode="true" FontSize="14"
+        LabelClassName="labeltopleft marginright8 fontsite fontsize14" Unit="vw" HeightUnit="vh" Top="40"
+        Position="absolute" Left="0" LabelWidth="14" Column1Width="14" Caption="Permission To Email:" 
+        CheckBoxXPosition="27.4" CheckBoxYPosition=".6" Width="54" Height="4" CheckBoxValue="true">
+    </ValidationComponent>
+    <div class="feedbackbuttons">
+        <button class="@SendButtonStyle" @onclick="SendFeedback"></button>
+        <button class="@CancelButtonStyle" @onclick="CancelSendFeedback"></button>
+    </div>
+    <div class="feedbackstatus fontsize20 left48">@StatusMessage</div>
+</div>

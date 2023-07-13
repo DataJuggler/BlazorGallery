@@ -37,6 +37,7 @@ namespace DataJuggler.BlazorGallery.Components
         private string imageFooterContainerStyle;
         private bool likeButtonEnabled;
         private const int MaxWidth = 400;
+        private int height;
         private IBlazorComponentParent parent;
         #endregion
 
@@ -46,8 +47,8 @@ namespace DataJuggler.BlazorGallery.Components
         /// </summary>
         public ImageViewer()
         {
-            // Set to true
-            // LikeButtonEnabled = true;
+            // Perform initializations for this object
+            Init();
         }
         #endregion
 
@@ -60,7 +61,7 @@ namespace DataJuggler.BlazorGallery.Components
             public async void DeleteImage(int imageId)
             {
                 // perform the delete
-                bool deleted = await ImageService.RemoveImage(imageId);
+                await ImageService.RemoveImage(imageId);
 
                 // if the value for HasSelectedFolder is true
                 if (HasSelectedFolder)
@@ -85,6 +86,17 @@ namespace DataJuggler.BlazorGallery.Components
 
                 // remove this button
                 ShowRemoveButton = false;
+            }
+            #endregion
+            
+            #region Init()
+            /// <summary>
+            ///  This method performs initializations for this object.
+            /// </summary>
+            public void Init()
+            {
+                // Default Height
+                Height = 256;
             }
             #endregion
             
@@ -388,6 +400,36 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region Height
+            /// <summary>
+            /// This property gets or sets the value for 'Height'.
+            /// </summary>
+            [Parameter]
+            public int Height
+            {
+                get { return height; }
+                set { height = value; }
+            }
+            #endregion
+            
+            #region HeightStyle
+            /// <summary>
+            /// This read only property returns the value of HeightStyle from the object Height.
+            /// </summary>
+            public string HeightStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string heightStyle = Height + "px";
+                    
+                    // return value
+                    return heightStyle;
+                }
+            }
+            #endregion
+            
             #region Image
             /// <summary>
             /// This property gets or sets the value for 'Image'.
@@ -470,16 +512,7 @@ namespace DataJuggler.BlazorGallery.Components
             public bool LikeButtonEnabled
             {
                 get { return likeButtonEnabled; }
-                set
-                {
-                    likeButtonEnabled = value;
-
-                    if (LikeButtonEnabled)
-                    {
-                        // breakpoint only
-                        int x = 0;
-                    }
-                }
+                set {likeButtonEnabled = value; }
             }
             #endregion
             
@@ -644,8 +677,7 @@ namespace DataJuggler.BlazorGallery.Components
             /// This read only property returns the value of ScaledDownWidth from the object Image.
             /// </summary>
             public int ScaledDownWidth
-            {
-                
+            {                
                 get
                 {
                     // initial value
@@ -656,7 +688,7 @@ namespace DataJuggler.BlazorGallery.Components
                     {  
                         // set the return value
                         double width = Image.Width;
-                        double newHeight = 200;
+                        double newHeight = 256;
                         double scaledDownRaw = (1 / (Image.Height / newHeight)) * width;
                         scaledDownWidth = (int) Math.Round(scaledDownRaw, 0);
 

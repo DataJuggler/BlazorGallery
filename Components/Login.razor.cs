@@ -53,6 +53,9 @@ namespace DataJuggler.BlazorGallery.Components
         private Sprite invisibleSprite;
         private int extraPercent;
         private User loggedInUser;
+        private int column1Width;
+        private int column2Width;
+        private int controlWidth;
         #endregion
 
         #region Consructor
@@ -79,6 +82,21 @@ namespace DataJuggler.BlazorGallery.Components
                 {
                     // Restore back to main screen
                     ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
+                }
+            }
+            #endregion
+            
+            #region ChangePassword()
+            /// <summary>
+            /// Change Password
+            /// </summary>
+            public void ChangePassword()
+            {
+                // if the value for HasParentMainLayout is true
+                if (HasParentMainLayout)
+                {
+                    // Setup the screen
+                    ParentMainLayout.SetupScreen(ScreenTypeEnum.ChangePasswordMode);
                 }
             }
             #endregion
@@ -197,6 +215,9 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 // Create a new collection of 'IBlazorComponent' objects.
                 Children = new List<IBlazorComponent>();
+                Column1Width = 8;
+                Column2Width = 16;
+                ControlWidth=26;
             }
             #endregion
 
@@ -243,7 +264,7 @@ namespace DataJuggler.BlazorGallery.Components
                     Percent = 0;
 
                     // Process the Login
-                    bool started = await StartProcessLogin();
+                    await StartProcessLogin();
                     
                     // if the InvisiibleSprite exists
                     if (HasInvisibleSprite)
@@ -298,6 +319,9 @@ namespace DataJuggler.BlazorGallery.Components
 
                                 // hide the progress
                                 ShowProgress = false;
+
+                                // Update the UI
+                                Refresh();
                             }
                             else
                             {
@@ -415,11 +439,11 @@ namespace DataJuggler.BlazorGallery.Components
                     if (!success)
                     {
                          // Set the message
-                        ValidationMessage = "The credentials entered were either not found or invalid.";
-
-                        // hide the progress
-                        ShowProgress = false;
+                        ValidationMessage = "The credentials entered were either not found or invalid.";                       
                     }
+
+                     // hide the progress
+                    ShowProgress = false;
                 }
             }
             #endregion
@@ -648,6 +672,31 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region CancelButtonStyle
+            /// <summary>
+            /// This read only property returns the value of CancelButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string CancelButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string cancelButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (HasParentMainLayout)
+                    {
+                        // set the return value
+                        cancelButtonStyle = ParentMainLayout.CancelButtonStyle;
+                    }
+                    
+                    // return value
+                    return cancelButtonStyle;
+                }
+            }
+            #endregion
+            
             #region Children
             /// <summary>
             /// This property gets or sets the value for 'Children'.
@@ -656,6 +705,39 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return children; }
                 set { children = value; }
+            }
+            #endregion
+            
+            #region Column1Width
+            /// <summary>
+            /// This property gets or sets the value for 'Column1Width'.
+            /// </summary>
+            public int Column1Width
+            {
+                get { return column1Width; }
+                set { column1Width = value; }
+            }
+            #endregion
+            
+            #region Column2Width
+            /// <summary>
+            /// This property gets or sets the value for 'Column2Width'.
+            /// </summary>
+            public int Column2Width
+            {
+                get { return column2Width; }
+                set { column2Width = value; }
+            }
+            #endregion
+            
+            #region ControlWidth
+            /// <summary>
+            /// This property gets or sets the value for 'ControlWidth'.
+            /// </summary>
+            public int ControlWidth
+            {
+                get { return controlWidth; }
+                set { controlWidth = value; }
             }
             #endregion
             
@@ -890,6 +972,31 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region JoinButtonStyle
+            /// <summary>
+            /// This read only property returns the value of JoinButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string JoinButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string joinButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        joinButtonStyle = ParentMainLayout.JoinButtonStyle;
+                    }
+                    
+                    // return value
+                    return joinButtonStyle;
+                }
+            }
+            #endregion
+            
             #region LoggedInUser
             /// <summary>
             /// This property gets or sets the value for 'LoggedInUser'.
@@ -922,6 +1029,31 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return loggedInUserId;
+                }
+            }
+            #endregion
+            
+            #region LoginButtonStyle
+            /// <summary>
+            /// This read only property returns the value of LoginButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string LoginButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string loginButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        loginButtonStyle = ParentMainLayout.LoginButtonStyle;
+                    }
+                    
+                    // return value
+                    return loginButtonStyle;
                 }
             }
             #endregion
@@ -1083,6 +1215,31 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return rememberLoginComponent; }
                 set { rememberLoginComponent = value; }
+            }
+            #endregion
+            
+            #region RequireEmailVerification
+            /// <summary>
+            /// This read only property returns the value of RequireEmailVerification from the object Admin.
+            /// </summary>
+            public bool RequireEmailVerification
+            {
+                
+                get
+                {
+                    // initial value
+                    bool requireEmailVerification = false;
+                    
+                    // if Admin exists
+                    if (Admin != null)
+                    {
+                        // set the return value
+                        requireEmailVerification = Admin.RequireEmailVerification;
+                    }
+                    
+                    // return value
+                    return requireEmailVerification;
+                }
             }
             #endregion
             

@@ -5,15 +5,16 @@
     width: 240px;
     height: 120px;    
     position: absolute;
-    left: 4%;
+    left: 2.8vh;
     top: @ConfirmationTopStyle;
     display: @DisplayStyle;
+    z-index: 37;
 </Styled>
 
-<div class="@ComponentStyle">
-    <div class="displayinlineblock colorgray204">@Prompt</div>
-    <button class="yesbutton" @onclick="YesClicked"></button>
-    <button class="nobutton" @onclick="NoClicked"></button>
+<div class="@ComponentStyle">    
+    <div class="displayinlineblock colorgray204 fontsize16">@Prompt</div><br />
+    <div class="text-nowrap">
+        <button class="@YesButtonStyle" @onclick="YesClicked"></button>
+        <button class="@NoButtonStyle" @onclick="NoClicked"></button>
+    </div>
 </div>
-
-

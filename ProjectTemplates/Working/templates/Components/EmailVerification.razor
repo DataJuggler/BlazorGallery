@@ -30,13 +30,13 @@
         LabelClassName="down8 right4" Unit="%" Width="20" Position="relative" Top="2" Parent="this"
         Column1Width="8" Column2Width="40" Text="@Email">
     </ValidationComponent>
-    <button class="sendbutton right18" title="Send A 6 Digit Code To Verify" @onclick="SendConfirmation"></button><br />
+    <button class="@SendButtonStyle down16 right18" title="Send A 6 Digit Code To Verify" @onclick="SendConfirmation"></button><br />
     <div class="height10"></div>
     <ValidationComponent Caption="Code:" HeightUnit="px" Height=24 Name="CodeComponent" Parent="this"
         LabelClassName="down8 right4" Unit="%" Width="20" Position="relative" Top="12"
         Column1Width="8" Column2Width="8">
     </ValidationComponent>
-    <button class="verifybutton" title="Verify The 6 Digit Code That Was Emailed" @onclick="Verify"></button><br />    
+    <button class="@VerifyButtonStyle" title="Verify The 6 Digit Code That Was Emailed" @onclick="Verify"></button><br />    
     <div class="@CheckMarkContainerStyle">
         <div class="@CheckMarkStyle"></div>
     </div>

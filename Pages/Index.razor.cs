@@ -35,6 +35,7 @@ namespace DataJuggler.BlazorGallery.Pages
         private List<IBlazorComponent> children;
         private IBlazorComponentParent parent;
         private string folderName;
+        private bool likeButtonEnabled;
         #endregion
 
         #region Methods
@@ -60,6 +61,12 @@ namespace DataJuggler.BlazorGallery.Pages
             {
                 // call the base
                 await base.OnAfterRenderAsync(firstRender);
+
+                // if the LoggedInUser exists
+                if (HasLoggedInUser)
+                {
+                    
+                }
 
                 // if the value for HasLoggedInUser is true
                 if ((HasLoggedInUser) && (firstRender))
@@ -213,6 +220,17 @@ namespace DataJuggler.BlazorGallery.Pages
                     // return value
                     return hasUserName;
                 }
+            }
+            #endregion
+            
+            #region LikeButtonEnabled
+            /// <summary>
+            /// This property gets or sets the value for 'LikeButtonEnabled'.
+            /// </summary>
+            public bool LikeButtonEnabled
+            {
+                get { return likeButtonEnabled; }
+                set { likeButtonEnabled = value; }
             }
             #endregion
             

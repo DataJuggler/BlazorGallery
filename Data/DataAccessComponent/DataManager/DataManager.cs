@@ -31,6 +31,8 @@ namespace DataAccessComponent.DataManager
         private ActivityLogManager activitylogManager;
         private AdminManager adminManager;
         private ErrorLogManager errorlogManager;
+        private FeedbackManager feedbackManager;
+        private FeedbackReplyManager feedbackreplyManager;
         private FolderManager folderManager;
         private ImageManager imageManager;
         private ImageLikeManager imagelikeManager;
@@ -68,6 +70,8 @@ namespace DataAccessComponent.DataManager
                 this.ActivityLogManager = new ActivityLogManager(this);
                 this.AdminManager = new AdminManager(this);
                 this.ErrorLogManager = new ErrorLogManager(this);
+                this.FeedbackManager = new FeedbackManager(this);
+                this.FeedbackReplyManager = new FeedbackReplyManager(this);
                 this.FolderManager = new FolderManager(this);
                 this.ImageManager = new ImageManager(this);
                 this.ImageLikeManager = new ImageLikeManager(this);
@@ -117,6 +121,22 @@ namespace DataAccessComponent.DataManager
             {
                 get { return errorlogManager; }
                 set { errorlogManager = value; }
+            }
+            #endregion
+
+            #region FeedbackManager
+            public FeedbackManager FeedbackManager
+            {
+                get { return feedbackManager; }
+                set { feedbackManager = value; }
+            }
+            #endregion
+
+            #region FeedbackReplyManager
+            public FeedbackReplyManager FeedbackReplyManager
+            {
+                get { return feedbackreplyManager; }
+                set { feedbackreplyManager = value; }
             }
             #endregion
 

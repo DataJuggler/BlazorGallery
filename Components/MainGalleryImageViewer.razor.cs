@@ -72,6 +72,9 @@ namespace DataJuggler.BlazorGallery.Components
                         // Increment the value Lilkes for Image
                         Image.Likes++;
 
+                        // test only
+                        int folderId = image.FolderId;
+
                         // perform the save again
                         saved = gateway.SaveImage(ref image);
 
@@ -590,7 +593,7 @@ namespace DataJuggler.BlazorGallery.Components
                     {  
                         // set the return value
                         double width = Image.Width;
-                        double newHeight = 200;
+                        double newHeight = 256;
                         double scaledDownRaw = (1 / (Image.Height / newHeight)) * width;
                         scaledDownWidth = (int) Math.Round(scaledDownRaw, 0);
 

@@ -58,6 +58,7 @@ namespace ObjectLibrary.BusinessObjects
                     
                     // Set the properties from the view to create an Image
                     image.CreatedDate = CreatedDate;
+                    image.FolderId = FolderId;
                     image.FolderName = FolderName;
                     image.FullPath = FullPath;
                     image.Height = Height;

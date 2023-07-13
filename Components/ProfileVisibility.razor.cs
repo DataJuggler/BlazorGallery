@@ -260,6 +260,31 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region NoButtonStyle
+            /// <summary>
+            /// This read only property returns the value of NoButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string NoButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string noButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        noButtonStyle = ParentMainLayout.NoButtonStyle;
+                    }
+                    
+                    // return value
+                    return noButtonStyle;
+                }
+            }
+            #endregion
+            
             #region Parent
             /// <summary>
             /// This property gets or sets the value for 'Parent'.
@@ -341,6 +366,31 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return requireEmailVerification;
+                }
+            }
+            #endregion
+            
+            #region YesButtonStyle
+            /// <summary>
+            /// This read only property returns the value of YesButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string YesButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string yesButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        yesButtonStyle = ParentMainLayout.YesButtonStyle;
+                    }
+                    
+                    // return value
+                    return yesButtonStyle;
                 }
             }
             #endregion

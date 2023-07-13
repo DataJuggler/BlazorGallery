@@ -2,31 +2,17 @@
 
 #region using statements
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
-using System.IO;
-using DataJuggler.Blazor.FileUpload;
-using Microsoft.AspNetCore.Components.Web;
-using System.Web;
-using DataJuggler.PixelDatabase;
-using System.Drawing;
-using System.Drawing.Imaging;
-using ApplicationLogicComponent.Connection;
+using DataGateway.Services;
+using DataJuggler.Blazor.Components;
+using DataJuggler.Blazor.Components.Interfaces;
+using DataJuggler.BlazorGallery.Shared;
+using DataJuggler.BlazorGallery.Util;
 using DataJuggler.Cryptography;
 using DataJuggler.UltimateHelper;
-using DataJuggler.UltimateHelper.Objects;
-using DataJuggler.Blazor.Components.Interfaces;
-using DataJuggler.Blazor.Components;
-using ObjectLibrary.BusinessObjects;
-using DataGateway.Services;
 using Microsoft.AspNetCore.Components;
+using ObjectLibrary.BusinessObjects;
 using ObjectLibrary.Enumerations;
 using System.Runtime.Versioning;
-using DataGateway;
-using DataJuggler.BlazorGallery.Shared;
 
 #endregion
 
@@ -61,7 +47,10 @@ namespace DataJuggler.BlazorGallery.Components
         private string progressStyle;
         private Sprite invisibleSprite;
         private bool loginInProcess;
-        private int extraPercent;        
+        private int extraPercent;
+        private int column1Width;
+        private int column2Width;
+        private int controlWidth;
         #endregion
 
         #region Consructor
@@ -117,57 +106,6 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
-            #region CheckValidEmail(string emailAddress)
-            /// <summary>
-            /// This method returns the Valid Email
-            /// </summary>
-            public bool CheckValidEmail(string emailAddress)
-            {
-                // initial value
-                bool isValidEmail = false;
-
-                try
-                {
-                    // If the emailAddress string exists
-                    if (TextHelper.Exists(emailAddress))
-                    {
-                        // find the at Sign
-                        int atSignIndex = emailAddress.IndexOf("@");
-
-                        // if found
-                        if (atSignIndex > 0)
-                        {
-                            // get the wordBefore
-                            string wordBefore = emailAddress.Substring(0, atSignIndex -1);
-
-                            // get the words after
-                            string wordsAfter = emailAddress.Substring(atSignIndex + 1);
-
-                            // get the delimiters
-                            char[] delimiters = { '.' };
-
-                            // get the words
-                            List<Word> words = TextHelper.GetWords(wordsAfter, delimiters);
-
-                            // if there are 2 or more words, this should be valid
-                            isValidEmail = ((TextHelper.Exists(wordBefore)) && (ListHelper.HasXOrMoreItems(words, 2)));
-                        } 
-                    }
-                } 
-                catch (Exception error)
-                {
-                    // not valid
-                    isValidEmail = false;
-
-                    // for debugging only
-                    DebugHelper.WriteDebugError("CheckValidEmail", "Join.razor.cs", error);
-                }
-                
-                // return value
-                return isValidEmail;
-            }
-            #endregion
-            
             #region FindChildByName(string name)
             /// <summary>
             /// method returns the Child By Name
@@ -208,6 +146,9 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 // Create a new collection of 'IBlazorComponent' objects.
                 Children = new List<IBlazorComponent>();
+                Column1Width = 8;
+                Column2Width = 16;
+                ControlWidth=26;
             }
             #endregion
 
@@ -299,6 +240,11 @@ namespace DataJuggler.BlazorGallery.Components
                 catch (Exception error)
                 {
                     DebugHelper.WriteDebugError("ProcessNewUserSignup", "Join.razor.cs", error);
+                }
+                finally
+                {
+                    // hide the progress bar
+                    ShowProgress = false;
                 }
             }
             #endregion
@@ -633,6 +579,22 @@ namespace DataJuggler.BlazorGallery.Components
                 {
                     // no validation is required, just capturing the value
                     this.Name = NameComponent.Text;
+
+                    if ((!TextHelper.Exists(Name)) || (Name.Length < 5) || (Name.Length > 20))
+                    {
+                        // not valid
+                        isValid = false;
+                        NameComponent.IsValid = false;
+                        ValidationMessage = "Name must between 5 and 20 characters.";
+                    }
+                }
+                else
+                {
+                    // Set to false
+                    isValid = false;
+
+                     // Set the Validation Message
+                    ValidationMessage = NameComponent.InvalidReason;
                 }
 
                 // if still valid
@@ -650,7 +612,7 @@ namespace DataJuggler.BlazorGallery.Components
                     else
                     {
                         // next we must check if this is a valid email
-                        isValid = CheckValidEmail(EmailAddressComponent.Text);
+                        isValid = EmailHelper.CheckValidEmail(EmailAddressComponent.Text);
 
                         // if not valid
                         if (!isValid)
@@ -741,6 +703,31 @@ namespace DataJuggler.BlazorGallery.Components
 
         #region Properties
 
+            #region CancelButtonStyle
+            /// <summary>
+            /// This read only property returns the value of CancelButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string CancelButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string cancelButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        cancelButtonStyle = ParentMainLayout.CancelButtonStyle;
+                    }
+                    
+                    // return value
+                    return cancelButtonStyle;
+                }
+            }
+            #endregion
+            
             #region Children
             /// <summary>
             /// This property gets or sets the value for 'Children'.
@@ -752,6 +739,28 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region Column1Width
+            /// <summary>
+            /// This property gets or sets the value for 'Column1Width'.
+            /// </summary>
+            public int Column1Width
+            {
+                get { return column1Width; }
+                set { column1Width = value; }
+            }
+            #endregion
+            
+            #region Column2Width
+            /// <summary>
+            /// This property gets or sets the value for 'Column2Width'.
+            /// </summary>
+            public int Column2Width
+            {
+                get { return column2Width; }
+                set { column2Width = value; }
+            }
+            #endregion
+            
             #region ConfirmPasswordComponent
             /// <summary>
             /// This property gets or sets the value for 'ConfirmPasswordComponent'.
@@ -760,6 +769,17 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return confirmPasswordComponent; }
                 set { confirmPasswordComponent = value; }
+            }
+            #endregion
+            
+            #region ControlWidth
+            /// <summary>
+            /// This property gets or sets the value for 'ControlWidth'.
+            /// </summary>
+            public int ControlWidth
+            {
+                get { return controlWidth; }
+                set { controlWidth = value; }
             }
             #endregion
             
@@ -974,6 +994,31 @@ namespace DataJuggler.BlazorGallery.Components
             {
                 get { return invisibleSprite; }
                 set { invisibleSprite = value; }
+            }
+            #endregion
+            
+            #region JoinButtonStyle
+            /// <summary>
+            /// This read only property returns the value of JoinButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string JoinButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string joinButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        joinButtonStyle = ParentMainLayout.JoinButtonStyle;
+                    }
+                    
+                    // return value
+                    return joinButtonStyle;
+                }
             }
             #endregion
             

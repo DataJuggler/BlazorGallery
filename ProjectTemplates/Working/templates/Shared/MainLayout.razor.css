@@ -22,7 +22,7 @@ main {
     position: fixed;
     bottom: 18px;
     left: 8px;
-    font-size: 14px;
+    font-size: 20px;
     font-family: 'Candara Light', 'Verdana', 'Tahoma';
     color: rgb(204, 204, 204);
 }

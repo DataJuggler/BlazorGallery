@@ -1,15 +1,15 @@
 ﻿@using BlazorStyled
 
 <Styled @bind-Classname=@ImageContainerStyle>
-    max-height: 200px;
-    height: 200px;
+    max-height: @HeightStyle;
+    height: @HeightStyle;
     width: @ScaledDownWidthStyle;    
     border: none;
     background-color: transparent;
     position: relative;
 </Styled>
 <Styled @bind-Classname=@ImageStyle>
-    height: 200px;
+    height: 256px;
     width: 100%;
     object-fit: cover;
     border: none;
@@ -56,8 +56,7 @@ else
         <div class="@ImageContainerStyle ">
             <button class="@FullScreenButtonStyle imagecontentbutton" title="View Larger Image" @onclick="() => ViewImage(Image)"></button>
             <img class="@ImageStyle" src="@ImageRelativePath">
-            <div class="@ImageFooterContainerStyle">
-                @if (HasLoggedInUser)
+            <div class="@ImageFooterContainerStyle">                
                 @if (LikeButtonEnabled)
                 {
                     <button class="likebutton" @onclick=LikeImage></button>

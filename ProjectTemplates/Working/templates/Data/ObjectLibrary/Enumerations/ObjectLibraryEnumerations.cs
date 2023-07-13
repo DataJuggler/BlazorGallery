@@ -34,7 +34,21 @@ namespace ObjectLibrary.Enumerations
         ViewImage = 6,
         EmailVerification = 7,
         ViewImageInMainGallery = 8,
-        ViewingGallery = 9        
+        ViewingGallery = 9,
+        ChangePasswordMode = 10,
+        Feedback = 11
+    }
+    #endregion
+
+    #region FeedbackTypeEnum : int
+    /// <summary>
+    ///  This enum is used in the Feedback table to set the type of feedback.
+    /// </summary>
+    public enum FeedbackTypeEnum : int
+    {
+        Bug = 0,
+        Suggestion = 1,
+        Visual_Display = 2
     }
     #endregion
 

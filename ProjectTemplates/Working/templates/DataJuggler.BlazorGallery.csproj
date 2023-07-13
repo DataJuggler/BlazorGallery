@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.4.5</Version>
+	<Version>1.5.6</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -117,11 +117,11 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;BL0007;</NoWarn>
+    <NoWarn>1701;1702;BL0007;IDE0017;IDE0090;IDE0059;</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;BL0007;</NoWarn>
+    <NoWarn>1701;1702;BL0007;IDE0017;IDE0090;IDE0059;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -145,9 +145,10 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Email" Version="1.0.0" />
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.7.8" />
-    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.0.5" />
-    <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.8" />
+    <PackageReference Include="BlazorPro.BlazorSize" Version="6.2.1" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.9.3" />
+    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.1.0" />
+    <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.9" />
   </ItemGroup>
 
   <ItemGroup>

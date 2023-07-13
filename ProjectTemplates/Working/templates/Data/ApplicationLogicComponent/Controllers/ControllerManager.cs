@@ -28,6 +28,8 @@ namespace ApplicationLogicComponent.Controllers
         private ActivityLogController activitylogController;
         private AdminController adminController;
         private ErrorLogController errorlogController;
+        private FeedbackController feedbackController;
+        private FeedbackReplyController feedbackreplyController;
         private FolderController folderController;
         private ImageController imageController;
         private ImageLikeController imagelikeController;
@@ -62,6 +64,8 @@ namespace ApplicationLogicComponent.Controllers
                 this.ActivityLogController = new ActivityLogController(this.ErrorProcessor, this.AppController);
                 this.AdminController = new AdminController(this.ErrorProcessor, this.AppController);
                 this.ErrorLogController = new ErrorLogController(this.ErrorProcessor, this.AppController);
+                this.FeedbackController = new FeedbackController(this.ErrorProcessor, this.AppController);
+                this.FeedbackReplyController = new FeedbackReplyController(this.ErrorProcessor, this.AppController);
                 this.FolderController = new FolderController(this.ErrorProcessor, this.AppController);
                 this.ImageController = new ImageController(this.ErrorProcessor, this.AppController);
                 this.ImageLikeController = new ImageLikeController(this.ErrorProcessor, this.AppController);
@@ -111,6 +115,22 @@ namespace ApplicationLogicComponent.Controllers
             {
                 get { return errorlogController; }
                 set { errorlogController = value; }
+            }
+            #endregion
+
+            #region FeedbackController
+            public FeedbackController FeedbackController
+            {
+                get { return feedbackController; }
+                set { feedbackController = value; }
+            }
+            #endregion
+
+            #region FeedbackReplyController
+            public FeedbackReplyController FeedbackReplyController
+            {
+                get { return feedbackreplyController; }
+                set { feedbackreplyController = value; }
             }
             #endregion
 

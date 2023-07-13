@@ -6,7 +6,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new ActivityLog
 -- =========================================================
 
@@ -68,7 +68,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing ActivityLog
 -- =========================================================
 
@@ -134,7 +134,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing ActivityLog
 -- =========================================================
 
@@ -191,7 +191,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing ActivityLog
 -- =========================================================
 
@@ -245,7 +245,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all ActivityLog objects
 -- =========================================================
 
@@ -296,7 +296,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new Admin
 -- =========================================================
 
@@ -357,7 +357,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing Admin
 -- =========================================================
 
@@ -421,7 +421,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing Admin
 -- =========================================================
 
@@ -478,7 +478,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing Admin
 -- =========================================================
 
@@ -532,7 +532,7 @@ Go
 -- =========================================================
 -- Procure Name: Admin_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all Admin objects
 -- =========================================================
 
@@ -583,7 +583,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new ErrorLog
 -- =========================================================
 
@@ -645,7 +645,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing ErrorLog
 -- =========================================================
 
@@ -711,7 +711,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing ErrorLog
 -- =========================================================
 
@@ -768,7 +768,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing ErrorLog
 -- =========================================================
 
@@ -822,7 +822,7 @@ Go
 -- =========================================================
 -- Procure Name: ErrorLog_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all ErrorLog objects
 -- =========================================================
 
@@ -871,9 +871,601 @@ set ANSI_NULLS ON
 set QUOTED_IDENTIFIER ON
 Go
 -- =========================================================
+-- Procure Name: Feedback_Insert
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Insert a new Feedback
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Feedback_Insert'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Feedback_Insert
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Feedback_Insert') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Feedback_Insert >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Feedback_Insert >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Feedback_Insert
+
+    -- Add the parameters for the stored procedure here
+    @CreatedDate datetime,
+    @Details nvarchar(512),
+    @FeedbackType int,
+    @PermissionToEmail bit,
+    @Responded bit,
+    @RespondedById int,
+    @RespondedDate datetime,
+    @UserId int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Insert Statement
+    Insert Into [Feedback]
+    ([CreatedDate],[Details],[FeedbackType],[PermissionToEmail],[Responded],[RespondedById],[RespondedDate],[UserId])
+
+    -- Begin Values List
+    Values(@CreatedDate, @Details, @FeedbackType, @PermissionToEmail, @Responded, @RespondedById, @RespondedDate, @UserId)
+
+    -- Return ID of new record
+    SELECT SCOPE_IDENTITY()
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Feedback_Update
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Update an existing Feedback
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Feedback_Update'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Feedback_Update
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Feedback_Update') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Feedback_Update >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Feedback_Update >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Feedback_Update
+
+    -- Add the parameters for the stored procedure here
+    @CreatedDate datetime,
+    @Details nvarchar(512),
+    @FeedbackType int,
+    @Id int,
+    @PermissionToEmail bit,
+    @Responded bit,
+    @RespondedById int,
+    @RespondedDate datetime,
+    @UserId int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Update Statement
+    Update [Feedback]
+
+    -- Update Each field
+    Set [CreatedDate] = @CreatedDate,
+    [Details] = @Details,
+    [FeedbackType] = @FeedbackType,
+    [PermissionToEmail] = @PermissionToEmail,
+    [Responded] = @Responded,
+    [RespondedById] = @RespondedById,
+    [RespondedDate] = @RespondedDate,
+    [UserId] = @UserId
+
+    -- Update Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Feedback_Find
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Find an existing Feedback
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Feedback_Find'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Feedback_Find
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Feedback_Find') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Feedback_Find >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Feedback_Find >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Feedback_Find
+
+    -- Primary Key Paramater
+    @Id int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [CreatedDate],[Details],[FeedbackType],[Id],[PermissionToEmail],[Responded],[RespondedById],[RespondedDate],[UserId]
+
+    -- From tableName
+    From [Feedback]
+
+    -- Find Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Feedback_Delete
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Delete an existing Feedback
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Feedback_Delete'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Feedback_Delete
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Feedback_Delete') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Feedback_Delete >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Feedback_Delete >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Feedback_Delete
+
+    -- Primary Key Paramater
+    @Id int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Delete Statement
+    Delete From [Feedback]
+
+    -- Delete Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: Feedback_FetchAll
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Returns all Feedback objects
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('Feedback_FetchAll'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure Feedback_FetchAll
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.Feedback_FetchAll') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure Feedback_FetchAll >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure Feedback_FetchAll >>>'
+
+    End
+
+GO
+
+Create PROCEDURE Feedback_FetchAll
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [CreatedDate],[Details],[FeedbackType],[Id],[PermissionToEmail],[Responded],[RespondedById],[RespondedDate],[UserId]
+
+    -- From tableName
+    From [Feedback]
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: FeedbackReply_Insert
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Insert a new FeedbackReply
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('FeedbackReply_Insert'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure FeedbackReply_Insert
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.FeedbackReply_Insert') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure FeedbackReply_Insert >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure FeedbackReply_Insert >>>'
+
+    End
+
+GO
+
+Create PROCEDURE FeedbackReply_Insert
+
+    -- Add the parameters for the stored procedure here
+    @IsPublic bit,
+    @LikesCount int,
+    @RepliedById int,
+    @RepliedDate datetime,
+    @ReplyFeedbackId int,
+    @Response nvarchar(512)
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Insert Statement
+    Insert Into [FeedbackReply]
+    ([IsPublic],[LikesCount],[RepliedById],[RepliedDate],[ReplyFeedbackId],[Response])
+
+    -- Begin Values List
+    Values(@IsPublic, @LikesCount, @RepliedById, @RepliedDate, @ReplyFeedbackId, @Response)
+
+    -- Return ID of new record
+    SELECT SCOPE_IDENTITY()
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: FeedbackReply_Update
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Update an existing FeedbackReply
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('FeedbackReply_Update'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure FeedbackReply_Update
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.FeedbackReply_Update') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure FeedbackReply_Update >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure FeedbackReply_Update >>>'
+
+    End
+
+GO
+
+Create PROCEDURE FeedbackReply_Update
+
+    -- Add the parameters for the stored procedure here
+    @Id int,
+    @IsPublic bit,
+    @LikesCount int,
+    @RepliedById int,
+    @RepliedDate datetime,
+    @ReplyFeedbackId int,
+    @Response nvarchar(512)
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Update Statement
+    Update [FeedbackReply]
+
+    -- Update Each field
+    Set [IsPublic] = @IsPublic,
+    [LikesCount] = @LikesCount,
+    [RepliedById] = @RepliedById,
+    [RepliedDate] = @RepliedDate,
+    [ReplyFeedbackId] = @ReplyFeedbackId,
+    [Response] = @Response
+
+    -- Update Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: FeedbackReply_Find
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Find an existing FeedbackReply
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('FeedbackReply_Find'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure FeedbackReply_Find
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.FeedbackReply_Find') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure FeedbackReply_Find >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure FeedbackReply_Find >>>'
+
+    End
+
+GO
+
+Create PROCEDURE FeedbackReply_Find
+
+    -- Primary Key Paramater
+    @Id int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [Id],[IsPublic],[LikesCount],[RepliedById],[RepliedDate],[ReplyFeedbackId],[Response]
+
+    -- From tableName
+    From [FeedbackReply]
+
+    -- Find Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: FeedbackReply_Delete
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Delete an existing FeedbackReply
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('FeedbackReply_Delete'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure FeedbackReply_Delete
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.FeedbackReply_Delete') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure FeedbackReply_Delete >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure FeedbackReply_Delete >>>'
+
+    End
+
+GO
+
+Create PROCEDURE FeedbackReply_Delete
+
+    -- Primary Key Paramater
+    @Id int
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Delete Statement
+    Delete From [FeedbackReply]
+
+    -- Delete Matching Record
+    Where [Id] = @Id
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
+-- Procure Name: FeedbackReply_FetchAll
+-- Author:           Data Juggler - Data Tier.Net Procedure Generator
+-- Create Date:   7/9/2023
+-- Description:    Returns all FeedbackReply objects
+-- =========================================================
+
+-- Check if the procedure already exists
+IF EXISTS (select * from syscomments where id = object_id ('FeedbackReply_FetchAll'))
+
+    -- Procedure Does Exist, Drop First
+    BEGIN
+
+        -- Execute Drop
+        Drop Procedure FeedbackReply_FetchAll
+
+        -- Test if procedure was dropped
+        IF OBJECT_ID('dbo.FeedbackReply_FetchAll') IS NOT NULL
+
+            -- Print Line Drop Failed
+            PRINT '<<< Drop Failed On Procedure FeedbackReply_FetchAll >>>'
+
+        Else
+
+            -- Print Line Procedure Dropped
+            PRINT '<<< Drop Suceeded On Procedure FeedbackReply_FetchAll >>>'
+
+    End
+
+GO
+
+Create PROCEDURE FeedbackReply_FetchAll
+
+AS
+BEGIN
+
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    SET NOCOUNT ON
+
+    -- Begin Select Statement
+    Select [Id],[IsPublic],[LikesCount],[RepliedById],[RepliedDate],[ReplyFeedbackId],[Response]
+
+    -- From tableName
+    From [FeedbackReply]
+
+END
+
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+Go
+-- =========================================================
 -- Procure Name: Folder_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new Folder
 -- =========================================================
 
@@ -934,7 +1526,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing Folder
 -- =========================================================
 
@@ -998,7 +1590,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing Folder
 -- =========================================================
 
@@ -1055,7 +1647,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing Folder
 -- =========================================================
 
@@ -1109,7 +1701,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all Folder objects
 -- =========================================================
 
@@ -1160,7 +1752,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new Image
 -- =========================================================
 
@@ -1227,7 +1819,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing Image
 -- =========================================================
 
@@ -1303,7 +1895,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing Image
 -- =========================================================
 
@@ -1360,7 +1952,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing Image
 -- =========================================================
 
@@ -1414,7 +2006,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all Image objects
 -- =========================================================
 
@@ -1465,7 +2057,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new ImageLike
 -- =========================================================
 
@@ -1525,7 +2117,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing ImageLike
 -- =========================================================
 
@@ -1587,7 +2179,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing ImageLike
 -- =========================================================
 
@@ -1644,7 +2236,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing ImageLike
 -- =========================================================
 
@@ -1698,7 +2290,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all ImageLike objects
 -- =========================================================
 
@@ -1749,7 +2341,7 @@ Go
 -- =========================================================
 -- Procure Name: MainGalleryView_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all MainGalleryView objects
 -- =========================================================
 
@@ -1800,7 +2392,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Insert
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Insert a new User
 -- =========================================================
 
@@ -1872,7 +2464,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Update
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Update an existing User
 -- =========================================================
 
@@ -1958,7 +2550,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Find
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing User
 -- =========================================================
 
@@ -2015,7 +2607,7 @@ Go
 -- =========================================================
 -- Procure Name: User_Delete
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Delete an existing User
 -- =========================================================
 
@@ -2069,7 +2661,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FetchAll
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all User objects
 -- =========================================================
 
@@ -2123,7 +2715,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FindByUserIdAndName
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing Folder by
 -- =========================================================
 
@@ -2185,7 +2777,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FindSelectedFolder
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing Folder for the UserId given.
 -- =========================================================
 
@@ -2242,7 +2834,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FindByEmailAddress
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing User for the EmailAddress given.
 -- =========================================================
 
@@ -2299,7 +2891,7 @@ Go
 -- =========================================================
 -- Procure Name: User_FindByUserName
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Find an existing User for the UserName given.
 -- =========================================================
 
@@ -2356,7 +2948,7 @@ Go
 -- =========================================================
 -- Procure Name: ActivityLog_FetchAllForActivityAndUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all ActivityLog objects by
 -- =========================================================
 
@@ -2418,7 +3010,7 @@ Go
 -- =========================================================
 -- Procure Name: Folder_FetchAllForUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all Folder objects for the UserId given.
 -- =========================================================
 
@@ -2476,7 +3068,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_FetchAllForGalleryOwnerIdAndUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all ImageLike objects by
 -- =========================================================
 
@@ -2538,7 +3130,7 @@ Go
 -- =========================================================
 -- Procure Name: ImageLike_FetchAllInMainGalleryForUserId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all ImageLike objects for the UserId given.
 -- =========================================================
 
@@ -2596,7 +3188,7 @@ Go
 -- =========================================================
 -- Procure Name: Image_FetchAllForFolderId
 -- Author:           Data Juggler - Data Tier.Net Procedure Generator
--- Create Date:   6/25/2023
+-- Create Date:   7/9/2023
 -- Description:    Returns all Image objects for the FolderId given.
 -- =========================================================
 

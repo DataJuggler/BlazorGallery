@@ -1,22 +1,21 @@
 ﻿@using BlazorStyled
 @using ObjectLibrary.Enumerations
 
-<Styled @bind-Classname=@ImageStyle>
-    max-height: @ImageHeightStyle;
-    height: @ImageHeightStyle;
+<Styled @bind-Classname=@ImageStyle>    
     width: @ScaledDownWidthStyle;
-    object-fit: cover;
+    max-height: @ImageHeightStyle;
+    height: @ImageHeightStyle;    
     border: none;
     background-color: transparent;
     background-image: url(@ImageRelativePath);
     background-size: 100% 100%;
     position: fixed;
-    left: 24%;
-    top: 2vh;
+    left: 24vw;
+    top: 8vh;
 </Styled>
 <Styled @bind-Classname="@CheckMarkContainerStyle">
     position: fixed;
-    top: 8vh;
+    top: 14vh;
     float: left;
     height: 32px;
     min-height: 32px;

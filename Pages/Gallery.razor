@@ -22,12 +22,12 @@
                 }
                 else
                 {
-                    <ImageViewer Parent="this" Image=@image></ImageViewer>
+                    <ImageViewer LikeButtonEnabled=(HasLoggedInUser) Parent="this" Image=@image></ImageViewer>
                 }
             }
             else
             {
-                <ImageViewer Parent="this" Image=@image></ImageViewer>
+                <ImageViewer LikeButtonEnabled=(HasLoggedInUser) Parent="this" Image=@image></ImageViewer>
             }
         }
     </div>

@@ -10,7 +10,9 @@
     background-color: transparent;
     border: none;
     position: fixed;
-    left: 20.8%;
+    left: 20.8vw;
+    top: 7vh;
+    z-index: 20;
 }
 .backbutton2
 {
@@ -27,10 +29,11 @@
 }
 .backtousershome
 {
-    position: fixed;
-    top: 16vh;
-    left: 4%;    width: 48px;
-    height: 36px;
+    position: absolute;
+    top: 18.8vh;
+    left: 5.8vw;
+    width: 4vw;
+    height: 5.2vh;
     background-image: url('../Images/Folder.png');
     background-size: 100% 100%;
     background-color: transparent;
@@ -43,25 +46,22 @@
 }
 .buttonlink
 {
-  background: none!important;
-  border: none;
-  padding: 0!important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
   color: black;
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer;  
 }
-.cancelbutton
+.buttonlinkblue
 {
-    background-image: url('../Images/CancelButton.png');
-    position: relative;
-    left: 0;
-    top: 0;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;    
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  color: rgb(29, 24, 167);
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
 }
 .centerscreen
 {
@@ -71,9 +71,23 @@
     width: 800px;
     height: 480px;
 }
+.changepasswordcomponent
+{
+    display: block;
+    position: fixed;
+    left: 24%;
+    top: 8vh;
+    width: 60%;
+    height: 48vh;    
+}
+.changepasswordmessage
+{
+    position: absolute;
+    top: 4vh;
+}
 .col 
 {
-  justify-content: flex-start; 
+    justify-content: flex-start;
 }
 .colorgray204
 {  
@@ -83,24 +97,28 @@
 {
     background-image: url('../Images/CopyButton.png');
     background-size: 100% 100%;    
-    width: 20px;
-    height: 20px;
+    width: 1.8vw;
+    height: 3vh;
     cursor: pointer;
     background-color: transparent;
     border: none;
+    position: absolute;
+    bottom: 0vh;
+    left: 0vh;    
 }
 .copybutton2
 {
     background-image: url('../Images/CopyButton.png');
     background-size: 100% 100%;    
-    width: 20px;
-    height: 20px;
+    width: 2vw;
+    height: 3vh;
     cursor: pointer;
     background-color: transparent;
     border: none;
     position: absolute;
-    left: 21.4%;
-    top: 5.4vh;
+    left: 21.4vw;
+    top: 10.4vh;
+    z-index: 20;
 }
 .customfileupload
 {  
@@ -120,10 +138,43 @@
     width: 60%;
     height: 32vh;    
 }
+.feedback 
+{
+    background-image: url('../Images/Feedback.png');
+    position: fixed;
+    z-index: 40;
+    right: 0;
+    top: 8vh;
+    height: 18vh;
+    width: 2.4vw;
+    background-size: 100% 100%;
+}
+.feedbackbuttons
+{
+    position: absolute;
+    right: 8vw;
+    bottom: 4vh;
+}
+.feedbackcomponent
+{
+    position: fixed;
+    top: 16vh;
+    left: 24vw;
+    width: 60vw;
+    height: 52vh;
+    white-space: nowrap;
+}
+.feedbackstatus
+{
+    position: absolute;
+    bottom: -26vh;
+    text-align: center;
+    width: 100%;
+}
 .fixedsidebar
 {
     background-image: url('../Images/SideBarBlack.png');
-    width: 256px;
+    width: 20%;
     height: 100vh;   
     position: fixed;
     top: 0;
@@ -148,13 +199,44 @@
   flex-wrap: wrap;
   margin-left: 8px;
   object-fit: cover;
-  gap: 0px;
+  column-gap: 8px;
+  row-gap: 4px;
+}
+.foldercontainer
+{  
+  padding: 1px;  
+  margin: 1px;
+  display: flex;
+  justify-content:space-between;
+}
+.foldernametext
+{
+    font-size: 14.8px;
+    font-weight: bold;
+    white-space: nowrap;
+    position: absolute;
+    left: 4.8vw;
+    top: 1.2vh;
 }
 .folders
 {
     position: fixed;
     top: 15vh;
     left: 1%;
+}
+.folderstext
+{
+    color: rgb(204, 204, 204);
+    font-weight: bold;
+    font-size: 24px;
+    min-height: 2.2vh;
+    position: absolute;
+    left: 4vw;
+    top: 2vh;
+    vertical-align: bottom;
+    justify-items: baseline;
+    white-space: nowrap;
+    text-align: center;
 }
 .fontbold
 {
@@ -171,6 +253,18 @@
 .fontsize14
 {
     font-size: 14px;    
+}
+.fontsize16
+{
+    font-size: 16px;    
+}
+.fontsize18
+{
+    font-size: 18px;
+}
+.fontsize20
+{
+    font-size: 20px;
 }
 .fontsize24
 {
@@ -191,25 +285,33 @@
 }
 .imagefolder
 {
-    width: 48px;
-    height: 36px;
-    background-image: url('../Images/Folder.png');
+    width: 4vw;
+    height: 5.2vh;
+    background-image: url('../Images/FolderSmall.png');
     background-size: 100% 100%;
     background-color: transparent;
     border: none;
+    position: absolute;
+    left: 3.8vw;
+    top: 0vh;
 }
-.joinbutton
+.joinbuttonscontainer
+{    
+    width: 20vw;
+    text-align: right;
+    position: fixed;
+    top: 56vh;
+    left: 40vw;
+}
+.labeltopleft
 {
-    background-image: url('../Images/JoinButton.png');
-    position: relative;
-    left: 0;
-    top: 0;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;    
+    position: absolute;
+    left: 0vw;
+    top: 0vh;
+    width: 14vw;
+    min-width: 14vw;
+    max-width: 14vw;
+    text-align: right !important;
 }
 .likebutton
 {
@@ -247,23 +349,18 @@
     float: right;
     z-index: 10;
 }
-.loginbutton
-{
-    background-image: url('../Images/LoginButton.png');
-    position: relative;
-    left: 0;
-    top: 0;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;    
+.loginbuttonscontainer
+{    
+    width: 20vw;
+    text-align: right;
+    position: fixed;
+    top: 52.8vh;
+    left: 40vw;
 }
 .logincontainer
 {
     position: absolute;      
-    width: 40%;
+    width: 48vw;
     height: 64vh;
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -285,33 +382,21 @@
 }
 .mainimagefolder
 {
-    position: fixed;
-    top: 9.4vh;
-    left: 4%;    width: 48px;
-    height: 36px;
+    position: absolute;
+    top: 10.8vh;
+    left: 5.8vw;
+    width: 4vw;
+    height: 5.2vh;
     background-image: url('../Images/Folder.png');
     background-size: 100% 100%;
     background-color: transparent;
     border: none;
 }
-.nobutton
-{
-    background-image: url('../Images/NoButton.png');
-    position: relative;
-    left: 0;
-    top: 0px;
-    background-size: 100% 100%;
-    width: 82px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;    
-}
 .progresscontainer
 {
     position: fixed;
-    left: 32%;
-    top: 29.2vh;
+    left: 28%;
+    top: 34vh;
     transform: scale(.8);
     transform-origin: left;
 }
@@ -335,43 +420,27 @@
 {
     background-image: url('../Images/RemoveButton.png');
     background-size: 100% 100%;    
-    width: 16px;
-    height: 16px;
+    width: 1.6vw;
+    height: 2.8vh;
     cursor: pointer;
     background-color: transparent;
     border: none;
-}
-.sendbutton
-{
-    background-image: url('../Images/SendButton.png');
     position: relative;
-    left: 0px;
-    top: 16px;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
+    left: 1.88vw;
+    bottom: 0vh;
+}
+.removebutton2
+{
+    background-image: url('../Images/RemoveButton.png');
+    background-size: 100% 100%;    
+    width: 1.6vw;
+    height: 2.8vh;
     cursor: pointer;
     background-color: transparent;
-    border: none;    
-}
-.signout
-{
-    background-image: url('../Images/SignOutButton.png');
-    position: relative;
-    left: 8px;
-    top: 8px;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;    
-}
-.signupbutton
-{
-    position: relative;
-    left: -6%;
-    top: 8vh;
+    border: none;
+    position: absolute;
+    left: 1.88vw;
+    bottom: 0vh;
 }
 .signupcontrols
 {  
@@ -380,7 +449,13 @@
     font-family: Arial, Verdana;
     color: black;
     margin-top: 2vh;
-    margin-left: 2%;    
+    margin-left: 2%;
+    width: 48vw;
+    height: 24vh;
+    white-space: nowrap;    
+    text-align: left;
+    position: fixed;
+    left: 32vw;
 }
 .signupcontainer
 {  
@@ -393,7 +468,12 @@
     overflow-x: hidden;
     position: fixed;
     top: 20vh;
-    left: 20%;
+    left: 32vw;    
+}
+.smallline
+{
+    height: .64vh;
+    margin-bottom: .64vh;
 }
 .topleft
 {
@@ -409,11 +489,11 @@
 .topright
 {
     position: absolute;
-    top: 1vh;
+    top: .4vh;
     right: 1%;
     float: right;    
     width: 28%;
-    height: 8vh;
+    height: 6vh;
     white-space: nowrap;
 }
 .validationmessage
@@ -427,32 +507,6 @@
     font-size: 24px;
     text-align: center;
     color: firebrick;
-}
-.verifybutton
-{
-    background-image: url('../Images/Verify.png');
-    position: relative;
-    left: 18px;
-    top: 28px;
-    background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;    
-}
-.yesbutton
-{
-    background-image: url('../Images/YesButton.png');
-    position: relative;
-    left: 0;
-    top: 0px;
-    background-size: 100% 100%;
-    width: 82px;
-    height: 32px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;        
 }
 
 input[type=file], /* FF, IE7+, chrome (except button) */

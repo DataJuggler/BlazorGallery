@@ -2,45 +2,55 @@
 @using DataJuggler.UltimateHelper
 @using DataJuggler.Blazor.Components 
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using BlazorStyled
 
 <div class="logincontainer">
-    <div class="signupcontrols">
-        Sign In With Your User Name or Email Address
-        <div class="bigline"></div>
-        <ValidationComponent Name="UserNameComponent"
-            Visible="true" ZIndex="40" Width="80" Column1Width=20 Parent="this" LabelTop=1
-            TextBoxWidth=50 Caption="User Name:" LabelColor="black" IsRequired="false"             
-            MinimumLength="5" LabelWidth=40 HeightUnit="vh" Height=3.2 TextBoxClassName="up1"
-            SetFocusOnFirstRender="true" MaximumLength="20" IsUniqueCallbackRequired="true">
-        </ValidationComponent>
-        <ValidationComponent Name="EmailAddressComponent" Visible="true" ZIndex="40" Width="80"
-            Column1Width=20 Parent="this" Position="relative" Top=2 LabelTop=1
-            TextBoxWidth=50 Caption="Email Address:" LabelColor="black" IsRequired="false"            
-            MinimumLength="5" LabelWidth=40 HeightUnit="vh" Height=3.2 TextBoxClassName="up1"            
-            MaximumLength="80" IsUniqueCallbackRequired="true">
-        </ValidationComponent>
-        <ValidationComponent Name="PasswordComponent" Visible="true" ZIndex="40" Width="80"
-            Column1Width=20 Parent="this" Position="relative" Top=4 LabelTop=1
-            TextBoxWidth=50 Caption="Password:" LabelColor="black"
-            MinimumLength="5" LabelWidth=40 HeightUnit="vh" Height=3.2 TextBoxClassName="up1"
-            MaximumLength="20" PasswordMode="true"
-            IsRequired="true" ValidationMessage="You must enter a password.">
-        </ValidationComponent>
-        <ValidationComponent Name="RememberLoginComponent" Unit="%"
-            Visible="true" ZIndex="40" Width="80" Column1Width=20 Parent="this" 
-            Caption="Remember:" IsRequired="false" MinimumLength="5" HeightUnit="vh" Height=3.2
-            CheckBoxMode=true CheckBoxYPosition=-.48 CheckBoxXPosition=-.32
-            LabelFontSizeUnit="px" LabelColor="black" Position="relative" Top="6" Left="18.8"
-            IsUniqueCallbackRequired="false" ShowCaption=true>
-        </ValidationComponent>       
+    <div class="fontbold textaligncenter">
+        <h3 class="text-nowrap">Sign In With Your User Name or Email Address</h3>
     </div>
-    <div class="right96 down40">
-        <button class="loginbutton" @onclick="LoginButton_Click">
+    <div class="signupcontrols">
+        <div class="bigline"></div>     
+        <ValidationComponent Name="UserNameComponent" Visible="true" ZIndex="40" Unit="vw"
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Caption="User Name:" LabelColor="black" LabelFontSize="16" IsRequired="false"
+            LabelClassName="textalignright down2 right4" MinimumLength="5" SetFocusOnFirstRender="true"
+            HeightUnit="vh" Height=3.4 MaximumLength="20" TextBoxClassName="up1 left2" 
+            Parent="this" MarginBottom="2" IsUniqueCallbackRequired="true" AutoComplete="false">
+        </ValidationComponent>        
+        <ValidationComponent Name="EmailAddressComponent" Visible="true" ZIndex="40" Unit="vw"            
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width            
+            Caption="Email:" LabelColor="black" LabelFontSize="16" IsRequired="false"
+            HeightUnit="vh" Height=3.4 MaximumLength="80" MarginBottom="2"
+            LabelClassName="textalignright  down2 right4" TextBoxClassName="up1 left2" 
+            Parent="this"  IsUniqueCallbackRequired="true">
+        </ValidationComponent>        
+        <ValidationComponent Name="PasswordComponent" Visible="true" ZIndex="40" Unit="vw"
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Parent="this" LabelClassName="textalignright  down2 right4" 
+            Caption="Password:" LabelColor="black" LabelFontSize="16"
+            MinimumLength="8" HeightUnit="vh" Height=3.4 MarginBottom="2"
+            MaximumLength="20" PasswordMode="true" TextBoxClassName="up1 left2"
+            IsRequired="true" ValidationMessage="You must enter a password.">
+        </ValidationComponent>        
+        <ValidationComponent Name="RememberLoginComponent" Unit="vw"
+            Visible="true" ZIndex="40" Width="@ControlWidth" Column1Width=@Column1Width Parent="this" 
+            LabelClassName="textalignright down2 right4" Caption="Remember:" IsRequired="false"
+            HeightUnit="vh"Height=3.4 CheckBoxMode=true CheckBoxYPosition=.4 CheckBoxXPosition=-.6
+            LabelColor="black" LabelFontSize="16" Column2Width="32" MarginBottom="2"
+            IsUniqueCallbackRequired="false" ShowCaption=true>
+        </ValidationComponent>
+    </div>
+    <div class="loginbuttonscontainer">
+        <button class="@LoginButtonStyle" @onclick="LoginButton_Click">
             <span class="up0"></span>
         </button>
-        <button class="cancelbutton" @onclick="Cancel">
+        <button class="@CancelButtonStyle" @onclick="Cancel">
             <span class="up0"></span>
-        </button>
+        </button><br />
+        @if (RequireEmailVerification)
+        {
+            <button class="buttonlinkblue" @onclick=ChangePassword>Forgot Password?</button>
+        }
     </div>
 </div>
 @if (TextHelper.Exists(ValidationMessage))

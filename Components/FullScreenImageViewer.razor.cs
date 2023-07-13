@@ -6,6 +6,7 @@ using ObjectLibrary.BusinessObjects;
 using DataJuggler.Blazor.Components.Interfaces;
 using DataJuggler.Blazor.Components;
 using DataJuggler.BlazorGallery.Pages;
+using DataJuggler.PixelDatabase;
 using Index = DataJuggler.BlazorGallery.Pages.Index;
 using Microsoft.AspNetCore.Components;
 using System.Runtime.Versioning;
@@ -14,6 +15,8 @@ using DataJuggler.BlazorGallery.Shared;
 using ObjectLibrary.Enumerations;
 using Timer = System.Timers.Timer;
 using DataJuggler.UltimateHelper;
+using System.Drawing;
+using Image = ObjectLibrary.BusinessObjects.Image;
 
 #endregion
 
@@ -38,8 +41,7 @@ namespace DataJuggler.BlazorGallery.Components
         private double imageHeight;
         private Timer timer;
         private string checkMarkContainerStyle;
-        private string checkMarkStyle;
-        private const int MaxWidth = 900;
+        private string checkMarkStyle;        
         private IBlazorComponentParent parent;
         #endregion
 
@@ -50,7 +52,7 @@ namespace DataJuggler.BlazorGallery.Components
         public FullScreenImageViewer()
         {
             // Set the ImageHeight default
-            ImageHeight = 600;
+            ImageHeight = 83.333;
 
              // default
             CheckMarkImage = "../Images/Transparent.png";
@@ -421,7 +423,10 @@ namespace DataJuggler.BlazorGallery.Components
             public double ImageHeight
             {
                 get { return imageHeight; }
-                set { imageHeight = value; }
+                set 
+                { 
+                    imageHeight = value;
+                }
             }
             #endregion
             
@@ -435,7 +440,7 @@ namespace DataJuggler.BlazorGallery.Components
                 get
                 {
                     // initial value
-                    string imageHeightStyle = ImageHeight + "px";
+                    string imageHeightStyle = ImageHeight + "vh";
                     
                     // return value
                     return imageHeightStyle;
@@ -559,40 +564,45 @@ namespace DataJuggler.BlazorGallery.Components
             /// <summary>
             /// This read only property returns the value of ScaledDownWidth from the object Image.
             /// </summary>
-            public int ScaledDownWidth
+            public double ScaledDownWidth
             {
                 
                 get
                 {
                     // initial value
-                    int scaledDownWidth = 0;
+                    double scaledDownWidth = 0;
+
+                    // local
+                    double ratio = 0;
                     
                     // if Image exists
-                    if (Image != null)
-                    {  
-                        // set the return value
-                        double width = Image.Width;
-                        double newHeight = 600;
-                        double scaledDownRaw = (1 / (Image.Height / newHeight)) * width;
-                        scaledDownWidth = (int) Math.Round(scaledDownRaw, 0);
-                        double one = 1;
+                    if (HasImage)
+                    {
+                        double zoom = 1920 / ScreenWidth;
 
-                        // if the width is too big
-                        if (scaledDownWidth > MaxWidth)
+                        if (Image.Width == Image.Height)
                         {
-                            // we have to rescale the height first
-                            ImageHeight = one / Image.Width * MaxWidth * Image.Height;
-
-                            // hopefully never agains, just a safeguard
-                            if (ImageHeight == 0)
-                            {
-                                // better than not visible (probably)
-                                ImageHeight = 600;
-                            }
-
-                            // Now set the ScaledDownWidth
-                            scaledDownWidth = MaxWidth;
+                            ImageHeight = 83.333;
+                            scaledDownWidth = 46.875;
                         }
+                        else if (Image.Height > Image.Width)
+                        {
+                            // Determine the ratio
+                            ratio = (double) 83.333 / (double) Image.Height; 
+
+                            ImageHeight = 83.333;
+                            scaledDownWidth = Math.Round(Image.Width * ratio, 2);
+                        }
+                        else
+                        {
+                            // width is wider than height
+
+                            // Determine the ratio
+                            ratio = (double) 72 / (double) Image.Width;
+
+                            scaledDownWidth = 72;
+                            ImageHeight = Math.Round((Image.Height / ScreenHeight * ScreenWidth) * ratio, 2);
+                        }                        
                     }
                     
                     // return value
@@ -611,10 +621,35 @@ namespace DataJuggler.BlazorGallery.Components
                 get
                 {
                     // initial value
-                    string scaledDownWidthStyle = ScaledDownWidth + "px";
+                    string scaledDownWidthStyle = ScaledDownWidth + "vw";
                     
                     // return value
                     return scaledDownWidthStyle;
+                }
+            }
+            #endregion
+            
+            #region ScreenHeight
+            /// <summary>
+            /// This read only property returns the value of ScreenHeight from the object ParentMainLayout.
+            /// </summary>
+            public double ScreenHeight
+            {
+                
+                get
+                {
+                    // initial value
+                    double screenHeight = 0;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        screenHeight = ParentMainLayout.ScreenHeight;
+                    }
+                    
+                    // return value
+                    return screenHeight;
                 }
             }
             #endregion
@@ -640,6 +675,31 @@ namespace DataJuggler.BlazorGallery.Components
                     
                     // return value
                     return screenType;
+                }
+            }
+            #endregion
+            
+            #region ScreenWidth
+            /// <summary>
+            /// This read only property returns the value of ScreenWidth from the object ParentMainLayout.
+            /// </summary>
+            public double ScreenWidth
+            {
+                
+                get
+                {
+                    // initial value
+                    double screenWidth = 0;
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        screenWidth = ParentMainLayout.ScreenWidth;
+                    }
+                    
+                    // return value
+                    return screenWidth;
                 }
             }
             #endregion

@@ -159,6 +159,80 @@ namespace DataGateway
             }
             #endregion
         
+            #region DeleteFeedback(int id, Feedback tempFeedback = null)
+            /// <summary>
+            /// This method is used to delete Feedback objects.
+            /// </summary>
+            /// <param name="id">Delete the Feedback with this id</param>
+            /// <param name="tempFeedback">Pass in a tempFeedback to perform a custom delete.</param>
+            public bool DeleteFeedback(int id, Feedback tempFeedback = null)
+            {
+                // initial value
+                bool deleted = false;
+        
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempFeedback does not exist
+                    if (tempFeedback == null)
+                    {
+                        // create a temp Feedback
+                        tempFeedback = new Feedback();
+                    }
+        
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempFeedback.UpdateIdentity(id);
+                    }
+        
+                    // perform the delete
+                    deleted = this.AppController.ControllerManager.FeedbackController.Delete(tempFeedback);
+                }
+        
+                // return value
+                return deleted;
+            }
+            #endregion
+        
+            #region DeleteFeedbackReply(int id, FeedbackReply tempFeedbackReply = null)
+            /// <summary>
+            /// This method is used to delete FeedbackReply objects.
+            /// </summary>
+            /// <param name="id">Delete the FeedbackReply with this id</param>
+            /// <param name="tempFeedbackReply">Pass in a tempFeedbackReply to perform a custom delete.</param>
+            public bool DeleteFeedbackReply(int id, FeedbackReply tempFeedbackReply = null)
+            {
+                // initial value
+                bool deleted = false;
+        
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempFeedbackReply does not exist
+                    if (tempFeedbackReply == null)
+                    {
+                        // create a temp FeedbackReply
+                        tempFeedbackReply = new FeedbackReply();
+                    }
+        
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempFeedbackReply.UpdateIdentity(id);
+                    }
+        
+                    // perform the delete
+                    deleted = this.AppController.ControllerManager.FeedbackReplyController.Delete(tempFeedbackReply);
+                }
+        
+                // return value
+                return deleted;
+            }
+            #endregion
+        
             #region DeleteFolder(int id, Folder tempFolder = null)
             /// <summary>
             /// This method is used to delete Folder objects.
@@ -487,6 +561,80 @@ namespace DataGateway
 
                 // return value
                 return errorLog;
+            }
+            #endregion
+
+            #region FindFeedback(int id, Feedback tempFeedback = null)
+            /// <summary>
+            /// This method is used to find 'Feedback' objects.
+            /// </summary>
+            /// <param name="id">Find the Feedback with this id</param>
+            /// <param name="tempFeedback">Pass in a tempFeedback to perform a custom find.</param>
+            public Feedback FindFeedback(int id, Feedback tempFeedback = null)
+            {
+                // initial value
+                Feedback feedback = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempFeedback does not exist
+                    if (tempFeedback == null)
+                    {
+                        // create a temp Feedback
+                        tempFeedback = new Feedback();
+                    }
+
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempFeedback.UpdateIdentity(id);
+                    }
+
+                    // perform the find
+                    feedback = this.AppController.ControllerManager.FeedbackController.Find(tempFeedback);
+                }
+
+                // return value
+                return feedback;
+            }
+            #endregion
+
+            #region FindFeedbackReply(int id, FeedbackReply tempFeedbackReply = null)
+            /// <summary>
+            /// This method is used to find 'FeedbackReply' objects.
+            /// </summary>
+            /// <param name="id">Find the FeedbackReply with this id</param>
+            /// <param name="tempFeedbackReply">Pass in a tempFeedbackReply to perform a custom find.</param>
+            public FeedbackReply FindFeedbackReply(int id, FeedbackReply tempFeedbackReply = null)
+            {
+                // initial value
+                FeedbackReply feedbackReply = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // if the tempFeedbackReply does not exist
+                    if (tempFeedbackReply == null)
+                    {
+                        // create a temp FeedbackReply
+                        tempFeedbackReply = new FeedbackReply();
+                    }
+
+                    // if the id is set
+                    if (id > 0)
+                    {
+                        // set the primary key
+                        tempFeedbackReply.UpdateIdentity(id);
+                    }
+
+                    // perform the find
+                    feedbackReply = this.AppController.ControllerManager.FeedbackReplyController.Find(tempFeedbackReply);
+                }
+
+                // return value
+                return feedbackReply;
             }
             #endregion
 
@@ -897,6 +1045,48 @@ namespace DataGateway
             }
             #endregion
 
+            #region LoadFeedbackReplys(FeedbackReply tempFeedbackReply = null)
+            /// <summary>
+            /// This method loads a collection of 'FeedbackReply' objects.
+            /// </summary>
+            public List<FeedbackReply> LoadFeedbackReplys(FeedbackReply tempFeedbackReply = null)
+            {
+                // initial value
+                List<FeedbackReply> feedbackReplys = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    feedbackReplys = this.AppController.ControllerManager.FeedbackReplyController.FetchAll(tempFeedbackReply);
+                }
+
+                // return value
+                return feedbackReplys;
+            }
+            #endregion
+
+            #region LoadFeedbacks(Feedback tempFeedback = null)
+            /// <summary>
+            /// This method loads a collection of 'Feedback' objects.
+            /// </summary>
+            public List<Feedback> LoadFeedbacks(Feedback tempFeedback = null)
+            {
+                // initial value
+                List<Feedback> feedbacks = null;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the load
+                    feedbacks = this.AppController.ControllerManager.FeedbackController.FetchAll(tempFeedback);
+                }
+
+                // return value
+                return feedbacks;
+            }
+            #endregion
+
             #region LoadFolders(Folder tempFolder = null)
             /// <summary>
             /// This method loads a collection of 'Folder' objects.
@@ -1191,6 +1381,50 @@ namespace DataGateway
                 {
                     // perform the save
                     saved = this.AppController.ControllerManager.ErrorLogController.Save(ref errorLog);
+                }
+
+                // return value
+                return saved;
+            }
+            #endregion
+
+            #region SaveFeedback(ref Feedback feedback)
+            /// <summary>
+            /// This method is used to save 'Feedback' objects.
+            /// </summary>
+            /// <param name="feedback">The Feedback to save.</param>
+            public bool SaveFeedback(ref Feedback feedback)
+            {
+                // initial value
+                bool saved = false;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the save
+                    saved = this.AppController.ControllerManager.FeedbackController.Save(ref feedback);
+                }
+
+                // return value
+                return saved;
+            }
+            #endregion
+
+            #region SaveFeedbackReply(ref FeedbackReply feedbackReply)
+            /// <summary>
+            /// This method is used to save 'FeedbackReply' objects.
+            /// </summary>
+            /// <param name="feedbackReply">The FeedbackReply to save.</param>
+            public bool SaveFeedbackReply(ref FeedbackReply feedbackReply)
+            {
+                // initial value
+                bool saved = false;
+
+                // if the AppController exists
+                if (this.HasAppController)
+                {
+                    // perform the save
+                    saved = this.AppController.ControllerManager.FeedbackReplyController.Save(ref feedbackReply);
                 }
 
                 // return value

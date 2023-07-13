@@ -182,19 +182,19 @@ namespace DataJuggler.BlazorGallery.Components
             /// <summary>
             /// This read only property returns the value of ConfirmationTop from the object ParentMainLayout.
             /// </summary>
-            public int ConfirmationTop
+            public double ConfirmationTop
             {
                 
                 get
                 {
                     // initial value
-                    int confirmationTop = 0;
+                    double confirmationTop = 0;
                     
                     // if ParentMainLayout exists
                     if (ParentMainLayout != null)
                     {
                         // set the return value
-                        confirmationTop = ParentMainLayout.Top + 36;
+                        confirmationTop = ParentMainLayout.Top + 8;
                     }
                     
                     // return value
@@ -213,7 +213,7 @@ namespace DataJuggler.BlazorGallery.Components
                 get
                 {
                     // initial value
-                    string confirmationTopStyle = ConfirmationTop + "px";
+                    string confirmationTopStyle = ConfirmationTop + "vh";
                     
                     // return value
                     return confirmationTopStyle;
@@ -277,6 +277,31 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region NoButtonStyle
+            /// <summary>
+            /// This read only property returns the value of NoButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string NoButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string noButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        noButtonStyle = ParentMainLayout.NoButtonStyle;
+                    }
+                    
+                    // return value
+                    return noButtonStyle;
+                }
+            }
+            #endregion
+            
             #region Parent
             /// <summary>
             /// This property gets or sets the value for 'Parent'.
@@ -291,7 +316,7 @@ namespace DataJuggler.BlazorGallery.Components
                     parent = value;
 
                     // if the parent exists
-                    if (parent != null)
+                    if (HasParent)
                     {
                         // register with the parent
                         parent.Register(this);
@@ -357,6 +382,31 @@ namespace DataJuggler.BlazorGallery.Components
                     {
                         DisplayStyle = "none";
                     }
+                }
+            }
+            #endregion
+            
+            #region YesButtonStyle
+            /// <summary>
+            /// This read only property returns the value of YesButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string YesButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string yesButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        yesButtonStyle = ParentMainLayout.YesButtonStyle;
+                    }
+                    
+                    // return value
+                    return yesButtonStyle;
                 }
             }
             #endregion

@@ -6,40 +6,50 @@
     <div class="signupcontrols">
         Sign Up For Free
         <div class="bigline"></div>
-        <ValidationComponent Name="UserNameComponent" Parent=this 
-            Caption="User Name:" IsRequired="true" MinimumLength="5" 
-            Unit="%" Width=30 LabelWidth=10 Column2Width="30"  Position="relative" Top=0
-            MaximumLength="20" IsUniqueCallbackRequired="true"
-            LabelColor="Black" TextBoxClassName="Up4" LabelClassName="down8"
-            ValidationMessage="User Name Must Be Between 5 And 20 Characters">
-        </ValidationComponent> 
-        <ValidationComponent Name="NameComponent" Parent=this LabelColor="Black" LabelClassName="down7"
-            Unit="%" Width=30 LabelWidth=10 Column2Width="30"Position="relative" Top=8
-            Caption="Name:" IsRequired="false" MaximumLength="50" TextBoxClassName="up4"
-            IsUniqueCallbackRequired="false">
+        <ValidationComponent Name="UserNameComponent" Visible="true" ZIndex="40" Unit="vw"
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Caption="User Name:" LabelColor="black" LabelFontSize="16" IsRequired="true"
+            LabelClassName="textalignright down2 right4" MinimumLength="5" SetFocusOnFirstRender="true"
+            HeightUnit="vh" Height=3.4 MaximumLength="20" TextBoxClassName="up1 left2" 
+            Parent="this" MarginBottom="2" IsUniqueCallbackRequired="true"
+            ValidationMessage="User Name must be between 5 and 20 characters">
+        </ValidationComponent>        
+       <ValidationComponent Name="NameComponent" Visible="true" ZIndex="40" Unit="vw"            
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Caption="Name:" LabelColor="black" LabelFontSize="16" IsRequired="true"
+            HeightUnit="vh" Height=3.4 MaximumLength="80" MarginBottom="2"
+            LabelClassName="textalignright  down2 right4" TextBoxClassName="up1 left2"            
+            Parent="this"  IsUniqueCallbackRequired="false"                             
+            ValidationMessage="User Name must be between 5 and 20 characters">
+        </ValidationComponent>        
+        <ValidationComponent Name="EmailAddressComponent" Visible="true" ZIndex="40" Unit="vw"
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Caption="Email:" LabelColor="black" LabelFontSize="16" IsRequired="false"
+            HeightUnit="vh" Height=3.4 MaximumLength="80" MarginBottom="2"
+            LabelClassName="textalignright  down2 right4" TextBoxClassName="up1 left2"            
+            Parent="this"  IsUniqueCallbackRequired="true">
+        </ValidationComponent>        
+        <ValidationComponent Name="PasswordComponent" Visible="true" ZIndex="40" Unit="vw"
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Parent="this" LabelClassName="textalignright  down2 right4" 
+            Caption="Password:" LabelColor="black" LabelFontSize="16"
+            MinimumLength="8" HeightUnit="vh" Height=3.4 MarginBottom="2"
+            MaximumLength="20" PasswordMode="true" TextBoxClassName="up1 left2"
+            IsRequired="true" ValidationMessage="You must enter a password.">
         </ValidationComponent>
-        <ValidationComponent Name="EmailAddressComponent" Parent=this TextBoxClassName="up4" LabelClassName="down6"
-            Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=16
-            LabelColor="Black" IsUniqueCallbackRequired="true" Caption="Email Address:"
-            MaximumLength="80" IsRequired="true" ValidationMessage="You must enter a valid email address">
-        </ValidationComponent>
-        <ValidationComponent Name="PasswordComponent" Parent=this LabelColor="Black" LabelClassName="down5"
-            Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=24
-            Caption="Password:" IsRequired="true" MaximumLength="20" TextBoxClassName="up4"
-            MinimumLength="8" IsUniqueCallbackRequired="false"
-            PasswordMode="true" ValidationMessage="You must enter a password.">
-        </ValidationComponent>
-        <ValidationComponent Name="ConfirmPasswordComponent" Parent=this LabelColor="Black" LabelClassName="down4"
-            Caption="Confirm Password:" IsRequired="true" MaximumLength="20"
-            Unit="%" Width=30 LabelWidth=10 Column2Width="30" Position="relative" Top=32
-            MinimumLength="8" IsUniqueCallbackRequired="false" TextBoxClassName="up4"
-            PasswordMode="true" ValidationMessage="You must enter a confirm password.">
-        </ValidationComponent>
+        <ValidationComponent Name="ConfirmPasswordComponent" Visible="true" ZIndex="40" Unit="vw"
+            Width="@ControlWidth" Column1Width=@Column1Width TextBoxWidth=@Column2Width
+            Parent="this" LabelClassName="textalignright  down2 right4" 
+            Caption="Password:" LabelColor="black" LabelFontSize="16"
+            MinimumLength="8" HeightUnit="vh" Height=3.4 MarginBottom="2"
+            MaximumLength="20" PasswordMode="true" TextBoxClassName="up1 left2"
+            IsRequired="true" ValidationMessage="You must enter the confirm password.">
+        </ValidationComponent>        
     </div>
-    <div class="right280 down40">
-        <button class="joinbutton" @onclick="SignUp">           
+    <div class="joinbuttonscontainer">
+        <button class="@JoinButtonStyle" @onclick="SignUp">           
         </button>
-        <button class="cancelbutton" @onclick="Cancel">           
+        <button class="@CancelButtonStyle" @onclick="Cancel">           
         </button>
     </div>
     

@@ -38,7 +38,7 @@ in the connection string from step 4.
 make up a string for its value. This keycode is used to create password hashes 
 when an account is created by a user.
 7. Create a system level environment variable named BlazorGalleryURL
-and set its value to https://localhost:44330 or the domain name if you are publishing.
+and set its value to https://localhost:44330 or your domain name if you are publishing.
 8. Go to https://github.com/DataJuggler/BlazorGallery/ and leave a star
 9. Go to https://youtube.com/DataJuggler and subscribe. 
 10. Tell a developer you know how easy Blazor Gallery makes it to create a Blazor SQL
@@ -49,7 +49,12 @@ Server image galleries.
 
 Everything should work if you followed the above steps.
 
-# News
+# Newss
+
+1.5.6
+7.12.2023: Blazor Gallery now supports multiple file uploads. There are also many fixes in this version, mainly fixing
+the way the app appears at 100% zoom in a browser. Prior to 1.4.6, I tested only at 150% zoom, which is what I use
+and I realzied this didn't look right for 100% zoom (normal vision) people. Sorry.
 
 1.4.6
 6.26.2023: I fixed a bug where the ImageViewer component was defaulting to LikeButtonEnabled in the

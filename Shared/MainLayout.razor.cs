@@ -18,6 +18,8 @@ using ObjectLibrary.Enumerations;
 using System.Runtime.Versioning;
 using ApplicationLogicComponent.Connection;
 using Timer = System.Timers.Timer;
+using BlazorPro.BlazorSize;
+using Microsoft.AspNetCore.Components;
 
 #endregion
 
@@ -44,17 +46,19 @@ namespace DataJuggler.BlazorGallery.Shared
         private bool renameFolderMode;
         private Folder folderBeingRenamed;
         private FileUpload fileUpload;
-        private ValidationComponent newFolderNameComponent;
-        private ValidationComponent renameFolderComponent;
-        private int top;
+        private ValidationComponent newFolderNameComponent;        
+        private double top;
         private bool forceReload;        
         private Admin admin;
         private ConfirmationComponent confirmationComponent;
         private bool showConfirmation;
         private int folderToDeleteId; 
-        private ScreenTypeEnum screenType;        
+        private ScreenTypeEnum screenType;
+        private ScreenTypeEnum previousScreenType;
         private Sprite sprite;
         private bool initialized;
+        private string saveButtonStyle;
+        private string saveButtonDisabledStyle;
         private Login loginComponent;  
         private string validationMessage;
         private string userUrl;
@@ -69,13 +73,25 @@ namespace DataJuggler.BlazorGallery.Shared
         private string addButtonStyle;
         private double addButtonTop;
         private string newFolderStyle;
-        private string newUserEmailAddress;
+        private BrowserWindowSize browser;
+        private string newUserEmailAddress;       
         private const int AdminId = 1;
-        public const int FolderHeight = 51;
-        private const int UploadTopBase = 148;
+        public const int FolderHeight = 7;
+        private bool isSmallMedia;
+        private double screenWidth;
+        private double screenHeight;
+        private const double UploadTopBase = 15.6;
         public const int UploadLimit = 20480000;
+        private string loginButtonStyle;
+        private string joinButtonStyle;
+        private string cancelButtonStyle;
+        private string noButtonStyle;
+        private string verifyButtonStyle;
+        private string yesButtonStyle;
+        private string signOutButtonStyle;
+        private string sendButtonStyle;
         public const string FileTooLargeMessage = "The file must be 20 megs or less.";      
-        public const int FolderTop = 140;         
+        public const int FolderTop = 14;       
         #endregion
 
         #region Constructor
@@ -159,10 +175,10 @@ namespace DataJuggler.BlazorGallery.Shared
                     int reverseButtonNumber = Folders.Count - buttonNumber;
 
                     // Set the top
-                    CheckMarkTop = buttonNumber * FolderHeight + 60 - (Folders.Count + buttonNumber);
+                    CheckMarkTop = 15.6 + (buttonNumber * FolderHeight);
 
                     // set the top, which sets the Upload button top
-                    Top = UploadTopBase + (Folders.Count * FolderHeight);
+                    Top = UploadTopBase + ((Folders.Count + 1) * FolderHeight);
 
                     string root = EnvironmentVariableHelper.GetEnvironmentVariableValue("BlazorGalleryURL", EnvironmentVariableTarget.Machine);
                     string gallery = root + "/Gallery/" + LoggedInUser.UserName + "/" + folder.Name.Replace(" ", "%20");
@@ -320,6 +336,10 @@ namespace DataJuggler.BlazorGallery.Shared
                                 // Select this folder so it displays properly (red)
                                 folder.Selected = true;
                             }
+                            else
+                            {
+                                folder.Selected = false;
+                            }
                         }
                     }
 
@@ -332,8 +352,8 @@ namespace DataJuggler.BlazorGallery.Shared
                     // if there is a LoggedInUser and the LoggedInUser is the owner of this Folder and the LoggedInUser is not in ViewOnlyMode.
                     if ((HasLoggedInUser) && (LoggedInUser.Id == SelectedFolder.UserId) && (!LoggedInUser.ViewOnlyMode))
                     {
-                        // if saved
-                        bool saved = await FolderService.SaveFolder(ref selectedFolder);
+                        // perform the file save
+                        await FolderService.SaveFolder(ref selectedFolder);
 
                         // The GalleryOwner is also the LoggedInUser
                         LoggedInUser.ViewingGalleryOwner = LoggedInUser;
@@ -346,7 +366,12 @@ namespace DataJuggler.BlazorGallery.Shared
                         // Set the Url (Display Purposes only)
                         url = "/Gallery/" + LoggedInUser.UserName + "/" + SelectedFolder.Name;
                     }
-
+                    else if (HasGalleryOwner)
+                    {
+                        // Set the Url (Display Purposes only)
+                        url = "/Gallery/" + GalleryOwner.UserName + "/" + SelectedFolder.Name;
+                    }
+                    
                     // Unselect all other folders
                     UnselectFolders(folderId);
 
@@ -381,6 +406,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
 
+            #region GiveFeedback()
+            /// <summary>
+            /// Give Feedback
+            /// </summary>
+            public void GiveFeedback()
+            {
+                // Give feedback
+                SetupScreen(ScreenTypeEnum.Feedback, "", false);
+            }
+            #endregion
+            
             #region Join()
             /// <summary>
             /// Join
@@ -511,13 +547,15 @@ namespace DataJuggler.BlazorGallery.Shared
             /// <returns></returns>
             protected async override Task OnAfterRenderAsync(bool firstRender)
             {
+                if (firstRender)
+                {
+                    // Add the Onresized event to listen for
+                    Listener.OnResized += WindowResized;
+                }
+
                  // if ther is not a logged in user
                 if (!HasLoggedInUser && firstRender)
                 {
-                    // locals
-                    string emailAddress = "";
-                    string storedPasswordHash = "";
-
                     try
                     {
                         // get the values from local storage if present
@@ -536,10 +574,10 @@ namespace DataJuggler.BlazorGallery.Shared
                             if (TextHelper.Exists(email.Value, hash.Value))
                             {
                                 // set the value for email
-                                emailAddress = email.Value;
+                                string emailAddress = email.Value;
 
                                 // get the storedPasswordHash
-                                storedPasswordHash = hash.Value;
+                                string storedPasswordHash = hash.Value;
 
                                 // Attempt to find this user
                                 User user = await UserService.FindUserByEmailAddress(emailAddress);
@@ -685,17 +723,17 @@ namespace DataJuggler.BlazorGallery.Shared
                         if (ScreenType == ScreenTypeEnum.Index)
                         {
                             // Set the Top                        
-                            Top = UploadTopBase + (Folders.Count * FolderHeight);
-
-                            // Set the Add Button Top
-                            AddButtonTop = Top - 16;
+                            Top = UploadTopBase + ((Folders.Count + 1) * FolderHeight);
 
                             // if the value for AddFolderMode is true
                             if (AddFolderMode)
                             {
                                 // Need to add 1 more folder height to not be in the way of the textbox
-                                Top = Top + FolderHeight;
+                                Top += FolderHeight;
                             }
+
+                            // Set the Add Button Top
+                            AddButtonTop = Top;
                         }
                    }
                 }
@@ -768,12 +806,12 @@ namespace DataJuggler.BlazorGallery.Shared
                                 if (ListHelper.HasXOrMoreItems(words, 3))
                                 {   
                                     // Set the FolderName
-                                    folderName = words[2].Text;
+                                    folderName = words[2].Text.Replace("%20", "");
                                 }
                                 else
                                 {
                                     // Set the HomeUrl
-                                    UserUrl = "/Gallery" + "/" + LoggedInUser;
+                                    UserUrl = "/Gallery" + "/" + userName;
                                 }
                                 
                                 // if we are opening a Gallery
@@ -785,28 +823,23 @@ namespace DataJuggler.BlazorGallery.Shared
                                     // If the user object exists
                                     if (NullHelper.Exists(user))
                                     {
-                                        
-
-                                        // Set the ScreenType
-                                        ScreenType = ScreenTypeEnum.Index;
-
                                         // Find the SelectedFolde
                                         SelectedFolder = await FolderService.FindFolderByUserIdAndFolderName(user.Id, folderName);
 
                                         // if the value for HasSelectedFolder is true
                                         if (HasSelectedFolder)
                                         {
+                                            // Set the GalleryOwner
+                                            GalleryOwner = user;
+
                                             // Unselect all other folders for this user (not saved)
                                             UnselectFolders(SelectedFolder.Id);
 
                                             // Select this folder
                                             FolderSelected(SelectedFolder.Id);
 
-                                            // Set to true
-                                            ForceReload = true;
-
-                                            // Update again
-                                            Refresh();
+                                             // Set the ScreenType
+                                            SetupScreen(ScreenTypeEnum.ViewingGallery);
                                         }
                                     }
                                 }
@@ -875,28 +908,32 @@ namespace DataJuggler.BlazorGallery.Shared
                             activityLog.UserId = LoggedInUserId;
 
                             // perform the save
-                            saved = await ActivityLogService.SaveActivityLog(ref activityLog);
+                            await ActivityLogService.SaveActivityLog(ref activityLog);
 
                             // set the storage used
                             LoggedInUser.StorageUsed += image.FileSize;
                             
                             // Save the logged in user
-                            saved = await UserService.SaveUser(ref loggedInUser);
+                            await UserService.SaveUser(ref loggedInUser);
 
                             // Load the imagess
                             SelectedFolder.Images = await ImageService.GetImageListForFolder(SelectedFolder.Id);
 
-                            // update the UI
-                            Refresh();
+                            // need to sure in single files, this is true and in a batch, handle this being set to true for the last file.
+                            if (file.LastFileInBatch)
+                            {
+                                // update the UI
+                                Refresh();
+
+                                // if the value for HasFileUpload is true
+                                if (HasFileUpload)
+                                {
+                                    // Reset so the button shows again
+                                    FileUpload.Reset();
+                                }
+                            }
                         }
                    }
-
-                    // if the value for HasFileUpload is true
-                    if (HasFileUpload)
-                    {
-                        // Reset so the button shows again
-                        FileUpload.Reset();
-                    }
                 }
                 else
                 {
@@ -1027,7 +1064,7 @@ namespace DataJuggler.BlazorGallery.Shared
                                             if (removed)
                                             {
                                                 // remove the images from the database and file system
-                                                removed = await ImageService.RemoveImagesForFolder(folder.Id);
+                                                await ImageService.RemoveImagesForFolder(folder.Id);
 
                                                 // Update the UI
                                                 ForceReload = true;
@@ -1093,8 +1130,12 @@ namespace DataJuggler.BlazorGallery.Shared
                         // no longer editing
                         if (HasFolderBeingRenamed)
                         {
-                            // Set the new name
-                            FolderBeingRenamed.Name = RenameFolderComponent.Text;
+                            // if the message has parameters
+                            if (message.HasParameters)
+                            {
+                                // Set the new name
+                                FolderBeingRenamed.Name = message.Parameters[0].Value.ToString();
+                            }
 
                             // no longer being renamed
                             RenameFolderMode = false;
@@ -1196,15 +1237,7 @@ namespace DataJuggler.BlazorGallery.Shared
 
                         // Set Focus
                         NewFolderNameComponent.SetFocus();
-                    }
-                    else if (component.Name == "RenameFolderTextBox")
-                    {
-                        // set the RenameFolderComponent
-                        RenameFolderComponent = component as ValidationComponent;
-
-                        // Set Focus
-                        RenameFolderComponent.SetFocus();
-                    }
+                    }                    
                 }
                 else if (component is FileUpload)
                 {
@@ -1299,6 +1332,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region RestoreScreenType()
+            /// <summary>
+            /// Restore Screen Type
+            /// </summary>
+            public void RestoreScreenType()
+            {
+                // Setup the screen
+                SetupScreen(PreviousScreenType, "", false);
+            }
+            #endregion
+            
             #region SelectNextImage()
             /// <summary>
             /// Select Next Image
@@ -1371,12 +1415,20 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
-            #region SetupScreen(ScreenTypeEnum screenType, string emailAddress = "")
+            #region SetupScreen(ScreenTypeEnum screenType, string emailAddress = "", bool storePrevious = true)
             /// <summary>
             /// This method Setup Screen
             /// </summary>
-            public void SetupScreen(ScreenTypeEnum screenType, string emailAddress = "")
+            public void SetupScreen(ScreenTypeEnum screenType, string emailAddress = "", bool storePrevious = true)
             {
+                // if storePrevious is true
+                if (storePrevious)
+                {
+                    // Store this, so in case of a cancel, this can be put back to where the user was.
+                    // Example clicking Feedback, then cancelling should go back to where the user was.
+                    PreviousScreenType = screenType;
+                }
+
                 // set the ScreenType
                 ScreenType = screenType;
 
@@ -1472,6 +1524,11 @@ namespace DataJuggler.BlazorGallery.Shared
                         // Refresh
                         Refresh();
                     }
+                    else if (ScreenType == ScreenTypeEnum.ChangePasswordMode)
+                    {
+                        // Refresh
+                        Refresh();
+                    }
                 }
 
                 // Update the UI
@@ -1556,11 +1613,32 @@ namespace DataJuggler.BlazorGallery.Shared
                                 Folder clone = tempFolder.Clone();
 
                                 // save this folder
-                                bool saved = await FolderService.SaveFolder(ref clone);
+                                await FolderService.SaveFolder(ref clone);
                             }
                         }
                     }
                 }
+            }
+            #endregion
+
+            #region WindowResized(object _, BrowserWindowSize window)
+            /// <summary>
+            /// event is fired when Window Resized
+            /// </summary>
+            private async void WindowResized(object _, BrowserWindowSize window)
+            {
+                // Get the browsers's width / height
+                Browser = window;
+                
+                // Check a media query to see if it was matched. We can do this at any time, but it's best to check on each resize
+                IsSmallMedia = await Listener.MatchMedia(Breakpoints.SmallDown);
+
+                // set the screensize properties
+                ScreenWidth = Browser.Width;
+                ScreenHeight = Browser.Height;
+                
+                // We're outside of the component's lifecycle, be sure to let it know it has to re-render.
+                StateHasChanged();
             }
             #endregion
             
@@ -1600,7 +1678,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 get
                 {
                     // initial value
-                    string addButtonTopStyle = AddButtonTop + "px";
+                    string addButtonTopStyle = AddButtonTop + "vh";
                     
                     // return value
                     return addButtonTopStyle;
@@ -1638,6 +1716,127 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return blueButton; }
                 set { blueButton = value; }
+            }
+            #endregion
+            
+            #region Browser
+            /// <summary>
+            /// This property gets or sets the value for 'Browser'.
+            /// </summary>
+            public BrowserWindowSize Browser
+            {
+                get { return browser; }
+                set { browser = value; }
+            }
+            #endregion
+
+            #region ButtonHeight
+            /// <summary>
+            /// This read only property returns the value of ButtonHeight
+            /// </summary>
+            public double ButtonHeight
+            {
+                
+                get
+                {
+                    // initial value
+                    double buttonHeight = 3.7; // typical
+
+                    if (ScreenHeight > 0)
+                    {
+                        // two digits is all that is needed
+                        buttonHeight = Math.Round(100 / ScreenHeight * 40, 2);
+
+                        // if the buttonheight is small = 1.0 zoom to 1.25 zoom for desktops, the only thing that matters (to me).
+                        if (buttonHeight < 6.19)
+                        {
+                            // minimum size until about 1.5 zoom
+                            buttonHeight = 6.19;
+                        }
+                    }
+
+                    // return value
+                    return buttonHeight;
+                }
+            }
+            #endregion
+
+            #region ButtonHeightStyle
+            /// <summary>
+            /// This read only property returns the value of ButtonHeight + "vh"
+            /// </summary>
+            public string ButtonHeightStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string buttonHeightStyle = ButtonHeight + "vh";
+                    
+                    // return value
+                    return buttonHeightStyle;
+                }
+            }
+            #endregion
+
+            #region ButtonWidth
+            /// <summary>
+            /// This read only property returns the value of ButtonWidth
+            /// </summary>
+            public double ButtonWidth
+            {
+                
+                get
+                {
+                    // initial value
+                    double buttonWidth = 9.375;
+                    
+                    // if the ScreenWidth has been set
+                    if (ScreenWidth > 0)
+                    {
+                        // set the value now that ScreenWidth is set - two digits is all that is needed
+                        buttonWidth = Math.Round((100 / ScreenWidth * 120), 2);
+
+                        // keep the button the same size until > 1.5 zoom
+                        if (buttonWidth < 9.375)
+                        {
+                            // keep the button the same size until > 1.5 zoom
+                            buttonWidth = 9.375;
+                        }
+                    }
+                    
+                    // return value
+                    return buttonWidth;
+                }
+            }
+            #endregion
+
+            #region ButtonWidthStyle
+            /// <summary>
+            /// This read only property returns the ButtonWidth + "vw";
+            /// </summary>
+            public string ButtonWidthStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string loginButtonWidthStyle = ButtonWidth + "vw";
+                    
+                    // return value
+                    return loginButtonWidthStyle;
+                }
+            }
+            #endregion
+            
+            #region CancelButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'CancelButtonStyle'.
+            /// </summary>
+            public string CancelButtonStyle
+            {
+                get { return cancelButtonStyle; }
+                set { cancelButtonStyle = value; }
             }
             #endregion
             
@@ -1744,7 +1943,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 get
                 {
                     // initial value
-                    string checkMarkTopStyle = CheckMarkTop + "px";
+                    string checkMarkTopStyle = CheckMarkTop + "vh";
                     
                     // return value
                     return checkMarkTopStyle;
@@ -2077,23 +2276,6 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
-            #region HasRenameFolderComponent
-            /// <summary>
-            /// This property returns true if this object has a 'RenameFolderComponent'.
-            /// </summary>
-            public bool HasRenameFolderComponent
-            {
-                get
-                {
-                    // initial value
-                    bool hasRenameFolderComponent = (this.RenameFolderComponent != null);
-                    
-                    // return value
-                    return hasRenameFolderComponent;
-                }
-            }
-            #endregion
-            
             #region HasSelectedFolder
             /// <summary>
             /// This property returns true if this object has a 'SelectedFolder'.
@@ -2183,6 +2365,33 @@ namespace DataJuggler.BlazorGallery.Shared
                 set { initialized = value; }
             }
             #endregion
+
+            #region IsSmallMedia
+            /// <summary>
+            /// This property gets or sets the value for 'IsSmallMedia'.
+            /// </summary>
+            public bool IsSmallMedia
+            {
+                get { return isSmallMedia; }
+                set { isSmallMedia = value; }
+            }
+            #endregion
+            
+            #region JoinButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'JoinButtonStyle'.
+            /// </summary>
+            public string JoinButtonStyle
+            {
+                get { return joinButtonStyle; }
+                set { joinButtonStyle = value; }
+            }
+            #endregion
+            
+            #region Listener
+            [Inject]
+            IResizeListener Listener { get; set; }
+            #endregion
             
             #region LoggedInUser
             /// <summary>
@@ -2217,6 +2426,17 @@ namespace DataJuggler.BlazorGallery.Shared
                     // return value
                     return loggedInUserId;
                 }
+            }
+            #endregion
+            
+            #region LoginButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'LoginButtonStyle'.
+            /// </summary>
+            public string LoginButtonStyle
+            {
+                get { return loginButtonStyle; }
+                set { loginButtonStyle = value; }
             }
             #endregion
             
@@ -2275,6 +2495,42 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region NewFolderTop
+            /// <summary>
+            /// This read only property returns the value of NewFolderTop from the object AddButtonTop.
+            /// </summary>
+            public double NewFolderTop
+            {
+                
+                get
+                {
+                    // initial value
+                    double newFolderTop = Top - (FolderHeight * 1.5);
+                    
+                    // return value
+                    return newFolderTop;
+                }
+            }
+            #endregion
+            
+            #region NewFolderTopStyle
+            /// <summary>
+            /// This read only property returns the value of NewFolderTopStyle from the object NewFolderTop.
+            /// </summary>
+            public string NewFolderTopStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string newFolderTopStyle = NewFolderTop + "vh";
+                    
+                    // return value
+                    return newFolderTopStyle;
+                }
+            }
+            #endregion
+            
             #region NewUserEmailAddress
             /// <summary>
             /// This property gets or sets the value for 'NewUserEmailAddress'.
@@ -2286,14 +2542,25 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
-            #region RenameFolderComponent
+            #region NoButtonStyle
             /// <summary>
-            /// This property gets or sets the value for 'RenameFolderComponent'.
+            /// This property gets or sets the value for 'NoButtonStyle'.
             /// </summary>
-            public ValidationComponent RenameFolderComponent
+            public string NoButtonStyle
             {
-                get { return renameFolderComponent; }
-                set { renameFolderComponent = value; }
+                get { return noButtonStyle; }
+                set { noButtonStyle = value; }
+            }
+            #endregion
+            
+            #region PreviousScreenType
+            /// <summary>
+            /// This property gets or sets the value for 'PreviousScreenType'.
+            /// </summary>
+            public ScreenTypeEnum PreviousScreenType
+            {
+                get { return previousScreenType; }
+                set { previousScreenType = value; }
             }
             #endregion
             
@@ -2308,6 +2575,39 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region SaveButtonDisabledStyle
+            /// <summary>
+            /// This property gets or sets the value for 'SaveButtonDisabledStyle'.
+            /// </summary>
+            public string SaveButtonDisabledStyle
+            {
+                get { return saveButtonDisabledStyle; }
+                set { saveButtonDisabledStyle = value; }
+            }
+            #endregion
+            
+            #region SaveButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'SaveButtonStyle'.
+            /// </summary>
+            public string SaveButtonStyle
+            {
+                get { return saveButtonStyle; }
+                set { saveButtonStyle = value; }
+            }
+            #endregion
+                        
+            #region ScreenHeight
+            /// <summary>
+            /// This property gets or sets the value for 'ScreenHeight'.
+            /// </summary>
+            public double ScreenHeight
+            {
+                get { return screenHeight; }
+                set { screenHeight = value; }
+            }
+            #endregion
+            
             #region ScreenType
             /// <summary>
             /// This property gets or sets the value for 'ScreenType'.
@@ -2316,6 +2616,17 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return screenType; }
                 set { screenType = value; }
+            }
+            #endregion
+            
+            #region ScreenWidth
+            /// <summary>
+            /// This property gets or sets the value for 'ScreenWidth'.
+            /// </summary>
+            public double ScreenWidth
+            {
+                get { return screenWidth; }
+                set { screenWidth = value; }
             }
             #endregion
             
@@ -2341,6 +2652,17 @@ namespace DataJuggler.BlazorGallery.Shared
             }
             #endregion
             
+            #region SendButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'SendButtonStyle'.
+            /// </summary>
+            public string SendButtonStyle
+            {
+                get { return sendButtonStyle; }
+                set { sendButtonStyle = value; }
+            }
+            #endregion
+            
             #region ShowConfirmation
             /// <summary>
             /// This property gets or sets the value for 'ShowConfirmation'.
@@ -2349,6 +2671,53 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return showConfirmation; }
                 set { showConfirmation = value; }
+            }
+            #endregion
+            
+            #region SignOutButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'SignOutButtonStyle'.
+            /// </summary>
+            public string SignOutButtonStyle
+            {
+                get { return signOutButtonStyle; }
+                set { signOutButtonStyle = value; }
+            }
+            #endregion
+            
+            #region SmallButtonWidth
+            /// <summary>
+            /// This read only property returns the value of SmallButtonWidth from the ButtonWidth * .6837
+            /// </summary>
+            public double SmallButtonWidth
+            {
+                
+                get
+                {
+                    // initial value
+                    double smallButtonWidth = (Math.Round(ButtonWidth * .6837 * 2, 2));
+
+                    // return value
+                    return smallButtonWidth;
+                }
+            }
+            #endregion
+            
+            #region SmallButtonWidthStyle
+            /// <summary>
+            /// This read only property returns the value of SmallButtonWidth + "vh"
+            /// </summary>
+            public string SmallButtonWidthStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string smallButtonWidthStyle = SmallButtonWidth + "vh";
+                    
+                    // return value
+                    return smallButtonWidthStyle;
+                }
             }
             #endregion
             
@@ -2378,7 +2747,7 @@ namespace DataJuggler.BlazorGallery.Shared
             /// <summary>
             /// This property gets or sets the value for 'Top'.
             /// </summary>
-            public int Top
+            public double Top
             {
                 get { return top; }
                 set { top = value; }
@@ -2395,7 +2764,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 get
                 {
                     // initial value
-                    string topStyle = Top + "px";
+                    string topStyle = Top + "vh";
                     
                     // return value
                     return topStyle;
@@ -2422,6 +2791,28 @@ namespace DataJuggler.BlazorGallery.Shared
             {
                 get { return validationMessage; }
                 set { validationMessage = value; }
+            }
+            #endregion
+            
+            #region VerifyButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'VerifyButtonStyle'.
+            /// </summary>
+            public string VerifyButtonStyle
+            {
+                get { return verifyButtonStyle; }
+                set { verifyButtonStyle = value; }
+            }
+            #endregion
+            
+            #region YesButtonStyle
+            /// <summary>
+            /// This property gets or sets the value for 'YesButtonStyle'.
+            /// </summary>
+            public string YesButtonStyle
+            {
+                get { return yesButtonStyle; }
+                set { yesButtonStyle = value; }
             }
             #endregion
             

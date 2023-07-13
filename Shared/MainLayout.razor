@@ -5,9 +5,9 @@
 @using DataJuggler.Blazor.Components
 @using DataJuggler.Blazor.Components.Interfaces
 @using DataJuggler.Blazor.FileUpload
-@using BlazorStyled@using DataJuggler.BlazorGallery.Components
-
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+@using BlazorStyled
+@using DataJuggler.BlazorGallery.Components
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
 @inject ProtectedLocalStorage ProtectedLocalStore
@@ -21,14 +21,14 @@
     background-size: 100% 100%;
     background-color: transparent;
     position: fixed;
-    top: @AddButtonTopStyle;
+    top: @NewFolderTopStyle;
     left: 10.8%;
 </Styled>
 <Styled @bind-Classname=@AddButtonStyle>
     background-image: url('../Images/AddButton.png');
     border: none;
-    width: 32px;
-    height: 32px;
+    width: 2.55vw;
+    height: 4.35vh;
     background-size: 100% 100%;
     background-color: transparent;    
     position: fixed;
@@ -38,11 +38,11 @@
 <Styled @bind-Classname=@BlueButton>
     background-image: url('../Images/UploadButtonBlue.png');
     position: fixed;        
-    left: 2%;
+    left: 2vw;
     top: @TopStyle;
     background-size: 100% 100%;
-    width: 120px;
-    height: 32px;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
     cursor: pointer;
 </Styled>
 <Styled @bind-Classname="@CheckMarkContainerStyle">
@@ -65,6 +65,125 @@
     background-image: url(@CheckMarkImage);
     z-index: 120;
 </Styled>
+<Styled @bind-Classname="@LoginButtonStyle">
+    background-image: url('../Images/LoginButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@JoinButtonStyle">
+    background-image: url('../Images/JoinButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@CancelButtonStyle">
+    background-image: url('../Images/CancelButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@NoButtonStyle">
+    background-image: url('../Images/NoButton.png');
+    position: relative;
+    left: 0;
+    top: 0px;
+    background-size: 100% 100%;
+    width: @SmallButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@YesButtonStyle">
+    background-image: url('../Images/YesButton.png');
+    position: relative;
+    left: 0;
+    top: 0px;
+    background-size: 100% 100%;
+    width: @SmallButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@SignOutButtonStyle">
+    background-image: url('../Images/SignOutButton.png');
+    position: relative;
+    left: 8px;
+    top: 8px;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@SendButtonStyle">
+    background-image: url('../Images/SendButton.png');
+    position: relative;
+    left: 0px;
+    top: 0px;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@VerifyButtonStyle">
+    background-image: url('../Images/Verify.png');
+    position: relative;
+    left: 18px;
+    top: 28px;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@SaveButtonStyle">
+    background-image: url('../Images/SaveButton.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+</Styled>
+<Styled @bind-Classname="@SaveButtonDisabledStyle">
+    background-image: url('../Images/SaveButtonDisabled.png');
+    position: relative;
+    left: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: @ButtonWidthStyle;
+    height: @ButtonHeightStyle;    
+    background-color: transparent;
+    border: none;
+</Styled>
 
 <div class="page">
     @if (!HasLoggedInUser)
@@ -80,8 +199,8 @@
         @if (ScreenType != ScreenTypeEnum.ViewImage)
         {
             <div class="topright">
-                <button class="loginbutton" title="Login with your UserName or email address and password." @onclick="Login"></button>
-                <button class="joinbutton" title="Sign up to create your own gallery." @onclick="Join"></button>
+                <button class="@LoginButtonStyle" title="Login with your UserName or email address and password." @onclick="Login"></button>
+                <button class="@JoinButtonStyle" title="Sign up to create your own gallery." @onclick="Join"></button>
             </div>
         }
     }
@@ -99,79 +218,46 @@
     {
         <div class="topright">
             Welcome @LoggedInUser.Name
-            <button class="signout" @onclick=SignOut></button>
+            <button class="@SignOutButtonStyle" @onclick=SignOut></button>
         </div>        
     }
     <div class="fixedsidebar">
         <div class="logo"></div>
         @if (ScreenType == ScreenTypeEnum.MainScreen)
         {
-            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="fontsize14 colortomato text-nowrap colorgray204 right56 fontbold fontsite">Main Gallery</span></button>
+            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colortomato fontsite">Main Gallery</span></button>
             @if ((HasLoggedInUser) && (!LoggedInUser.ViewOnlyMode))
             {
-                <button class="backtousershome" @onclick="NavigateToUsersGalleries"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">@LoggedInUser.UserName Galleries</span></button>
+                <button class="backtousershome" @onclick="NavigateToUsersGalleries"><span class="foldernametext colorgray204 fontsite">@LoggedInUser.UserName</span></button>
             }
         }
         else
         {
-            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">Main Gallery</span></button>
+            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colorgray204 fontsite">Main Gallery</span></button>
         }        
         @if ((HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.ViewingGallery)))
         {
             <div class="folders">
-                <div class="colorgray204 fontbold fontsize24 right64 fontsite">
+                <div class="folderstext fontsite">
                     Folders
                 </div>
                 <div class="height8"></div>
                 @if (HasFolders)
                 {
                     int buttonNumber = 0;
+                    string folderClassName = "";
 
                     foreach (Folder folder in Folders)
-                    {  
+                    {
                         buttonNumber++;
+                        folderClassName = "imagefolder" + buttonNumber;
 
                         <div class="nav-item px-3">
-                        <button class="copybutton down16 right16" title="Copy This Folder's URL'" @onclick="() => CopyFolder(folder.Id)"></button>                            
-                        @if ((HasLoggedInUser) && (folder.Name != "Home") && (LoggedInUser.IsGalleryOwner))
-                        {
-                            <button class="removebutton down16 right16" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
-                        }
-                        else
-                        {
-                            <div class="displayinlineblock width16"></div>
-                        }
-                        @if ((RenameFolderMode) && (HasFolderBeingRenamed) && (FolderBeingRenamedId == folder.Id))
-                        {
-                            <div class="right60 up14">
-                                <ValidationComponent Name="RenameFolderTextBox" Parent="this" Unit="px"
-                                    SetFocusOnFirstRender=true Position="relative" HeightUnit="px" Text="@folder.Name" 
-                                    Width="160" Column1Width="48" Caption="Name:" LabelClassName="colorgray204 left2">
-                                </ValidationComponent>
-                            </div>
-                        }
-                        else
-                        {
-                            @if ((folder.Selected) && (ScreenType != ScreenTypeEnum.MainScreen))
-                            {
-                                if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner))
-                                {
-                                    <button class="imagefolder right16"><span class="fontsize14 colortomato fontbold right56 text-nowrap fontsite" @ondblclick="() => RenameFolder(folder)">@folder.Name</span></button>
-                                }
-                                else
-                                {
-                                    <button class="imagefolder right16"><span class="fontsize14 colortomato fontbold right56 text-nowrap fontsite">@folder.Name</span></button>
-                                }
-                            }
-                            else
-                            {
-                                <button class="imagefolder right16" @onclick="() => FolderSelected(folder.Id)"><span class="fontsize14 text-nowrap colorgray204 right56 fontbold fontsite">@folder.Name</span></button>
-                            }
-                        }
-                    </div>
-                    <div class="height16 displayblock"></div>
-                }                
-            }
+                            <FolderComponent ButtonNumber="@buttonNumber" Folder="@folder"  Parent="this"></FolderComponent>                            
+                        </div>
+                        <div class="height16 displayblock"></div>
+                    }                
+                }
             </div>
             @if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner) && (HasFolders) && (Folders.Count < Admin.MaxFolderCount))
             {
@@ -195,7 +281,7 @@
                     ShowCustomButton="true" OnChange="OnFileUploaded" Visible="false"
                     CustomButtonClassName="@BlueButton" AllowedExtensions=".jpg,.png"
                     ShowResetButton="false" AppendPartialGuid="true" ButtonText=""
-                    CustomExtensionMessage="Only .png and .jpg extensions are allowed."
+                    CustomExtensionMessage="Only .png and .jpg extensions are allowed." MultipleFiles="true"
                     InputFileClassName="customfileupload" Status="Refresh" ResetButtonText=""
                     FileTooLargeMessage=@FileTooLargeMessage>
                 </FileUpload>
@@ -207,7 +293,7 @@
                 <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>
             </div>
         }
-        <div class="sidebarfooter">Version 1.4.6</div>
+        <div class="sidebarfooter">Version 1.5.6</div>
     </div>
     <main>
         <article class="content px-4">
@@ -251,6 +337,18 @@
             {
                 <EmailVerification Parent="this" Name="EmailComponent" Email="@LoggedInUser.EmailAddress"></EmailVerification>
             }
+            else if (screenType == ScreenTypeEnum.ChangePasswordMode)
+            {
+                <ChangePasswordComponent Parent="this" Name="ChangePasswordComponent"></ChangePasswordComponent>
+            }
+            else if (screenType == ScreenTypeEnum.Feedback)
+            {
+                <FeedbackComponent Parent="this" Name="FeedbackComponent"></FeedbackComponent>
+            }
         </article>        
-    </main>    
+    </main>
+    @if ((HasLoggedInUser) && (ScreenType != ScreenTypeEnum.Feedback))
+    {
+        <button class="feedback" @onclick="GiveFeedback"></button>
+    }
 </div>

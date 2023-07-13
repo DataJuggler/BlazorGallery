@@ -38,7 +38,7 @@ in the connection string from step 4.
 make up a string for its value. This keycode is used to create password hashes 
 when an account is created by a user.
 7. Create a system level environment variable named BlazorGalleryURL
-and set its value to https://localhost:44330 or the domain name if you are publishing.
+and set its value to https://localhost:44330 or your domain name if you are publishing.
 8. Go to https://github.com/DataJuggler/BlazorGallery/ and leave a star
 9. Go to https://youtube.com/DataJuggler and subscribe. 
 10. Tell a developer you know how easy Blazor Gallery makes it to create a Blazor SQL

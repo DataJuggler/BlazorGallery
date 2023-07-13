@@ -376,6 +376,11 @@ namespace DataJuggler.BlazorGallery.Components
                     log.UserId = LoggedInUserId;
                     bool saved = await ErrorLogService.SaveErrorLog(ref log);
                 }
+                finally
+                {
+                    // Hide the progress bar
+                    ShowProgress = false;
+                }
 
                 // return value
                 return sent;
@@ -406,7 +411,7 @@ namespace DataJuggler.BlazorGallery.Components
                             int codeValue = NumericHelper.ParseInteger(code, 0, -1);
 
                             // if the code is set
-                            if ((codeValue > 0) && (LoggedInUser.CodeEmailed == codeValue))
+                            if ((codeValue > 0) && (LoggedInUser.CodeEmailed > 0) && (LoggedInUser.CodeEmailed == codeValue))
                             {
                                 // get the current time
                                 DateTime now = DateTime.Now;
@@ -426,9 +431,17 @@ namespace DataJuggler.BlazorGallery.Components
                                     MessageColor = "red";
 
                                     // Expired message
-                                    StatusMessage = "This code has expired.";
+                                    StatusMessage = "The code entered does not match or has expired.";
                                 }
-                            }                            
+                            }
+                            else
+                            {
+                                // Set the message color
+                                MessageColor = "red";
+
+                                // Expired message
+                                StatusMessage = "The code entered does not match or has expired.";
+                            }
                         }
                     }
 
@@ -674,6 +687,23 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region HasParent
+            /// <summary>
+            /// This property returns true if this object has a 'Parent'.
+            /// </summary>
+            public bool HasParent
+            {
+                get
+                {
+                    // initial value
+                    bool hasParent = (this.Parent != null);
+                    
+                    // return value
+                    return hasParent;
+                }
+            }
+            #endregion
+            
             #region HasParentMainLayout
             /// <summary>
             /// This property returns true if this object has a 'ParentMainLayout'.
@@ -789,7 +819,7 @@ namespace DataJuggler.BlazorGallery.Components
                     parent = value;
                     
                     // If the parent object exists
-                    if (parent != null)
+                    if (HasParent)
                     {
                         // register with the parent
                         parent.Register(this);
@@ -823,7 +853,7 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
 
-             #region Percent
+            #region Percent
             /// <summary>
             /// This property gets or sets the value for 'Percent'.
             /// </summary>
@@ -880,6 +910,31 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region SendButtonStyle
+            /// <summary>
+            /// This read only property returns the value of SendButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string SendButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string sendButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        sendButtonStyle = ParentMainLayout.SendButtonStyle;
+                    }
+                    
+                    // return value
+                    return sendButtonStyle;
+                }
+            }
+            #endregion
+            
             #region ShowProgress
             /// <summary>
             /// This property gets or sets the value for 'ShowProgress'.
@@ -924,6 +979,31 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
 
+            #region VerifyButtonStyle
+            /// <summary>
+            /// This read only property returns the value of VerifyButtonStyle from the object ParentMainLayout.
+            /// </summary>
+            public string VerifyButtonStyle
+            {
+                
+                get
+                {
+                    // initial value
+                    string verifyButtonStyle = "";
+                    
+                    // if ParentMainLayout exists
+                    if (ParentMainLayout != null)
+                    {
+                        // set the return value
+                        verifyButtonStyle = ParentMainLayout.VerifyButtonStyle;
+                    }
+                    
+                    // return value
+                    return verifyButtonStyle;
+                }
+            }
+            #endregion
+            
         #endregion
 
     }

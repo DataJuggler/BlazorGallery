@@ -32,6 +32,8 @@ namespace ApplicationLogicComponent.DataOperations
         private ActivityLogMethods activitylogMethods;
         private AdminMethods adminMethods;
         private ErrorLogMethods errorlogMethods;
+        private FeedbackMethods feedbackMethods;
+        private FeedbackReplyMethods feedbackreplyMethods;
         private FolderMethods folderMethods;
         private ImageMethods imageMethods;
         private ImageLikeMethods imagelikeMethods;
@@ -66,6 +68,8 @@ namespace ApplicationLogicComponent.DataOperations
                 this.ActivityLogMethods = new ActivityLogMethods(this.DataManager);
                 this.AdminMethods = new AdminMethods(this.DataManager);
                 this.ErrorLogMethods = new ErrorLogMethods(this.DataManager);
+                this.FeedbackMethods = new FeedbackMethods(this.DataManager);
+                this.FeedbackReplyMethods = new FeedbackReplyMethods(this.DataManager);
                 this.FolderMethods = new FolderMethods(this.DataManager);
                 this.ImageMethods = new ImageMethods(this.DataManager);
                 this.ImageLikeMethods = new ImageLikeMethods(this.DataManager);
@@ -115,6 +119,22 @@ namespace ApplicationLogicComponent.DataOperations
             {
                 get { return errorlogMethods; }
                 set { errorlogMethods = value; }
+            }
+            #endregion
+
+            #region FeedbackMethods
+            public FeedbackMethods FeedbackMethods
+            {
+                get { return feedbackMethods; }
+                set { feedbackMethods = value; }
+            }
+            #endregion
+
+            #region FeedbackReplyMethods
+            public FeedbackReplyMethods FeedbackReplyMethods
+            {
+                get { return feedbackreplyMethods; }
+                set { feedbackreplyMethods = value; }
             }
             #endregion
 
