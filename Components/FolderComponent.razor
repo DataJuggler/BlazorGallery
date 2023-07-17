@@ -27,7 +27,10 @@
     else
     {
         <button class="copybutton" title="Copy This Folder's URL'" @onclick="() => CopyFolder(folder.Id)"></button>
-        <button class="removebutton2" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
+        if ((HasFolder) && (Folder.Name != "Home"))
+        {
+            <button class="removebutton2" title="Remove This Folder" @onclick="() => DeleteFolder(folder.Id)"></button>
+        }
         @if ((folder.Selected) && (ScreenType != ScreenTypeEnum.MainScreen))
         {
             @if ((HasLoggedInUser) && (folder.Name != "Home") && (LoggedInUser.IsGalleryOwner))
