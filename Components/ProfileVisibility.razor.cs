@@ -92,6 +92,9 @@ namespace DataJuggler.BlazorGallery.Components
                     // if the value for saved is true
                     if (saved)
                     {
+                        // Update the user to fix profile visibility bug
+                        ParentMainLayout.LoggedInUser = user;
+
                         // if the value for RequireEmailVerification is true
                         if (RequireEmailVerification)
                         {

@@ -51,6 +51,11 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.5.8
+7.16.2023: There have been many fixes in the last month. The site should look better for browsers with
+100% zoom. I always test at 150% due to my vision isn't great, and noticed a few things didn't look good.
+It should be similar layout, just a bigger font size now.
+
 1.4.6
 6.26.2023: I fixed a bug where the ImageViewer component was defaulting to LikeButtonEnabled in the
 constructor. This didn't work when a logged in user was viewing their own gallery if they enter by clicking

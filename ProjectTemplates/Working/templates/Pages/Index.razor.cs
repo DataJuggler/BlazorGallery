@@ -62,12 +62,6 @@ namespace DataJuggler.BlazorGallery.Pages
                 // call the base
                 await base.OnAfterRenderAsync(firstRender);
 
-                // if the LoggedInUser exists
-                if (HasLoggedInUser)
-                {
-                    
-                }
-
                 // if the value for HasLoggedInUser is true
                 if ((HasLoggedInUser) && (firstRender))
                 {

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Net7" Version="7.0.10" />
+    <PackageReference Include="DataJuggler.Net7" Version="7.1.0" />
   </ItemGroup>
   
 </Project>

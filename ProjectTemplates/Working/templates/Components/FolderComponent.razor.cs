@@ -258,6 +258,23 @@ namespace DataJuggler.BlazorGallery.Components
             }
             #endregion
             
+            #region HasFolder
+            /// <summary>
+            /// This property returns true if this object has a 'Folder'.
+            /// </summary>
+            public bool HasFolder
+            {
+                get
+                {
+                    // initial value
+                    bool hasFolder = (this.Folder != null);
+                    
+                    // return value
+                    return hasFolder;
+                }
+            }
+            #endregion
+            
             #region HasFolderBeingRenamed
             /// <summary>
             /// This property returns true if this object has a 'FolderBeingRenamed'.
