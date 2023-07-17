@@ -51,6 +51,10 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.5.9
+7.16.2023: I fixed a bug where if you are unable to log in when the timer is finished, a message is shown.
+I may have to change the speed of timer to be slower or add more time till it gives up.
+
 1.5.8
 7.16.2023: There have been many fixes in the last month. The site should look better for browsers with
 100% zoom. I always test at 150% due to my vision isn't great, and noticed a few things didn't look good.

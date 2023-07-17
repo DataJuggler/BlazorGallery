@@ -319,9 +319,6 @@ namespace DataJuggler.BlazorGallery.Components
 
                                 // hide the progress
                                 ShowProgress = false;
-
-                                // Update the UI
-                                Refresh();
                             }
                             else
                             {
@@ -392,7 +389,15 @@ namespace DataJuggler.BlazorGallery.Components
                                     }
                                 }                                
                             }
-                        }                        
+                        }
+                        else
+                        {
+                            // Set the message
+                            ValidationMessage = "The credentials entered were either not found or invalid.";                       
+
+                            // hide the progress
+                            ShowProgress = false;
+                        }
                     }
                     else
                     {
@@ -438,8 +443,8 @@ namespace DataJuggler.BlazorGallery.Components
                     // if the value for success is false
                     if (!success)
                     {
-                         // Set the message
-                        ValidationMessage = "The credentials entered were either not found or invalid.";                       
+                        // Set the message
+                        ValidationMessage = "The credentials entered were either not found or invalid.";  
                     }
 
                      // hide the progress
@@ -480,9 +485,19 @@ namespace DataJuggler.BlazorGallery.Components
                     // if higher than 10
                     if (ExtraPercent >= 10)
                     {
+                        // stop
+                        LoginInProcess = false;
+
                         // Stop the timer
                         InvisibleSprite.Stop();
                         ShowProgress = false;
+
+                        // if there is a logged in user
+                        if (!HasLoggedInUser)
+                        {   
+                            // set the message
+                            ValidationMessage = "The credentials entered were either not found or invalid.";
+                        }
                     }
                 }
 
