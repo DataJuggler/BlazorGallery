@@ -329,7 +329,7 @@ namespace DataJuggler.BlazorGallery.Components
                                 ParentMainLayout.LoggedInUser = user;
 
                                 // if the value for RememberLogin is true
-                                if (RememberLogin)
+                                if ((HasRememberLoginComponent) && (RememberLoginComponent.CheckBoxValue))
                                 {
                                     // Save the login details in local protected storage
                                     await HandleRememberPassword();
@@ -483,7 +483,7 @@ namespace DataJuggler.BlazorGallery.Components
                     }
 
                     // if higher than 10
-                    if (ExtraPercent >= 10)
+                    if (ExtraPercent >= 20)
                     {
                         // stop
                         LoginInProcess = false;

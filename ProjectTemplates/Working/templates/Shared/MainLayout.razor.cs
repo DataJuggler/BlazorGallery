@@ -314,13 +314,24 @@ namespace DataJuggler.BlazorGallery.Shared
             /// Folder Selected
             /// </summary>
             public async void FolderSelected(int folderId)
-            {
+            {  
                 // Set the SelectedFolder
                 SelectedFolder = await FolderService.FindFolder(folderId);
 
                 // if the value for HasSelectedFolder is true
                 if (HasSelectedFolder)
                 {
+                    if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner))
+                    {
+                        // Make sure you are on the Index page
+                        SetupScreen(ScreenTypeEnum.Index);
+                    }
+                    else if (HasGalleryOwner)
+                    {
+                        // Select in Viewing Mode
+                        SetupScreen(ScreenTypeEnum.ViewingGallery);
+                    }
+
                     // Set Selectd to true
                     SelectedFolder.Selected = true;
 
@@ -424,10 +435,7 @@ namespace DataJuggler.BlazorGallery.Shared
             public void Join()
             {  
                 // Setup the ScreenType
-                ScreenType = ScreenTypeEnum.SignUp;
-
-                // Update
-                Refresh();
+                SetupScreen(ScreenTypeEnum.SignUp, "", false);                
             }
             #endregion
 
@@ -438,10 +446,7 @@ namespace DataJuggler.BlazorGallery.Shared
             public void Login()
             { 
                 // Setup the ScreenType
-                ScreenType = ScreenTypeEnum.Login;
-
-                // Update the UI
-                Refresh();
+                SetupScreen(ScreenTypeEnum.Login);
             }
             #endregion
             
@@ -451,6 +456,9 @@ namespace DataJuggler.BlazorGallery.Shared
             /// </summary>
             public async void NavigateToGallery(string galleryUserName, string folderName)
             {
+                // Setup the screen type
+                SetupScreen(ScreenTypeEnum.ViewingGallery);
+
                 // If the strings galleryUserName and folderName both exist
                 if (TextHelper.Exists(galleryUserName, folderName))
                 {
@@ -464,7 +472,7 @@ namespace DataJuggler.BlazorGallery.Shared
                         LoggedInUser.ViewingGalleryOwner = GalleryOwner;
 
                         // If both User's exist, we are in ViewOnlyMode unless the LoggedInUser is the GalleryOwner
-                        GalleryOwner.ViewOnlyMode = !LoggedInUser.IsGalleryOwner;
+                        LoggedInUser.ViewOnlyMode = !LoggedInUser.IsGalleryOwner;
 
                         // Find the SelectedFolde
                         SelectedFolder = await FolderService.FindFolderByUserIdAndFolderName(GalleryOwnerId, folderName);
@@ -611,26 +619,17 @@ namespace DataJuggler.BlazorGallery.Shared
                                             if (LoggedInUser.AcceptedTermsOfServiceDate.Year < 2000)
                                             {
                                                 // Setup the screen
-                                                ScreenType = ScreenTypeEnum.TermsOfservice;
-
-                                                // Setup the screen
-                                                Refresh();
+                                                SetupScreen(ScreenTypeEnum.TermsOfservice);
                                             }
                                             else if (LoggedInUser.ProfileVisibility == ProfileVisibilityEnum.NotSelected)
                                             {
                                                 // Setup the screen
-                                                ScreenType = ScreenTypeEnum.SetProfileVisibility;
-
-                                                // Setup the screen
-                                                Refresh();
+                                                SetupScreen(ScreenTypeEnum.SetProfileVisibility);
                                             }
                                             else if ((!LoggedInUser.EmailVerified) && (HasAdmin) && (Admin.RequireEmailVerification))
                                             {
                                                 // Send a confirmation email code
-                                                ScreenType = ScreenTypeEnum.EmailVerification;
-
-                                                // setup the screen
-                                                Refresh();
+                                                SetupScreen(ScreenTypeEnum.EmailVerification);
                                             }
                                             else
                                             {

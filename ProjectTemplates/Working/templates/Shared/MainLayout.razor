@@ -204,7 +204,7 @@
             </div>
         }
     }
-    @if ((HasGalleryOwner) && (ScreenType == ScreenTypeEnum.ViewingGallery))
+    @if ((HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.ViewingGallery) || (ScreenType == ScreenTypeEnum.ViewImage)))
     {
         @if (HasSelectedFolder)
         {
@@ -214,7 +214,7 @@
             }
         }
     }
-    @if ((HasLoggedInUser) && (!LoggedInUser.ViewOnlyMode))
+    @if (HasLoggedInUser)
     {
         <div class="topright">
             Welcome @LoggedInUser.Name
@@ -225,17 +225,13 @@
         <div class="logo"></div>
         @if (ScreenType == ScreenTypeEnum.MainScreen)
         {
-            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colortomato fontsite">Main Gallery</span></button>
-            @if ((HasLoggedInUser) && (!LoggedInUser.ViewOnlyMode))
-            {
-                <button class="backtousershome" @onclick="NavigateToUsersGalleries"><span class="foldernametext colorgray204 fontsite">@LoggedInUser.UserName</span></button>
-            }
+            <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colortomato fontsite">Main Gallery</span></button>           
         }
         else
         {
             <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colorgray204 fontsite">Main Gallery</span></button>
         }        
-        @if ((HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.ViewingGallery)))
+        @if ((HasLoggedInUser || HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.ViewingGallery)) || (ScreenType == ScreenTypeEnum.MainScreen))
         {
             <div class="folders">
                 <div class="folderstext fontsite">
@@ -293,7 +289,7 @@
                 <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>
             </div>
         }
-        <div class="sidebarfooter">Version 1.5.9</div>
+        <div class="sidebarfooter">Version 1.6.0</div>
     </div>
     <main>
         <article class="content px-4">

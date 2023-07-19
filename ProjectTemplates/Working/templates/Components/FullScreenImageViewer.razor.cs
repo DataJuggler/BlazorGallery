@@ -103,43 +103,10 @@ namespace DataJuggler.BlazorGallery.Components
             public void GoBack()
             {
                 // if the value for HasParentMainLayout is true
-                if (ScreenType == ScreenTypeEnum.ViewImage)
-                {  
-                    // remove the selected image
-                    ParentMainLayout.SelectedImage = null;
-
-                    // if the value for HasLoggedInUser is true
-                    if (HasLoggedInUser)
-                    {
-                        // If the value for the property LoggedInUser.ViewOnlyMode is true
-                        if (LoggedInUser.ViewOnlyMode)
-                        {
-                            // we need to go back to the MainGallery
-
-                            // Setup the main screen again
-                            ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
-                        }
-                        else
-                        {
-                            // Setup the main screen again
-                            ParentMainLayout.SetupScreen(ScreenTypeEnum.Index);        
-                        }
-                    }
-                    else
-                    {
-                        // we need to go back to the MainGallery
-
-                        // Setup the main screen again
-                        ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
-                    }
-                }
-                else if (ScreenType == ScreenTypeEnum.ViewImageInMainGallery)
+                if (HasParentMainLayout)
                 {
-                    // remove the selected image
-                    ParentMainLayout.SelectedImage = null;
-
-                    // Setup the main screen again
-                    ParentMainLayout.SetupScreen(ScreenTypeEnum.MainScreen);
+                    // Go back to the previous screen type
+                    ParentMainLayout.RestoreScreenType();
                 }
             }
             #endregion
@@ -551,7 +518,7 @@ namespace DataJuggler.BlazorGallery.Components
                     if (Parent != null)
                     {
                         // set the return value
-                        parentMainLayout = Parent as MainLayout;
+                       parentMainLayout = Parent as MainLayout;
                     }
                     
                     // return value

@@ -154,7 +154,7 @@ namespace DataJuggler.BlazorGallery.Components
                     ParentMainLayout.SelectedImage = image;
 
                     // Setup the screen to show the image
-                    ParentMainLayout.SetupScreen(ScreenTypeEnum.ViewImageInMainGallery);
+                    ParentMainLayout.SetupScreen(ScreenTypeEnum.ViewImageInMainGallery, "", false);
                 }
             }
             #endregion
