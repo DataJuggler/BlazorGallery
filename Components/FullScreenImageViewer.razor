@@ -41,7 +41,7 @@
     <div class="@CheckMarkContainerStyle">
         <div class="@CheckMarkStyle"></div>
     </div>
-    @if (ScreenType != ScreenTypeEnum.ViewImageInMainGallery)
+    @if ((ScreenType == ScreenTypeEnum.ViewImageInMainGallery) || (ScreenType == ScreenTypeEnum.ViewImage))
     {
         @if (CanMovePrevious)
         {

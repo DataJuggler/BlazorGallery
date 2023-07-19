@@ -204,14 +204,22 @@
             </div>
         }
     }
-    @if ((HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.ViewingGallery) || (ScreenType == ScreenTypeEnum.ViewImage)))
+    @if ((HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.ViewingGallery)) || (ScreenType == ScreenTypeEnum.ViewImage) || (ScreenType == ScreenTypeEnum.ViewImageInMainGallery))
     {
         @if (HasSelectedFolder)
-        {
-            if ((!HasLoggedInUser) || (!LoggedInUser.IsGalleryOwner))
+        {  
+            if ((HasLoggedInUser) && (LoggedInUser.Id != SelectedFolder.UserId))
             {
-                <h5 class="topleft">Viewing Gallery @GalleryOwner.UserName/@SelectedFolder.Name</h5>
+                <h4 class="topleft">Viewing Gallery @GalleryOwner.UserName/@SelectedFolder.Name</h4>
             }
+            else if ((HasGalleryOwner) && (!HasLoggedInUser))
+            {
+                <h4 class="topleft">Viewing Gallery @GalleryOwner.UserName/@SelectedFolder.Name</h4>
+            }
+        }
+        else if (HasSelectedImage)
+        {
+            <h4 class="topleft">Viewing Image By @SelectedImage.UserName</h4>
         }
     }
     @if (HasLoggedInUser)
@@ -223,7 +231,7 @@
     }
     <div class="fixedsidebar">
         <div class="logo"></div>
-        @if (ScreenType == ScreenTypeEnum.MainScreen)
+        @if ((ScreenType == ScreenTypeEnum.MainScreen) || (ScreenType == ScreenTypeEnum.ViewImageInMainGallery))
         {
             <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colortomato fontsite">Main Gallery</span></button>           
         }
@@ -231,28 +239,39 @@
         {
             <button class="mainimagefolder" @onclick="NavigateToMain"><span class="foldernametext colorgray204 fontsite">Main Gallery</span></button>
         }        
-        @if ((HasLoggedInUser || HasGalleryOwner) && ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.ViewingGallery)) || (ScreenType == ScreenTypeEnum.MainScreen))
+        @if ((ScreenType == ScreenTypeEnum.Index) || (ScreenType == ScreenTypeEnum.ViewingGallery) || (ScreenType == ScreenTypeEnum.MainScreen) || (ScreenType == ScreenTypeEnum.ViewImage) || (ScreenType == ScreenTypeEnum.ViewImageInMainGallery))
         {
-            <div class="folders">
-                <div class="folderstext fontsite">
-                    Folders
-                </div>
+            <div class="folders">               
                 <div class="height8"></div>
-                @if (HasFolders)
+                @if ((HasLoggedInUser) || (HasGalleryOwner) && (HasFolders))
                 {
+                    <div class="folderstext fontsite">
+                        @if (HasGalleryOwner)
+                        {
+                            <span class="fontsize14">@GalleryOwner.FoldersTitle</span>
+                        }
+                        else if (HasLoggedInUser)
+                        {
+                            <span class="fontsize14">@LoggedInUser.FoldersTitle</span>
+                        }
+                    </div>
+
                     int buttonNumber = 0;
                     string folderClassName = "";
 
-                    foreach (Folder folder in Folders)
+                    @if (HasFolders)
                     {
-                        buttonNumber++;
-                        folderClassName = "imagefolder" + buttonNumber;
+                        foreach (Folder folder in Folders)
+                        {
+                            buttonNumber++;
+                            folderClassName = "imagefolder" + buttonNumber;
 
-                        <div class="nav-item px-3">
-                            <FolderComponent ButtonNumber="@buttonNumber" Folder="@folder"  Parent="this"></FolderComponent>                            
-                        </div>
-                        <div class="height16 displayblock"></div>
-                    }                
+                            <div class="nav-item px-3">
+                                <FolderComponent ButtonNumber="@buttonNumber" Folder="@folder"  Parent="this"></FolderComponent>                            
+                            </div>
+                            <div class="height16 displayblock"></div>
+                        }                
+                    }
                 }
             </div>
             @if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner) && (HasFolders) && (Folders.Count < Admin.MaxFolderCount))
@@ -289,7 +308,7 @@
                 <ConfirmationComponent Parent="this" Visible="@ShowConfirmation"></ConfirmationComponent>
             </div>
         }
-        <div class="sidebarfooter">Version 1.6.0</div>
+        <div class="sidebarfooter">Version 1.6.1</div>
     </div>
     <main>
         <article class="content px-4">

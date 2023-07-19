@@ -51,9 +51,9 @@ Everything should work if you followed the above steps.
 
 # News
 
-1.6.0
-7.18.2023: I fixed the remember me checkbox, the GoBack functionality, and now if there is a LoggedInUser, and you 
-are not viewing someone else's gallery, your folders are always visible.
+1.6.1
+7.19.2023: I fixed a couple of bugs around navigation. I also added a new feature where Main Gallery
+Images can be scrolled through in slide show mode, similar to the way a user's folder can.
 
 1.5.9
 7.16.2023: I fixed a bug where if you are unable to log in when the timer is finished, a message is shown.

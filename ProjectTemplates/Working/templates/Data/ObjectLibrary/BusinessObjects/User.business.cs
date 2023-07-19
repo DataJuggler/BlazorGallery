@@ -67,6 +67,24 @@ namespace ObjectLibrary.BusinessObjects
             }
             #endregion
 
+            #region FoldersTitle
+            /// <summary>
+            /// This read only property returns the value of FoldersTitle from the object UserName.
+            /// </summary>
+            public string FoldersTitle
+            {
+                
+                get
+                {
+                    // initial value
+                    string foldersTitle = UserName + "'s Folders";
+                    
+                    // return value
+                    return foldersTitle;
+                }
+            }
+            #endregion
+            
             #region HasViewingGalleryOwner
             /// <summary>
             /// This property returns true if this object has a 'ViewingGalleryOwner'.

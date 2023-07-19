@@ -20,6 +20,7 @@ using ApplicationLogicComponent.Connection;
 using Timer = System.Timers.Timer;
 using BlazorPro.BlazorSize;
 using Microsoft.AspNetCore.Components;
+using System.Linq;
 
 #endregion
 
@@ -321,6 +322,14 @@ namespace DataJuggler.BlazorGallery.Shared
                 // if the value for HasSelectedFolder is true
                 if (HasSelectedFolder)
                 {
+                    // If this user is the owner                    
+                    if (SelectedFolder.UserId == LoggedInUserId)
+                    {
+                        // Set owner
+                        GalleryOwner = LoggedInUser;
+                        LoggedInUser.ViewingGalleryOwner = GalleryOwner;
+                    }
+
                     if ((HasLoggedInUser) && (LoggedInUser.IsGalleryOwner))
                     {
                         // Make sure you are on the Index page
@@ -524,6 +533,15 @@ namespace DataJuggler.BlazorGallery.Shared
             /// </summary>
             public void NavigateToMain()
             {
+                // Erase the current gallery owner and SelectedFolder
+                GalleryOwner = null;
+                SelectedFolder = null;
+                if (HasLoggedInUser)
+                {
+                    // erase
+                    LoggedInUser.ViewingGalleryOwner = null;
+                }
+
                 // View the MainGallery
                 SetupScreen(ScreenTypeEnum.MainScreen);
             }
@@ -633,6 +651,19 @@ namespace DataJuggler.BlazorGallery.Shared
                                             }
                                             else
                                             {
+                                                // get the list of folders
+                                                List<Folder> folders = await FolderService.GetFolderListForUserId(LoggedInUserId);
+
+                                                // If the folders collection exists and has one or more items
+                                                if (ListHelper.HasOneOrMoreItems(folders))
+                                                {
+                                                    // find the selected folder
+                                                    SelectedFolder = folders.FirstOrDefault(x => x.Selected == true);
+
+                                                    // Select this folder
+                                                    FolderSelected(selectedFolder.Id);
+                                                }
+
                                                 // Show the user's galleries
                                                 NavigateToUsersGalleries();
                                             }
@@ -694,10 +725,10 @@ namespace DataJuggler.BlazorGallery.Shared
                                     }
                                 }                                
                             }
-                            else
+                            else if (ScreenType == ScreenTypeEnum.Index)
                             {
-                                // if this is the SelectedFolder
-                                if ((folder.Selected) && ((!HasSelectedFolder) || (SelectedFolder.Id != folder.Id)))
+                                // if this is the SelectedFolder and we do not have a selected folder yet
+                                if ((folder.Selected) && (!HasSelectedFolder))
                                 {
                                     // Select this folder
                                     FolderSelected(folder.Id);
@@ -715,7 +746,7 @@ namespace DataJuggler.BlazorGallery.Shared
                                     // just for in memory use, not saved to the database
                                     folder.Selected = false;
                                 }
-                            }
+                            }                      
                         }
 
                         // This is not needed for ScreenType.ViewingGallery
@@ -1351,30 +1382,65 @@ namespace DataJuggler.BlazorGallery.Shared
                 // local
                 bool nextImage = false;
 
-                // if the SelectedFolder.Images and the SelectedImage exists
-                if ((HasSelectedFolder) && (SelectedFolder.HasImages) && (HasSelectedImage))
+                // if the value for HasSelectedImage is true
+                if (HasSelectedImage)
                 {
-                    // Iterate the collection of Image objects
-                    foreach (Image image in SelectedFolder.Images)
+                    if (ScreenType == ScreenTypeEnum.ViewImageInMainGallery)
                     {
-                        // if this is our image
-                        if (image.Id == SelectedImage.Id)
+                        // if the value for HasMainGalleryImages is true
+                        if (HasMainGalleryImages)
                         {
-                            // set to true
-                            nextImage = true;
-                        }
-                        else if (nextImage)
-                        {
-                            // Set the selected image
-                            SelectedImage = image;
+                            // Iterate the collection of Image objects
+                            foreach (MainGalleryView image in MainGalleryImages)
+                            {
+                                // if this is our image
+                                if (image.ImageId == SelectedImage.Id)
+                                {
+                                    // set to true
+                                    nextImage = true;
+                                }
+                                else if (nextImage)
+                                {
+                                    // Set the selected image
+                                    SelectedImage = image.Image;
 
-                            // required
-                            break;                            
+                                    // required
+                                    break;
+                                }
+                            }
+
+                            // Update the UI
+                            Refresh();
                         }
                     }
+                    else if (ScreenType == ScreenTypeEnum.ViewImage)
+                    {
+                        // if the SelectedFolder.Images and the SelectedImage exists
+                        if ((HasSelectedFolder) && (SelectedFolder.HasImages))
+                        {
+                            // Iterate the collection of Image objects
+                            foreach (Image image in SelectedFolder.Images)
+                            {
+                                // if this is our image
+                                if (image.Id == SelectedImage.Id)
+                                {
+                                    // set to true
+                                    nextImage = true;
+                                }
+                                else if (nextImage)
+                                {
+                                    // Set the selected image
+                                    SelectedImage = image;
 
-                    // Update the UI
-                    Refresh();
+                                    // required
+                                    break;                            
+                                }
+                            }
+                        }
+
+                        // Update the UI
+                        Refresh();
+                    }
                 }
             }
             #endregion
@@ -1388,28 +1454,55 @@ namespace DataJuggler.BlazorGallery.Shared
                 // local
                Image previousImage = null;
 
-                // if the SelectedFolder.Images and the SelectedImage exists
-                if ((HasSelectedFolder) && (SelectedFolder.HasImages) && (HasSelectedImage))
-                {
-                    // Iterate the collection of Image objects
-                    foreach (Image image in SelectedFolder.Images)
+               // if the value for HasSelectedImage is true
+               if (HasSelectedImage)
+               {
+                    // if the value for HasMainGalleryImages is true
+                    if (HasMainGalleryImages)
                     {
-                        // if this is our image
-                        if (image.Id == SelectedImage.Id)
+                         // Iterate the collection of Image objects
+                        foreach (MainGalleryView image in MainGalleryImages)
                         {
-                            // Set the selected image
-                            SelectedImage = previousImage;
+                            // if this is our image
+                            if (image.ImageId == SelectedImage.Id)
+                            {
+                                // Set the selected image
+                                SelectedImage = previousImage;
 
-                            // exit
-                            break;
+                                // exit
+                                break;
+                            }
+
+                            // Set the previous
+                            previousImage = image.Image;
                         }
 
-                        // Set the previous
-                        previousImage = image;
+                        // Update the UI
+                        Refresh();
                     }
+                    // if the SelectedFolder.Images and the SelectedImage exists
+                    else if ((HasSelectedFolder) && (SelectedFolder.HasImages))
+                    {
+                        // Iterate the collection of Image objects
+                        foreach (Image image in SelectedFolder.Images)
+                        {
+                            // if this is our image
+                            if (image.Id == SelectedImage.Id)
+                            {
+                                // Set the selected image
+                                SelectedImage = previousImage;
 
-                    // Update the UI
-                    Refresh();
+                                // exit
+                                break;
+                            }
+
+                            // Set the previous
+                            previousImage = image;
+                        }
+
+                        // Update the UI
+                        Refresh();
+                    }
                 }
             }
             #endregion
@@ -1490,7 +1583,7 @@ namespace DataJuggler.BlazorGallery.Shared
                 else if (screenType == ScreenTypeEnum.ViewImageInMainGallery)
                 {
                     // Force a reload
-                    // ForceReload = true;
+                    ForceReload = true;
 
                     // Refresh
                     Refresh();
@@ -1850,13 +1943,25 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // initial value
                     bool canMoveNext = false;
-                    
+
+                    // if viewing an image in the main gallery
+                    if ((ScreenType == ScreenTypeEnum.ViewImageInMainGallery) && (HasSelectedImage))
+                    {
+                        // if the value for HasMainGalleryImages is true
+                        if (HasMainGalleryImages)
+                        {
+                            // This images are in the reverse order
+
+                            // Set the return value to true if the SelectedImage.Id is less than the Id of the last image in the MainGallery
+                            canMoveNext = (SelectedImage.Id > MainGalleryImages.Last().ImageId);
+                        }
+                    }
                     // if has selected folder
-                   if ((HasSelectedFolder) && (HasSelectedImage) && (SelectedFolder.HasImages))
-                   {
+                    else if ((HasSelectedFolder) && (HasSelectedImage) && (SelectedFolder.HasImages))
+                    {
                         // Set the return value to true if the SelectedImage.Id is less than the Id of the last image in the folder
                         canMoveNext = (SelectedImage.Id <  SelectedFolder.Images.Last().Id);
-                   }
+                    }
                     
                     // return value
                     return canMoveNext;
@@ -1875,13 +1980,24 @@ namespace DataJuggler.BlazorGallery.Shared
                 {
                     // initial value
                     bool canMovePrevious = false;
-                    
-                     // if has selected folder
-                   if ((HasSelectedFolder) && (HasSelectedImage) && (SelectedFolder.HasImages))
-                   {
+
+                    // if viewing an image in the main gallery
+                    if ((ScreenType == ScreenTypeEnum.ViewImageInMainGallery) && (HasSelectedImage))
+                    {
+                        // if the value for HasMainGalleryImages is true
+                        if (HasMainGalleryImages)
+                        {
+                            // Set the return value to true if the SelectedImage.Id is less than the Id of the last image in the MainGallery
+                            canMovePrevious = (SelectedImage.Id < MainGalleryImages.First().ImageId);
+                        }
+                    }
+
+                    // if has selected folder
+                    if ((HasSelectedFolder) && (HasSelectedImage) && (SelectedFolder.HasImages))
+                    {
                         // Set the return value to true if the SelectedImage.Id is less than the Id of the last image in the folder
                         canMovePrevious = (SelectedImage.Id > SelectedFolder.Images.First().Id);
-                   }
+                    }
                     
                     // return value
                     return canMovePrevious;
@@ -2254,6 +2370,23 @@ namespace DataJuggler.BlazorGallery.Shared
                     
                     // return value
                     return hasMainGalleryComponent;
+                }
+            }
+            #endregion
+            
+            #region HasMainGalleryImages
+            /// <summary>
+            /// This property returns true if this object has a 'MainGalleryImages'.
+            /// </summary>
+            public bool HasMainGalleryImages
+            {
+                get
+                {
+                    // initial value
+                    bool hasMainGalleryImages = (this.MainGalleryImages != null);
+                    
+                    // return value
+                    return hasMainGalleryImages;
                 }
             }
             #endregion

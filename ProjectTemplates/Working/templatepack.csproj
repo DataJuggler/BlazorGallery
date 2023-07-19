@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>    
     <PackageType>Template</PackageType>
-    <PackageVersion>1.5.9</PackageVersion>
+    <PackageVersion>1.6.1</PackageVersion>
     <PackageId>DataJuggler.BlazorGallery</PackageId>
     <Title>DataJuggler.BlazorGallery</Title>
     <Authors>Data Juggler</Authors>
@@ -14,7 +14,7 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <Version>1.5.9</Version>
+    <Version>1.6.1</Version>
     <Product>DataJuggler.BlazorGallery</Product>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,8 +23,13 @@ with a public url such as BlazorGallery.com/Gallery/Julia/Drawings.
     <RepositoryType>Git/GitHub</RepositoryType>
     <PackageReleaseNotes>
 
+		1.6.1
+		7.19.2023: I fixed a couple of bugs around navigation. I also added a new feature where Main Gallery
+		Images can be scrolled through in slide show mode, similar to the way a user's folder can.
+
+
 		1.6.0
-		7.18.2023: I fixed the remember me checkbox, the GoBack functionality, and now if there is a LoggedInUser, and you 
+		7.18.2023: I fixed the remember me checkbox, the GoBack functionality, and now if there is a LoggedInUser, and you
 		are not viewing someone else's gallery, your folders are always visible.
 
 		1.5.9

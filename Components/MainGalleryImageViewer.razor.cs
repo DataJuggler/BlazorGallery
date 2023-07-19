@@ -145,11 +145,14 @@ namespace DataJuggler.BlazorGallery.Components
             /// <summary>
             /// View Image
             /// </summary>
-            public void ViewImage(Image image)
+            public async void ViewImage(Image image)
             {
                 // if the value for HasParentMainLayout is true
-                if (HasParentMainLayout)
+                if ((HasParentMainLayout) && (NullHelper.Exists(image)))
                 {
+                    // Find the GalleryOwner
+                    ParentMainLayout.GalleryOwner = await UserService.FindUser(image.UserId);
+
                     // Set the selected image
                     ParentMainLayout.SelectedImage = image;
 
