@@ -173,7 +173,7 @@
 }
 .fixedsidebar
 {
-    background-image: url('../Images/SideBarBlack.png');
+    background-image: url('../Images/SideBar.png');
     width: 20%;
     height: 100vh;   
     position: fixed;
