@@ -5,7 +5,7 @@ BlazorGallery is a working SQL Server C# Blazor image gallery project and Nuget 
 Blazor Gallery is now live https://blazorgallery.com
 
 # Screenshot
-<img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/BlazorGalleryScreenShot2.png height=480 width=886 />
+<img src=https://github.com/DataJuggler/SharedRepo/blob/master/Shared/Images/Blazor%20Gallery.png height=480 width=886 />
 
 # New Video
 [![Blazor Gallery Deserves A Star Video](https://img.youtube.com/vi/HAMgeaCuvHY/0.jpg)](https://www.youtube.com/watch?v=HAMgeaCuvHY)
