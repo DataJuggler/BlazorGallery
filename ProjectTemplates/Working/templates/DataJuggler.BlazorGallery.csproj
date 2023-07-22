@@ -19,6 +19,30 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<PackageTags>C#;Blazor;FileUpload;Images;</PackageTags>
 	<PackageReleaseNotes>
 
+		1.6.3
+		7.22.2023: 3 Nuget packages have updates, DataJuggler.Net7, DataJuggler.Blazor.Components and
+		DataJuggler.Blazor.FileUpload. The code for this project has not changed.
+
+		1.6.1
+		7.19.2023: I fixed a couple of bugs around navigation. I also added a new feature where Main Gallery
+		Images can be scrolled through in slide show mode, similar to the way a user's folder can.
+
+		1.5.9
+		7.16.2023: I fixed a bug where if you are unable to log in when the timer is finished, a message is shown.
+		I may have to change the speed of timer to be slower or add more time till it gives up.
+
+		1.5.8
+		7.16.2023: There have been many fixes in the last month. The site should look better for browsers with
+		100% zoom. I always test at 150% due to my vision isn't great, and noticed a few things didn't look good.
+		It should be similar layout, just a bigger font size now.
+
+		1.4.6
+		6.26.2023: I fixed a bug where the ImageViewer component was defaulting to LikeButtonEnabled in the
+		constructor. This didn't work when a logged in user was viewing their own gallery if they enter by clicking
+		on their own name from the MainGalleryComponent. I also moved the version number to where it should
+		be visible before a user logs in now.
+
+
 		1.4.5
 		6.26.2023: Bug fixed where clicking the back button on the FullScreenImageViewer was taking the Logged In User
 		back to their own gallery, instead of the MainGallery. Also on the FullScreenImageViewer the previous and next
@@ -146,9 +170,9 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Email" Version="1.0.0" />
     <PackageReference Include="BlazorPro.BlazorSize" Version="6.2.1" />
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.9.6" />
-    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.1.0" />
-    <PackageReference Include="DataJuggler.Net7" Version="7.1.0" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.9.21" />
+    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.1.1" />
+    <PackageReference Include="DataJuggler.Net7" Version="7.2.8" />
     <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.9" />
   </ItemGroup>
 

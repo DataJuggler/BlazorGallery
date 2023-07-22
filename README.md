@@ -51,6 +51,10 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.6.3
+7.22.2023: 3 Nuget packages have updates, DataJuggler.Net7, DataJuggler.Blazor.Components and 
+DataJuggler.Blazor.FileUpload. The code for this project has not changed.
+
 1.6.1
 7.19.2023: I fixed a couple of bugs around navigation. I also added a new feature where Main Gallery
 Images can be scrolled through in slide show mode, similar to the way a user's folder can.
