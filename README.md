@@ -51,6 +51,10 @@ Everything should work if you followed the above steps.
 
 # News
 
+1.6.4
+8.14.2023: 4 Nuget packages have updates, DataJuggler.Net7, DataJuggler.Blazor.Components and 
+DataJuggler.Blazor.FileUpload and DataJuggler.UltimateHelper. The code for this project has not changed.
+
 1.6.3
 7.22.2023: 3 Nuget packages have updates, DataJuggler.Net7, DataJuggler.Blazor.Components and 
 DataJuggler.Blazor.FileUpload. The code for this project has not changed.

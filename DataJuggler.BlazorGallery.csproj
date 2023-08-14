@@ -170,9 +170,9 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Email" Version="1.0.0" />
     <PackageReference Include="BlazorPro.BlazorSize" Version="6.2.1" />
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.9.21" />
-    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.1.1" />
-    <PackageReference Include="DataJuggler.Net7" Version="7.2.8" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.10.2" />
+    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.2.1" />
+    <PackageReference Include="DataJuggler.Net7" Version="7.3.0" />
     <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.9" />
   </ItemGroup>
 
