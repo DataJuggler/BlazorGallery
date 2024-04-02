@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<PackageType>Template</PackageType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 	<PackageReleaseNotes>
 
 		1.6.3
-		7.22.2023: 3 Nuget packages have updates, DataJuggler.Net7, DataJuggler.Blazor.Components and
+		7.22.2023: 3 Nuget packages have updates, DataJuggler.NET8, DataJuggler.Blazor.Components and
 		DataJuggler.Blazor.FileUpload. The code for this project has not changed.
 
 		1.6.1
@@ -168,12 +168,12 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Communication.Email" Version="1.0.0" />
-    <PackageReference Include="BlazorPro.BlazorSize" Version="6.2.1" />
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="7.10.2" />
-    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="7.2.1" />
-    <PackageReference Include="DataJuggler.Net7" Version="7.3.0" />
-    <PackageReference Include="DataJuggler.PixelDatabase" Version="7.0.9" />
+    <PackageReference Include="Azure.Communication.Email" Version="1.0.1" />
+    <PackageReference Include="BlazorPro.BlazorSize" Version="6.2.2" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="8.1.5" />
+    <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="8.0.0" />
+    <PackageReference Include="DataJuggler.Net8" Version="8.0.3" />
+    <PackageReference Include="DataJuggler.PixelDatabase" Version="8.2.7" />
   </ItemGroup>
 
   <ItemGroup>

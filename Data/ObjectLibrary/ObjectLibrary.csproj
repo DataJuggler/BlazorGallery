@@ -3,12 +3,12 @@
   <PropertyGroup>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
-    <TargetFramework>net7.0</TargetFramework>
-    <PackageId>DataJuggler.DataTier.Net7.ObjectLibrary</PackageId>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>DataJuggler.DataTier.NET8.ObjectLibrary</PackageId>
     <Version>7.0.0</Version>
     <Authors>DataJuggler</Authors>
     <Company>DataJuggler</Company>
-    <Description>This is one of four projects that make up a DataTier.Net7 DataTier</Description>
+    <Description>This is one of four projects that make up a DataTier.NET8 DataTier</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Net7" Version="7.3.0" />
+    <PackageReference Include="DataJuggler.Net8" Version="8.0.3" />
   </ItemGroup>
   
 </Project>

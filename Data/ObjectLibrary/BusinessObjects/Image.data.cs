@@ -4,8 +4,8 @@
 
 using ObjectLibrary.Enumerations;
 using System;
-using DataJuggler.Net7.Delegates;
-using DataJuggler.Net7.Enumerations;
+using DataJuggler.NET8.Delegates;
+using DataJuggler.NET8.Enumerations;
 
 #endregion
 
