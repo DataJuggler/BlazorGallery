@@ -4,11 +4,13 @@
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 	<TargetFramework>net8.0</TargetFramework>
-    <Version>7.0.0</Version>
+    <Version>8.0.0</Version>
     <PackageId>DataJuggler.DataTier.Net.ApplicationLogicComponent</PackageId>
     <Authors>DataJuggler</Authors>
     <Product>DataJuggler.DataTier.Net.ApplicationLogicComponent</Product>
     <Description>This is one of the four projects that make up a DataTier.Net project template.</Description>
+    <AssemblyVersion>8.0.0</AssemblyVersion>
+    <FileVersion>8.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
