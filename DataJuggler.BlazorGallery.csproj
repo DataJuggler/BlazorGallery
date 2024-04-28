@@ -5,9 +5,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<IsPackable>true</IsPackable>
-	<Version>1.6.0</Version>
+	<Version>1.6.5</Version>
 	<Description>A project template for creating a Blazor Image Gallery project that uses SQL Server for a backend.
 You will need SQL Server or SQL Server Express to run this project. See the Read Me for more info.
 Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
@@ -169,8 +169,8 @@ Watch this video to see a demo https://youtu.be/yQz1dqYiy2g.</Description>
 
   <ItemGroup>
     <PackageReference Include="Azure.Communication.Email" Version="1.0.1" />
-    <PackageReference Include="BlazorPro.BlazorSize" Version="6.2.2" />
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="8.1.5" />
+    <PackageReference Include="BlazorPro.BlazorSize" Version="8.0.0" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="8.6.19" />
     <PackageReference Include="DataJuggler.Blazor.FileUpload" Version="8.0.0" />
     <PackageReference Include="DataJuggler.Net8" Version="8.0.3" />
     <PackageReference Include="DataJuggler.PixelDatabase" Version="8.2.7" />

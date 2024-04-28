@@ -1,5 +1,6 @@
 # DataJuggler.BlazorGallery
-BlazorGallery is a working SQL Server C# Blazor image gallery project and Nuget package, that can be setup in about 5 to 10 minutes.
+BlazorGallery is a working SQL Server C# Blazor image gallery project and Nuget package, that can be setup in 
+about 5 to 10 minutes.
 
 # Live Demo
 Blazor Gallery is now live https://blazorgallery.com
